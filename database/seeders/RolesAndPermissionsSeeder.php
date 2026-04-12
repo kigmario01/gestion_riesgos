@@ -1,0 +1,108 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+class RolesAndPermissionsSeeder extends Seeder
+{
+    public function run(): void
+    {
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        // PERMISOS
+        $permisos = [
+            'activos.ver', 'activos.crear', 'activos.editar', 'activos.eliminar',
+            'amenazas.ver', 'amenazas.crear', 'amenazas.editar', 'amenazas.eliminar',
+            'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
+            'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar', 'mitigacion.aprobar',
+            'matriz.ver', 'matriz.exportar',
+            'reportes.ver', 'reportes.exportar',
+            'bitacora.ver',
+            'evidencias.ver', 'evidencias.aprobar',
+            'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
+            'basedatos.ver', 'basedatos.configurar', 'basedatos.respaldar',
+            'dashboard.ver',
+        ];
+
+        foreach ($permisos as $permiso) {
+            Permission::firstOrCreate(['name' => $permiso, 'guard_name' => 'web']);
+        }
+
+        // ROLES
+        $po = Role::firstOrCreate(['name' => 'product_owner', 'guard_name' => 'web']);
+        $po->syncPermissions([
+            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+            'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
+            'reportes.ver', 'reportes.exportar', 'bitacora.ver', 'usuarios.ver', 'evidencias.ver',
+        ]);
+
+        $sm = Role::firstOrCreate(['name' => 'scrum_master', 'guard_name' => 'web']);
+        $sm->syncPermissions([
+            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+            'mitigacion.ver', 'matriz.ver', 'matriz.exportar',
+            'reportes.ver', 'reportes.exportar', 'bitacora.ver', 'usuarios.ver',
+        ]);
+
+        $frontend = Role::firstOrCreate(['name' => 'frontend', 'guard_name' => 'web']);
+        $frontend->syncPermissions([
+            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+            'mitigacion.ver', 'matriz.ver', 'matriz.exportar', 'reportes.ver', 'reportes.exportar',
+        ]);
+
+        $backend = Role::firstOrCreate(['name' => 'backend', 'guard_name' => 'web']);
+        $backend->syncPermissions([
+            'dashboard.ver',
+            'activos.ver', 'activos.crear', 'activos.editar', 'activos.eliminar',
+            'amenazas.ver', 'amenazas.crear', 'amenazas.editar', 'amenazas.eliminar',
+            'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
+            'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar',
+            'matriz.ver', 'matriz.exportar', 'reportes.ver', 'reportes.exportar',
+            'bitacora.ver', 'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
+            'basedatos.ver',
+        ]);
+
+        $bd = Role::firstOrCreate(['name' => 'base_datos', 'guard_name' => 'web']);
+        $bd->syncPermissions([
+            'dashboard.ver', 'activos.ver', 'activos.crear', 'activos.editar',
+            'amenazas.ver', 'amenazas.crear', 'evaluaciones.ver', 'mitigacion.ver',
+            'matriz.ver', 'matriz.exportar', 'reportes.ver', 'usuarios.ver',
+            'basedatos.ver', 'basedatos.configurar', 'basedatos.respaldar',
+        ]);
+
+        $auditoria = Role::firstOrCreate(['name' => 'auditoria', 'guard_name' => 'web']);
+        $auditoria->syncPermissions([
+            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+            'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
+            'reportes.ver', 'reportes.exportar', 'bitacora.ver',
+            'evidencias.ver', 'evidencias.aprobar', 'usuarios.ver',
+        ]);
+
+        // USUARIOS DE PRUEBA
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@gestion.com'],
+            [
+                'name'     => 'Administrador',
+                'password' => Hash::make('Admin1234!'),
+                'activo'   => true,
+            ]
+        );
+        $admin->syncRoles(['backend', 'auditoria']);
+
+        $mario = User::firstOrCreate(
+            ['email' => 'mario.alvarez@gestion.com'],
+            [
+                'name'     => 'Mario Álvarez',
+                'password' => Hash::make('Scrum1234!'),
+                'activo'   => true,
+            ]
+        );
+        $mario->assignRole('scrum_master');
+
+        $this->command->info('✅ Roles, permisos y usuarios creados correctamente.');
+    }
+}
