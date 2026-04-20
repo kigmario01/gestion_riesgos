@@ -57,7 +57,7 @@
         <a href="{{ route('bitacora.index') }}" class="nav-item"><i class="fas fa-clipboard-list"></i> Bitácora</a>
         <div class="nav-section-title">Sistema</div>
         <a href="{{ route('usuarios.index') }}" class="nav-item active"><i class="fas fa-users"></i> Usuarios</a>
-        <a href="#" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
+        <a href="{{ route('roles.index') }}" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
         <a href="#" class="nav-item"><i class="fas fa-database"></i> Respaldo BD</a>
     </nav>
     <div class="sidebar-footer">
@@ -129,6 +129,7 @@
                     <td style="font-size:12px;color:#64748b;">{{ $usuario->created_at->format('d/m/Y') }}</td>
                     <td>
                         <div class="actions">
+                            <a href="{{ route('usuarios.show', $usuario) }}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
                             <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
                             @if($usuario->id !== auth()->id())
                             <form method="POST" action="{{ route('usuarios.toggle', $usuario) }}">

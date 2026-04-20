@@ -85,7 +85,7 @@
         <a href="#" class="nav-item"><i class="fas fa-check-circle"></i> Evidencias</a>
         <div class="nav-section-title">Sistema</div>
         <a href="{{ route('usuarios.index') }}" class="nav-item"><i class="fas fa-users"></i> Usuarios</a>
-        <a href="#" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
+        <a href="{{ route('roles.index') }}" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
         <a href="#" class="nav-item"><i class="fas fa-database"></i> Respaldo BD</a>
     </nav>
     <div class="sidebar-footer">
