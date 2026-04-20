@@ -49,6 +49,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('usuarios', \App\Http\Controllers\UsuarioController::class);
     Route::post('usuarios/{usuario}/toggle', [\App\Http\Controllers\UsuarioController::class, 'toggleActivo'])->name('usuarios.toggle');
 
+    // Roles
+    Route::resource('roles', \App\Http\Controllers\RolController::class)
+        ->only(['index', 'show', 'edit', 'update'])
+        ->parameters(['roles' => 'rol']);
+
 });
 
 require __DIR__.'/auth.php';

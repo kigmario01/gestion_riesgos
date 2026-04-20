@@ -78,7 +78,7 @@
         <a href="{{ route('bitacora.index') }}" class="nav-item"><i class="fas fa-clipboard-list"></i> Bitácora</a>
         <div class="nav-section-title">Sistema</div>
         <a href="{{ route('usuarios.index') }}" class="nav-item"><i class="fas fa-users"></i> Usuarios</a>
-        <a href="#" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
+        <a href="{{ route('roles.index') }}" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
     </nav>
     <div class="sidebar-footer">
         <div class="user-info">
