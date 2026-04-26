@@ -8,6 +8,7 @@ use App\Http\Controllers\EvaluacionRiesgoController;
 use App\Http\Controllers\PlanMitigacionController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\MatrizRiesgoController;
+use App\Http\Controllers\RespaldoBdController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,6 +54,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles', \App\Http\Controllers\RolController::class)
         ->only(['index', 'show', 'edit', 'update'])
         ->parameters(['roles' => 'rol']);
+
+    // Respaldo BD
+    Route::get('respaldos', [RespaldoBdController::class, 'index'])->name('respaldos.index');
+    Route::post('respaldos', [RespaldoBdController::class, 'store'])->name('respaldos.store');
+    Route::get('respaldos/{respaldo}/download', [RespaldoBdController::class, 'download'])->name('respaldos.download');
+    Route::delete('respaldos/{respaldo}', [RespaldoBdController::class, 'destroy'])->name('respaldos.destroy');
 
 });
 

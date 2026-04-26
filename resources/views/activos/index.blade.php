@@ -1,231 +1,163 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activos TI — Gestión de Riesgos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css'])
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #1e293b; }
+@extends('layouts.main')
 
-        .sidebar {
-            position: fixed; top: 0; left: 0;
-            width: 250px; height: 100vh;
-            background: #1e40af;
-            display: flex; flex-direction: column;
-            z-index: 100; overflow-y: auto;
-        }
-        .sidebar-logo { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar-logo h1 { color: #fff; font-size: 18px; font-weight: 700; }
-        .sidebar-logo p { color: rgba(255,255,255,0.6); font-size: 11px; margin-top: 3px; }
-        .nav-section-title { padding: 16px 20px 6px; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13.5px; transition: all 0.2s; border-left: 3px solid transparent; }
-        .nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
-        .nav-item.active { background: rgba(255,255,255,0.12); color: #fff; border-left-color: #60a5fa; font-weight: 500; }
-        .nav-item i { width: 18px; text-align: center; font-size: 14px; }
-        .sidebar-footer { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .user-info { display: flex; align-items: center; gap: 10px; }
-        .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: #60a5fa; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #1e40af; }
-        .user-name { font-size: 13px; color: #fff; font-weight: 500; }
-        .user-role { font-size: 11px; color: rgba(255,255,255,0.5); }
-        .btn-logout { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 12px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); border-radius: 8px; font-size: 12px; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; width: 100%; }
-        .btn-logout:hover { background: rgba(239,68,68,0.2); color: #fca5a5; }
+@section('title', 'Activos TI')
 
-        .main { margin-left: 250px; min-height: 100vh; display: flex; flex-direction: column; }
-        .topbar { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 0 28px; height: 58px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-        .topbar-title { font-size: 16px; font-weight: 600; color: #1e293b; }
-        .topbar-right { display: flex; align-items: center; gap: 10px; }
-        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; }
-        .btn-primary { background: #1e40af; color: #fff; }
-        .btn-primary:hover { background: #1d3a9e; }
-        .btn-outline { background: #fff; color: #475569; border: 1px solid #e2e8f0; }
-        .btn-outline:hover { border-color: #1e40af; color: #1e40af; }
-        .btn-danger { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-        .btn-danger:hover { background: #fee2e2; }
-        .btn-sm { padding: 5px 10px; font-size: 12px; }
+@section('topbar-left')
+    <div class="topbar-icon"><i class="fas fa-server"></i></div>
+    <div class="topbar-title">Activos TI</div>
+@endsection
 
-        .content { padding: 24px 28px; flex: 1; }
+@section('topbar-right')
+    <a href="{{ route('activos.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Activo</a>
+@endsection
 
-        .alert-success { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #22c55e; border-radius: 10px; padding: 12px 18px; margin-bottom: 20px; color: #15803d; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+@push('styles')
+<style>
+.activo-tipo-icon { width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0; }
+.at-hardware    { background:#eff6ff;color:#3b82f6; }
+.at-software    { background:#f5f3ff;color:#7c3aed; }
+.at-red         { background:#fff7ed;color:#f97316; }
+.at-datos       { background:#fdf4ff;color:#9333ea; }
+.at-servicios   { background:#ecfeff;color:#0891b2; }
+.at-personas    { background:#f0fdf4;color:#16a34a; }
+.at-instalaciones { background:#fef2f2;color:#dc2626; }
+.activo-stripe { height:3px; }
+.stripe-critica { background:linear-gradient(90deg,#ef4444,#dc2626); }
+.stripe-alta    { background:linear-gradient(90deg,#f97316,#ea580c); }
+.stripe-media   { background:linear-gradient(90deg,#eab308,#ca8a04); }
+.stripe-baja    { background:linear-gradient(90deg,#22c55e,#16a34a); }
+</style>
+@endpush
 
-        .panel { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
-        .panel-header { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; }
-        .panel-title { font-size: 14px; font-weight: 600; color: #1e293b; display: flex; align-items: center; gap: 8px; }
-        .panel-title i { color: #1e40af; }
+@section('content')
 
-        .table { width: 100%; border-collapse: collapse; }
-        .table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
-        .table td { padding: 12px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
-        .table tr:last-child td { border-bottom: none; }
-        .table tr:hover td { background: #f8fafc; }
+@php
+    $tipoIcon = [
+        'hardware'=>['icon'=>'fa-microchip','cls'=>'at-hardware'],
+        'software'=>['icon'=>'fa-code','cls'=>'at-software'],
+        'red'=>['icon'=>'fa-network-wired','cls'=>'at-red'],
+        'datos'=>['icon'=>'fa-database','cls'=>'at-datos'],
+        'servicios'=>['icon'=>'fa-cloud','cls'=>'at-servicios'],
+        'personas'=>['icon'=>'fa-users','cls'=>'at-personas'],
+        'instalaciones'=>['icon'=>'fa-building','cls'=>'at-instalaciones'],
+    ];
+    $critColors = ['critica'=>'badge-critica','alta'=>'badge-alta','media'=>'badge-media','baja'=>'badge-baja'];
+    $critDot    = ['critica'=>'#ef4444','alta'=>'#f97316','media'=>'#eab308','baja'=>'#22c55e'];
+@endphp
 
-        .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-        .badge-critica { background: #fef2f2; color: #dc2626; }
-        .badge-alta { background: #fff7ed; color: #ea580c; }
-        .badge-media { background: #fefce8; color: #ca8a04; }
-        .badge-baja { background: #f0fdf4; color: #16a34a; }
-        .badge-activo { background: #f0fdf4; color: #16a34a; }
-        .badge-inactivo { background: #f8fafc; color: #64748b; }
-        .badge-en_mantenimiento { background: #eff6ff; color: #1e40af; }
-
-        .actions { display: flex; gap: 6px; }
-
-        .empty-state { padding: 60px 20px; text-align: center; color: #94a3b8; }
-        .empty-state i { font-size: 40px; margin-bottom: 12px; display: block; color: #cbd5e1; }
-        .empty-state p { font-size: 14px; margin-bottom: 16px; }
-
-        .pagination { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 16px; }
-        .page-link { padding: 6px 12px; border-radius: 6px; font-size: 13px; text-decoration: none; color: #475569; border: 1px solid #e2e8f0; transition: all 0.2s; }
-        .page-link:hover, .page-link.active { background: #1e40af; color: #fff; border-color: #1e40af; }
-
-        .filter-bar { display: flex; gap: 10px; padding: 14px 20px; background: #f8fafc; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap; }
-        .filter-input { padding: 7px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; color: #374151; background: #fff; outline: none; }
-        .filter-input:focus { border-color: #1e40af; }
-        select.filter-input { cursor: pointer; }
-    </style>
-</head>
-<body>
-
-<aside class="sidebar">
-    <div class="sidebar-logo">
-        <h1>🛡️ RiskGuard TI</h1>
-        <p>Gestión de Riesgos · ISO 27001</p>
-    </div>
-    <nav>
-        <div class="nav-section-title">Principal</div>
-        <a href="{{ route('dashboard') }}" class="nav-item"><i class="fas fa-chart-pie"></i> Dashboard</a>
-        <a href="{{ route('matriz.index') }}" class="nav-item"><i class="fas fa-map"></i> Matriz de Riesgos</a>
-        <div class="nav-section-title">Gestión</div>
-        <a href="{{ route('activos.index') }}" class="nav-item active"><i class="fas fa-server"></i> Activos TI</a>
-        <a href="{{ route('amenazas.index') }}" class="nav-item"><i class="fas fa-biohazard"></i> Amenazas</a>
-        <a href="{{ route('evaluaciones.index') }}" class="nav-item"><i class="fas fa-search"></i> Evaluaciones</a>
-        <a href="{{ route('evaluaciones.create') }}" class="nav-item"><i class="fas fa-calculator"></i> Cálculo de Riesgo</a>
-        <a href="{{ route('mitigacion.index') }}" class="nav-item"><i class="fas fa-tools"></i> Mitigación</a>
-        <div class="nav-section-title">Auditoría</div>
-        <a href="{{ route('bitacora.index') }}" class="nav-item"><i class="fas fa-clipboard-list"></i> Bitácora</a>
-        <a href="#" class="nav-item"><i class="fas fa-file-alt"></i> Reportes</a>
-        <a href="#" class="nav-item"><i class="fas fa-check-circle"></i> Evidencias</a>
-        <div class="nav-section-title">Sistema</div>
-        <a href="{{ route('usuarios.index') }}" class="nav-item"><i class="fas fa-users"></i> Usuarios</a>
-        <a href="{{ route('roles.index') }}" class="nav-item"><i class="fas fa-shield-alt"></i> Control de Roles</a>
-        <a href="#" class="nav-item"><i class="fas fa-database"></i> Respaldo BD</a>
-    </nav>
-    <div class="sidebar-footer">
-        <div class="user-info">
-            <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
-            <div>
-                <div class="user-name">{{ auth()->user()->name }}</div>
-                <div class="user-role">{{ auth()->user()->getRoleNames()->first() ?? 'Sin rol' }}</div>
-            </div>
-        </div>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-        </form>
-    </div>
-</aside>
-
-<div class="main">
-    <header class="topbar">
-        <div class="topbar-title"><i class="fas fa-server" style="color:#1e40af; margin-right:8px;"></i> Activos TI</div>
-        <div class="topbar-right">
-            <a href="{{ route('activos.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Nuevo Activo</a>
-        </div>
-    </header>
-
-    <div class="content">
-
-        @if(session('success'))
-        <div class="alert-success"><i class="fas fa-check-circle"></i> {{ session('success') }}</div>
-        @endif
-
-        <div class="panel">
-            <div class="panel-header">
-                <div class="panel-title"><i class="fas fa-list"></i> Listado de Activos TI</div>
-                <span style="font-size:12px; color:#94a3b8;">Total: {{ $activos->total() }} activos</span>
-            </div>
-
-            <div class="filter-bar">
-                <input type="text" class="filter-input" placeholder="🔍 Buscar activo..." style="flex:1; min-width:200px;">
-                <select class="filter-input">
-                    <option value="">Todos los tipos</option>
-                    <option>hardware</option>
-                    <option>software</option>
-                    <option>red</option>
-                    <option>datos</option>
-                    <option>servicios</option>
-                    <option>personas</option>
-                    <option>instalaciones</option>
-                </select>
-                <select class="filter-input">
-                    <option value="">Toda criticidad</option>
-                    <option>critica</option>
-                    <option>alta</option>
-                    <option>media</option>
-                    <option>baja</option>
-                </select>
-            </div>
-
-            @if($activos->count() > 0)
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Tipo</th>
-                        <th>Criticidad</th>
-                        <th>Estado</th>
-                        <th>Responsable</th>
-                        <th>Registrado por</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($activos as $activo)
-                    <tr>
-                        <td><code style="background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:12px;">{{ $activo->codigo }}</code></td>
-                        <td>
-                            <div style="font-weight:500;">{{ $activo->nombre }}</div>
-                            @if($activo->descripcion)
-                            <div style="font-size:11px; color:#94a3b8;">{{ Str::limit($activo->descripcion, 50) }}</div>
-                            @endif
-                        </td>
-                        <td><span style="text-transform:capitalize;">{{ $activo->tipo }}</span></td>
-                        <td><span class="badge badge-{{ $activo->criticidad }}">{{ strtoupper($activo->criticidad) }}</span></td>
-                        <td><span class="badge badge-{{ $activo->estado }}">{{ strtoupper(str_replace('_', ' ', $activo->estado)) }}</span></td>
-                        <td>{{ $activo->responsable ?? '—' }}</td>
-                        <td style="font-size:12px; color:#64748b;">{{ $activo->registrador->name ?? '—' }}</td>
-                        <td>
-                            <div class="actions">
-                                <a href="{{ route('activos.show', $activo) }}" class="btn btn-outline btn-sm"><i class="fas fa-eye"></i></a>
-                                <a href="{{ route('activos.edit', $activo) }}" class="btn btn-outline btn-sm"><i class="fas fa-edit"></i></a>
-                                <form method="POST" action="{{ route('activos.destroy', $activo) }}" onsubmit="return confirm('¿Eliminar este activo?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <div class="pagination">
-                {{ $activos->links() }}
-            </div>
-
-            @else
-            <div class="empty-state">
-                <i class="fas fa-server"></i>
-                <p>No hay activos TI registrados aún.</p>
-                <a href="{{ route('activos.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Registrar primer activo</a>
-            </div>
-            @endif
-        </div>
-    </div>
+{{-- Filter tabs --}}
+<div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterActivos('all','tipo', this)">
+        Todos <span class="tab-count">{{ $activos->total() }}</span>
+    </button>
+    @foreach(['hardware','software','red','datos','servicios','personas','instalaciones'] as $t)
+    <button class="filter-tab" onclick="filterActivos('{{ $t }}','tipo', this)" style="text-transform:capitalize;">
+        <i class="fas {{ $tipoIcon[$t]['icon'] ?? 'fa-box' }}" style="font-size:10px;"></i>
+        {{ ucfirst($t) }}
+    </button>
+    @endforeach
 </div>
 
-</body>
-</html>
+@if($activos->count() > 0)
+<div class="card-grid" id="activosGrid">
+    @foreach($activos as $activo)
+    @php
+        $ti = $tipoIcon[$activo->tipo] ?? ['icon'=>'fa-box','cls'=>'at-hardware'];
+        $stripeCls = 'stripe-'.$activo->criticidad;
+    @endphp
+    <div class="item-card" data-tipo="{{ $activo->tipo }}" data-criticidad="{{ $activo->criticidad }}">
+        <div class="activo-stripe {{ $stripeCls }}"></div>
+        <div class="item-card-header">
+            <div class="activo-tipo-icon {{ $ti['cls'] }}">
+                <i class="fas {{ $ti['icon'] }}"></i>
+            </div>
+            <div style="min-width:0;">
+                <div class="item-card-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $activo->nombre }}</div>
+                <div class="item-card-sub">
+                    <code class="tag" style="font-size:10px;">{{ $activo->codigo }}</code>
+                    &nbsp;·&nbsp;
+                    <span style="text-transform:capitalize;">{{ $activo->tipo }}</span>
+                </div>
+            </div>
+            <div style="margin-left:auto;flex-shrink:0;">
+                <span class="badge {{ $critColors[$activo->criticidad] ?? '' }}">
+                    <span class="badge-dot" style="background:{{ $critDot[$activo->criticidad] ?? '#94a3b8' }};"></span>
+                    {{ strtoupper($activo->criticidad) }}
+                </span>
+            </div>
+        </div>
+
+        <div class="item-card-body">
+            @if($activo->descripcion)
+            <div style="font-size:12px;color:#64748b;line-height:1.5;margin-bottom:10px;">
+                {{ Str::limit($activo->descripcion, 80) }}
+            </div>
+            @endif
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11.5px;">
+                <div>
+                    <div style="font-size:10px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Responsable</div>
+                    <div style="color:#374151;font-weight:500;">{{ $activo->responsable ?? '—' }}</div>
+                </div>
+                <div>
+                    <div style="font-size:10px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Estado</div>
+                    <span class="badge badge-{{ $activo->estado }}" style="font-size:10px;">{{ strtoupper(str_replace('_',' ',$activo->estado)) }}</span>
+                </div>
+                <div>
+                    <div style="font-size:10px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Registrado por</div>
+                    <div style="color:#374151;">{{ $activo->registrador->name ?? '—' }}</div>
+                </div>
+                @if($activo->ubicacion)
+                <div>
+                    <div style="font-size:10px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;">Ubicación</div>
+                    <div style="color:#374151;">{{ Str::limit($activo->ubicacion, 24) }}</div>
+                </div>
+                @endif
+            </div>
+        </div>
+
+        <div class="item-card-footer">
+            <span style="font-size:11px;color:#94a3b8;">
+                <i class="fas fa-calendar" style="font-size:9px;"></i>
+                {{ $activo->created_at->format('d/m/Y') }}
+            </span>
+            <div class="actions">
+                <a href="{{ route('activos.show', $activo) }}" class="btn btn-outline btn-xs" title="Ver detalle"><i class="fas fa-eye"></i></a>
+                <a href="{{ route('activos.edit', $activo) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>
+                <form method="POST" action="{{ route('activos.destroy', $activo) }}" onsubmit="return confirm('¿Eliminar este activo?')">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+</div>
+
+<div style="padding:14px 4px;display:flex;align-items:center;justify-content:space-between;">
+    <span style="font-size:12px;color:#94a3b8;">{{ $activos->total() }} activo(s) en total</span>
+    {{ $activos->links() }}
+</div>
+@else
+<div class="empty-state">
+    <i class="fas fa-server"></i>
+    <p>No hay activos TI registrados aún.</p>
+    <a href="{{ route('activos.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Registrar primer activo</a>
+</div>
+@endif
+
+@endsection
+
+@push('scripts')
+<script>
+function filterActivos(val, field, btn) {
+    document.querySelectorAll('.filter-tab').forEach(t =>
+        t.classList.remove('active','active-red','active-orange','active-yellow','active-green')
+    );
+    btn.classList.add('active');
+
+    document.querySelectorAll('#activosGrid .item-card').forEach(card => {
+        card.style.display = (val === 'all' || card.dataset[field] === val) ? '' : 'none';
+    });
+}
+</script>
+@endpush
