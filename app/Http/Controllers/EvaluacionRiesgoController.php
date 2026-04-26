@@ -13,8 +13,9 @@ class EvaluacionRiesgoController extends Controller
     public function index()
     {
         $evaluaciones = EvaluacionRiesgo::with(['activo', 'amenaza', 'evaluador'])
+            ->orderBy('valor_riesgo', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->get();
         return view('evaluaciones.index', compact('evaluaciones'));
     }
 
