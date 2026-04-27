@@ -126,7 +126,7 @@
             </div>
         </a>
         @empty
-        <div style="background:#f8fafc;border-radius:10px;border:1.5px dashed #e8eaf0;padding:22px 14px;text-align:center;color:#cbd5e1;font-size:11.5px;">
+        <div class="kanban-empty">
             <i class="fas fa-check-circle" style="font-size:18px;display:block;margin-bottom:6px;"></i>Sin riesgos
         </div>
         @endforelse

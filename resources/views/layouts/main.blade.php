@@ -9,6 +9,12 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
+    <script>
+        (function(){
+            var t = localStorage.getItem('rg-theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: #f0f2f5; color: #1e293b; min-height: 100vh; display: flex; }
@@ -363,6 +369,122 @@
 
         /* ══ SEARCH TABLE HIGHLIGHT ══ */
         .row-hidden { display: none; }
+
+        /* ══ DARK MODE ══ */
+        [data-theme="dark"] body { background:#0f1117; color:#e2e8f0; }
+        [data-theme="dark"] .topbar { background:#161b2e; border-bottom-color:#2a2f45; }
+        [data-theme="dark"] .topbar-title { color:#e2e8f0; }
+        [data-theme="dark"] .topbar-date { color:#64748b; }
+        [data-theme="dark"] .topbar-search input { background:#1e2438; border-color:#2a2f45; color:#e2e8f0; }
+        [data-theme="dark"] .topbar-search input::placeholder { color:#475569; }
+        [data-theme="dark"] .topbar-icon { background:#1e2438; }
+        [data-theme="dark"] .notif-btn { background:#1e2438; border-color:#2a2f45; color:#94a3b8; }
+        [data-theme="dark"] .app-content { background:#0f1117; }
+        [data-theme="dark"] .statusbar { background:#161b2e; border-top-color:#2a2f45; color:#64748b; }
+
+        [data-theme="dark"] .panel { background:#1a1f2e !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .panel-header { border-bottom-color:#2a2f45 !important; }
+        [data-theme="dark"] .panel-title { color:#e2e8f0 !important; }
+        [data-theme="dark"] .panel-subtitle { color:#64748b !important; }
+
+        [data-theme="dark"] .stat-card { background:#1a1f2e !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .stat-num { color:#e2e8f0; }
+        [data-theme="dark"] .stat-lbl { color:#64748b; }
+
+        [data-theme="dark"] .risk-card { background:#1a1f2e; border-color:#2a2f45; }
+        [data-theme="dark"] .risk-card-title { color:#e2e8f0; }
+        [data-theme="dark"] .risk-card-footer { border-top-color:#2a2f45; }
+        [data-theme="dark"] .rc-id { background:#0f1117; border-color:#2a2f45; color:#94a3b8; }
+        [data-theme="dark"] .rc-name { color:#cbd5e1; }
+
+        [data-theme="dark"] .item-card { background:#1a1f2e; border-color:#2a2f45; }
+        [data-theme="dark"] .item-card-header { border-bottom-color:#2a2f45; }
+        [data-theme="dark"] .item-card-name { color:#e2e8f0; }
+        [data-theme="dark"] .item-card-body { color:#cbd5e1; }
+        [data-theme="dark"] .item-card-footer { background:#161b2e; border-top-color:#2a2f45; }
+        [data-theme="dark"] .item-stat { background:#161b2e; }
+
+        [data-theme="dark"] .table th { background:#161b2e; color:#64748b; border-bottom-color:#2a2f45; }
+        [data-theme="dark"] .table td { color:#cbd5e1; border-bottom-color:#1e2438; }
+        [data-theme="dark"] .table tr:hover td { background:#1e2438; }
+
+        [data-theme="dark"] .filter-tabs { background:#1a1f2e; border-color:#2a2f45; }
+        [data-theme="dark"] .filter-tab { color:#94a3b8; }
+        [data-theme="dark"] .filter-tab:hover { background:#1e2438; color:#e2e8f0; }
+        [data-theme="dark"] .filter-tab:not(.active):not(.active-red):not(.active-orange):not(.active-yellow):not(.active-green) .tab-count { background:#1e2438; color:#94a3b8; }
+
+        [data-theme="dark"] .kch-critico { background:rgba(239,68,68,.15); }
+        [data-theme="dark"] .kch-alto    { background:rgba(249,115,22,.15); }
+        [data-theme="dark"] .kch-medio   { background:rgba(234,179,8,.15); }
+        [data-theme="dark"] .kch-bajo    { background:rgba(34,197,94,.15); }
+
+        [data-theme="dark"] .btn-outline { background:#1a1f2e; color:#94a3b8; border-color:#2a2f45; }
+        [data-theme="dark"] .btn-outline:hover { border-color:#4f8ef7; color:#4f8ef7; background:#1e2438; }
+        [data-theme="dark"] .btn-ghost { color:#94a3b8; }
+
+        [data-theme="dark"] .form-card { background:#1a1f2e; border-color:#2a2f45; }
+        [data-theme="dark"] .form-header { border-bottom-color:#2a2f45; }
+        [data-theme="dark"] .form-header h2 { color:#e2e8f0; }
+        [data-theme="dark"] .form-footer { background:#161b2e; border-top-color:#2a2f45; }
+        [data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea { background:#1e2438; border-color:#2a2f45; color:#e2e8f0; }
+        [data-theme="dark"] label { color:#cbd5e1; }
+        [data-theme="dark"] .hint { color:#64748b; }
+
+        [data-theme="dark"] code.tag { background:#1e2438; color:#e2e8f0; border-color:#2a2f45; }
+        [data-theme="dark"] .detail-value { color:#e2e8f0; }
+        [data-theme="dark"] .detail-label { color:#64748b; }
+        [data-theme="dark"] .text-content { background:#161b2e; border-color:#2a2f45; color:#cbd5e1; }
+        [data-theme="dark"] .text-label { color:#64748b; }
+        [data-theme="dark"] .filter-bar { background:#161b2e; border-bottom-color:#2a2f45; }
+        [data-theme="dark"] .filter-input { background:#1e2438; border-color:#2a2f45; color:#e2e8f0; }
+        [data-theme="dark"] .empty-state { color:#475569; }
+        [data-theme="dark"] .empty-state i { color:#2a2f45; }
+        [data-theme="dark"] .alert-error { background:#2d1515; border-color:#7f1d1d; color:#fca5a5; }
+        [data-theme="dark"] .alert-success { background:#0d2318; border-color:#14532d; color:#86efac; }
+        [data-theme="dark"] .alert-warning { background:#2d1f0a; border-color:#78350f; color:#fcd34d; }
+        [data-theme="dark"] .alert-info { background:#0d1f3c; border-color:#1e3a5f; color:#93c5fd; }
+
+        /* ── Roles ── */
+        [data-theme="dark"] .role-card { background:#1a1f2e !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .role-card-header { border-bottom-color:#2a2f45 !important; }
+        [data-theme="dark"] .role-name { color:#e2e8f0 !important; }
+        [data-theme="dark"] .role-desc { color:#64748b !important; }
+        [data-theme="dark"] .role-stats { border-bottom-color:#2a2f45 !important; }
+        [data-theme="dark"] .role-stat { border-right-color:#2a2f45 !important; }
+        [data-theme="dark"] .role-stat-label { color:#64748b !important; }
+        [data-theme="dark"] .role-card-footer { background:#161b2e !important; border-top-color:#2a2f45 !important; }
+
+        /* ── Roles show/edit ── */
+        [data-theme="dark"] .role-header-section { background:#1a1f2e !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .stat-chip { background:#161b2e !important; border-color:#2a2f45 !important; color:#cbd5e1 !important; }
+        [data-theme="dark"] .perm-module-header { background:#161b2e !important; border-color:#2a2f45 !important; color:#e2e8f0 !important; }
+        [data-theme="dark"] .perm-module-body { background:#1a1f2e !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .perm-chip { background:#1e2438 !important; border-color:#2a2f45 !important; color:#94a3b8 !important; }
+        [data-theme="dark"] .perm-has { background:#0d2318 !important; border-color:#14532d !important; color:#86efac !important; }
+        [data-theme="dark"] .perm-not { background:#1e2438 !important; border-color:#2a2f45 !important; color:#475569 !important; }
+        [data-theme="dark"] .module-block { border-color:#2a2f45 !important; }
+        [data-theme="dark"] .module-header { background:#161b2e !important; color:#e2e8f0 !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .module-body { background:#1a1f2e !important; }
+        [data-theme="dark"] .action-bar { background:#161b2e !important; border-top-color:#2a2f45 !important; }
+        [data-theme="dark"] .warning-note { background:#2d1f0a !important; border-color:#78350f !important; color:#fcd34d !important; }
+        [data-theme="dark"] .select-all-btn { background:#1e2438 !important; color:#94a3b8 !important; border-color:#2a2f45 !important; }
+
+        /* ── Matriz ── */
+        [data-theme="dark"] .matriz-wrap { background:#1a1f2e !important; border-color:#2a2f45 !important; }
+        [data-theme="dark"] .matriz-title { color:#e2e8f0 !important; }
+        [data-theme="dark"] .matriz-axis { color:#64748b !important; }
+        [data-theme="dark"] .mc-bajo    { background:rgba(34,197,94,.15) !important; }
+        [data-theme="dark"] .mc-medio   { background:rgba(234,179,8,.12) !important; }
+        [data-theme="dark"] .mc-alto    { background:rgba(249,115,22,.15) !important; }
+        [data-theme="dark"] .mc-critico { background:rgba(239,68,68,.15) !important; }
+        [data-theme="dark"] .ley-item { color:#94a3b8 !important; }
+
+        /* ── Usuarios ── */
+        [data-theme="dark"] .profile-header { background:linear-gradient(135deg,#161b2e,#1a1f2e) !important; border-color:#2a2f45 !important; }
+
+        /* ── Kanban empty placeholder ── */
+        .kanban-empty { background:#f8fafc; border-radius:10px; border:1.5px dashed #e8eaf0; padding:24px 14px; text-align:center; color:#cbd5e1; font-size:11.5px; }
+        [data-theme="dark"] .kanban-empty { background:#1e2438 !important; border-color:#2a2f45 !important; color:#475569 !important; }
     </style>
 </head>
 <body>
@@ -437,6 +559,9 @@
 
         <div class="topbar-right">
             <span class="topbar-date">{{ now()->format('d M Y') }}</span>
+            <button id="themeToggle" class="notif-btn" onclick="toggleTheme()" title="Modo oscuro" style="cursor:pointer;border:none;font-family:inherit;">
+                <i class="fas fa-moon"></i>
+            </button>
             <a href="{{ route('bitacora.index') }}" class="notif-btn" title="Bitácora de auditoría">
                 <i class="fas fa-bell"></i>
             </a>
@@ -466,5 +591,19 @@
 </div>
 
 @stack('scripts')
+<script>
+function toggleTheme() {
+    var curr = document.documentElement.getAttribute('data-theme');
+    var next = curr === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('rg-theme', next);
+    updateThemeIcon(next);
+}
+function updateThemeIcon(t) {
+    var btn = document.getElementById('themeToggle');
+    if (btn) btn.innerHTML = t === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+}
+updateThemeIcon(document.documentElement.getAttribute('data-theme'));
+</script>
 </body>
 </html>

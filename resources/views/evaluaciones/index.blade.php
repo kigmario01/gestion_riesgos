@@ -117,7 +117,7 @@
             </div>
         </div>
         @empty
-        <div style="background:#f8fafc;border-radius:10px;border:1.5px dashed #e8eaf0;padding:26px 14px;text-align:center;color:#cbd5e1;font-size:11.5px;">
+        <div class="kanban-empty">
             <i class="fas fa-check-circle" style="font-size:22px;display:block;margin-bottom:8px;"></i>
             Sin riesgos en este nivel
         </div>
