@@ -9,7 +9,12 @@
       "Bash(git -C c:/xampp/htdocs/gestion_riesgos show HEAD:nixpacks.toml)",
       "Bash(git -C c:/xampp/htdocs/gestion_riesgos add nixpacks.toml Dockerfile Procfile .dockerignore .env.example)",
       "Bash(git -C c:/xampp/htdocs/gestion_riesgos log --oneline -3)",
-      "Bash(git -C c:/xampp/htdocs/gestion_riesgos commit -m ' *)"
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos commit -m ' *)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos add .github/)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos push origin master)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos add resources/views/dashboard.blade.php resources/views/layouts/main.blade.php)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos add .github/workflows/ci.yml phpunit.xml)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos add -A)"
     ]
   }
 }
