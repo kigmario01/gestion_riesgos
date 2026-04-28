@@ -5,12 +5,13 @@ RUN apk add --no-cache \
     git curl zip unzip \
     libpng-dev libzip-dev libxml2-dev oniguruma-dev \
     freetype-dev libjpeg-turbo-dev \
+    postgresql-dev \
     nodejs npm
 
 # PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
-        pdo pdo_mysql \
+        pdo pdo_mysql pdo_pgsql pgsql \
         mbstring bcmath gd zip xml pcntl opcache
 
 # Composer
