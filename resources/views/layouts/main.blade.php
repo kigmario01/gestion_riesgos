@@ -138,7 +138,7 @@
         .notif-btn:hover { border-color: #4f8ef7; color: #4f8ef7; background: #eff6ff; }
 
         /* ══ CONTENT ══ */
-        .app-content { padding: 22px 24px; flex: 1; }
+        .app-content { padding: 22px 24px 40px; flex: 1; overflow-y: auto; }
 
         /* ══ PAGE HEADER ══ */
         .page-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 18px; }

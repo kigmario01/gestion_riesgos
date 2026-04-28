@@ -135,7 +135,7 @@
 </div>
 
 {{-- Bottom row --}}
-<div style="display:grid;grid-template-columns:1fr 320px;gap:18px;">
+<div style="display:grid;grid-template-columns:1fr 320px;gap:18px;padding-bottom:32px;">
 
     {{-- Bitácora --}}
     <div class="panel" style="margin-bottom:0;">
