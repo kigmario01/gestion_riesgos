@@ -5,3 +5,7 @@ node_modules
 vendor
 storage/logs/*.log
 public/build
+tests
+phpunit.xml
+README.md
+.dockerignore
