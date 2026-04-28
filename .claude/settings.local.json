@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(php artisan *)"
+      "Bash(php artisan *)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos status --short)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos show HEAD:.dockerignore)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos show HEAD:Dockerfile)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos show HEAD:Procfile)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos show HEAD:nixpacks.toml)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos add nixpacks.toml Dockerfile Procfile .dockerignore .env.example)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos log --oneline -3)",
+      "Bash(git -C c:/xampp/htdocs/gestion_riesgos commit -m ' *)"
     ]
   }
 }

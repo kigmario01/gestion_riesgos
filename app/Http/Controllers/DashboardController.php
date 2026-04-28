@@ -13,26 +13,31 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Conteo de riesgos por nivel
-        $totalCritico = EvaluacionRiesgo::where('nivel_riesgo', 'critico')->where('estado', 'activa')->count();
-        $totalAlto    = EvaluacionRiesgo::where('nivel_riesgo', 'alto')->where('estado', 'activa')->count();
-        $totalMedio   = EvaluacionRiesgo::where('nivel_riesgo', 'medio')->where('estado', 'activa')->count();
-        $totalBajo    = EvaluacionRiesgo::where('nivel_riesgo', 'bajo')->where('estado', 'activa')->count();
+        // Conteo de riesgos por nivel (1 sola query con groupBy)
+        $riesgosNivel = EvaluacionRiesgo::where('estado', 'activa')
+            ->groupBy('nivel_riesgo')
+            ->selectRaw('nivel_riesgo, COUNT(*) as total')
+            ->pluck('total', 'nivel_riesgo');
 
-        // Totales generales
+        $totalCritico = $riesgosNivel->get('critico', 0);
+        $totalAlto    = $riesgosNivel->get('alto', 0);
+        $totalMedio   = $riesgosNivel->get('medio', 0);
+        $totalBajo    = $riesgosNivel->get('bajo', 0);
+
+        // Totales generales (optimizados)
         $totalActivos   = ActivoTi::count();
         $totalAmenazas  = Amenaza::where('estado', 'activa')->count();
         $totalRiesgos   = EvaluacionRiesgo::where('estado', 'activa')->count();
-        $totalPlanes    = PlanMitigacion::where('estado', 'pendiente')->orWhere('estado', 'en_progreso')->count();
+        $totalPlanes    = PlanMitigacion::whereIn('estado', ['pendiente', 'en_progreso'])->count();
 
-        // Últimos riesgos registrados
+        // Últimos riesgos registrados (ya optimizado)
         $ultimosRiesgos = EvaluacionRiesgo::with(['activo', 'amenaza', 'evaluador'])
             ->where('estado', 'activa')
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
-        // Últimos registros de bitácora
+        // Últimos registros de bitácora (ya optimizado)
         $ultimaBitacora = BitacoraAuditoria::with('usuario')
             ->orderBy('created_at', 'desc')
             ->take(6)
