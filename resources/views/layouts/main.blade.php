@@ -19,86 +19,122 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: #f0f2f5; color: #1e293b; min-height: 100vh; display: flex; }
 
-        /* ══ SIDEBAR (icon-only 68px) ══ */
+        /* ══ SIDEBAR ══ */
         .sidebar {
-            width: 68px; min-height: 100vh;
-            background: #1b1f3b;
-            display: flex; flex-direction: column; align-items: center;
-            padding: 12px 0; position: fixed; top: 0; left: 0; z-index: 200;
+            width: 220px; height: 100vh;
+            background: rgba(15, 17, 35, 0.82);
+            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+            border-right: 1px solid rgba(255,255,255,0.06);
+            display: flex; flex-direction: column;
+            position: fixed; top: 0; left: 0; z-index: 200;
+            box-shadow: 4px 0 32px rgba(0,0,0,0.35);
+        }
+
+        /* Header con logo y nombre app */
+        .sidebar-header {
+            padding: 20px 18px 16px;
+            display: flex; align-items: center; gap: 11px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
         }
         .sidebar-logo {
-            width: 44px; height: 44px;
+            width: 38px; height: 38px; flex-shrink: 0;
             background: linear-gradient(135deg, #4f8ef7 0%, #6366f1 100%);
-            border-radius: 13px; display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 18px; margin-bottom: 18px; flex-shrink: 0;
-            box-shadow: 0 4px 16px rgba(99,102,241,0.45); text-decoration: none;
+            border-radius: 11px; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 16px;
+            box-shadow: 0 4px 14px rgba(99,102,241,0.45); text-decoration: none;
             transition: transform 0.15s;
         }
         .sidebar-logo:hover { transform: scale(1.06); }
-
-        .sidebar-nav { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; width: 100%; padding: 0 10px; }
-        .nav-sep { width: 36px; height: 1px; background: rgba(255,255,255,0.07); margin: 8px 0; }
-
-        .nav-icon {
-            width: 46px; height: 46px; border-radius: 13px;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.4); font-size: 15px; cursor: pointer;
-            transition: all 0.15s; text-decoration: none; position: relative;
+        .sidebar-app-name {
+            font-size: 13.5px; font-weight: 700; color: #fff;
+            letter-spacing: 0.2px; line-height: 1.2;
         }
-        .nav-icon:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8); }
-        .nav-icon.active { background: #4f8ef7; color: #fff; box-shadow: 0 4px 14px rgba(79,142,247,0.45); }
-        .nav-icon.active-soft { background: rgba(79,142,247,0.15); color: #93c5fd; }
-
-        .nav-icon::after {
-            content: attr(data-tip);
-            position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%);
-            background: #1b1f3b; color: #e2e8f0; font-size: 11.5px; font-weight: 500;
-            padding: 6px 11px; border-radius: 8px; white-space: nowrap;
-            pointer-events: none; opacity: 0; transition: opacity 0.15s;
-            border: 1px solid rgba(255,255,255,0.08); z-index: 999;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        .sidebar-app-sub {
+            font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 400;
         }
-        .nav-icon:hover::after { opacity: 1; }
 
-        .sidebar-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; padding-bottom: 6px; }
-        .user-avatar-sm {
-            width: 38px; height: 38px; border-radius: 50%;
+        /* Usuario */
+        .sidebar-user {
+            padding: 14px 18px;
+            display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+        .sidebar-user-avatar {
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
             background: linear-gradient(135deg, #4f8ef7, #8b5cf6);
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 12px; color: #fff; cursor: pointer;
-            border: 2px solid rgba(255,255,255,0.12); transition: all 0.15s;
-            position: relative;
+            font-weight: 700; font-size: 11px; color: #fff;
+            border: 2px solid rgba(255,255,255,0.15);
         }
-        .user-avatar-sm::after {
-            content: attr(data-tip);
-            position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%);
-            background: #1b1f3b; color: #e2e8f0; font-size: 11.5px; font-weight: 500;
-            padding: 6px 11px; border-radius: 8px; white-space: nowrap;
-            pointer-events: none; opacity: 0; transition: opacity 0.15s;
-            border: 1px solid rgba(255,255,255,0.08); z-index: 999;
+        .sidebar-user-name {
+            font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.88);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .user-avatar-sm:hover::after { opacity: 1; }
-        .user-avatar-sm:hover { border-color: rgba(255,255,255,0.3); }
-        .logout-icon-btn {
-            width: 38px; height: 38px; border-radius: 12px;
-            background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.14);
-            color: rgba(252,165,165,0.55); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 14px; transition: all 0.15s;
-            position: relative;
+        .sidebar-user-role {
+            font-size: 10px; color: rgba(255,255,255,0.35);
         }
-        .logout-icon-btn::after {
-            content: "Cerrar sesión";
-            position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%);
-            background: #1b1f3b; color: #e2e8f0; font-size: 11.5px; font-weight: 500;
-            padding: 6px 11px; border-radius: 8px; white-space: nowrap;
-            pointer-events: none; opacity: 0; transition: opacity 0.15s;
-            border: 1px solid rgba(255,255,255,0.08); z-index: 999;
+
+        /* Nav scrollable */
+        .sidebar-nav {
+            flex: 1; overflow-y: auto; overflow-x: hidden;
+            padding: 10px 12px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.08) transparent;
         }
-        .logout-icon-btn:hover { background: rgba(239,68,68,0.16); color: #fca5a5; }
-        .logout-icon-btn:hover::after { opacity: 1; }
+        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+
+        /* Etiqueta de sección */
+        .nav-section-label {
+            font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
+            color: rgba(255,255,255,0.25); text-transform: uppercase;
+            padding: 14px 8px 6px; display: block;
+        }
+        .nav-section-label:first-child { padding-top: 4px; }
+
+        /* Item de navegación */
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 12px; border-radius: 10px;
+            color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500;
+            text-decoration: none; cursor: pointer;
+            transition: all 0.15s; margin-bottom: 2px;
+            white-space: nowrap;
+        }
+        .nav-item i { width: 16px; text-align: center; font-size: 13px; flex-shrink: 0; }
+        .nav-item:hover {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.85);
+        }
+        .nav-item.active {
+            background: rgba(79,142,247,0.18);
+            color: #93c5fd;
+            font-weight: 600;
+        }
+        .nav-item.active i { color: #4f8ef7; }
+
+        /* Bottom: logout */
+        .sidebar-bottom {
+            padding: 12px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
+        }
+        .logout-btn {
+            display: flex; align-items: center; gap: 10px;
+            width: 100%; padding: 9px 12px; border-radius: 10px;
+            background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.12);
+            color: rgba(252,165,165,0.55); font-size: 12.5px; font-weight: 500;
+            cursor: pointer; font-family: inherit; transition: all 0.15s;
+            text-align: left;
+        }
+        .logout-btn i { width: 16px; text-align: center; font-size: 13px; }
+        .logout-btn:hover { background: rgba(239,68,68,0.14); color: #fca5a5; }
 
         /* ══ APP WRAPPER ══ */
-        .app-wrapper { margin-left: 68px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+        .app-wrapper { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
 
         /* ══ TOPBAR ══ */
         .topbar {
@@ -372,6 +408,7 @@
 
         /* ══ DARK MODE ══ */
         [data-theme="dark"] body { background:#0f1117; color:#e2e8f0; }
+        [data-theme="dark"] .sidebar { background: rgba(10,11,22,0.88); border-right-color: rgba(255,255,255,0.05); }
         [data-theme="dark"] .topbar { background:#161b2e; border-bottom-color:#2a2f45; }
         [data-theme="dark"] .topbar-title { color:#e2e8f0; }
         [data-theme="dark"] .topbar-date { color:#64748b; }
@@ -490,60 +527,79 @@
 <body>
 
 <aside class="sidebar">
-    <a href="{{ route('dashboard') }}" class="sidebar-logo"><i class="fas fa-shield-alt"></i></a>
 
+    {{-- Header --}}
+    <div class="sidebar-header">
+        <a href="{{ route('dashboard') }}" class="sidebar-logo"><i class="fas fa-shield-alt"></i></a>
+        <div>
+            <div class="sidebar-app-name">RiskGuard TI</div>
+            <div class="sidebar-app-sub">Gestión de Riesgos</div>
+        </div>
+    </div>
+
+    {{-- Usuario --}}
+    <div class="sidebar-user">
+        <div class="sidebar-user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
+        <div style="min-width:0;">
+            <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
+            <div class="sidebar-user-role">{{ auth()->user()->getRoleNames()->first() ?? 'Sin rol' }}</div>
+        </div>
+    </div>
+
+    {{-- Navegación con scroll --}}
     <nav class="sidebar-nav">
-        <a href="{{ route('dashboard') }}" class="nav-icon {{ request()->routeIs('dashboard') ? 'active' : '' }}" data-tip="Dashboard">
-            <i class="fas fa-chart-pie"></i>
+        <span class="nav-section-label">Principal</span>
+        <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <i class="fas fa-chart-pie"></i> Dashboard
         </a>
-        <a href="{{ route('matriz.index') }}" class="nav-icon {{ request()->routeIs('matriz.*') ? 'active' : '' }}" data-tip="Matriz de Riesgos">
-            <i class="fas fa-th"></i>
-        </a>
-
-        <div class="nav-sep"></div>
-
-        <a href="{{ route('activos.index') }}" class="nav-icon {{ request()->routeIs('activos.*') ? 'active' : '' }}" data-tip="Activos TI">
-            <i class="fas fa-server"></i>
-        </a>
-        <a href="{{ route('amenazas.index') }}" class="nav-icon {{ request()->routeIs('amenazas.*') ? 'active' : '' }}" data-tip="Amenazas">
-            <i class="fas fa-biohazard"></i>
-        </a>
-        <a href="{{ route('evaluaciones.index') }}" class="nav-icon {{ request()->routeIs('evaluaciones.index','evaluaciones.show','evaluaciones.edit') ? 'active' : '' }}" data-tip="Evaluaciones">
-            <i class="fas fa-search-plus"></i>
-        </a>
-        <a href="{{ route('evaluaciones.create') }}" class="nav-icon {{ request()->routeIs('evaluaciones.create') ? 'active' : '' }}" data-tip="Cálculo de Riesgo">
-            <i class="fas fa-calculator"></i>
-        </a>
-        <a href="{{ route('mitigacion.index') }}" class="nav-icon {{ request()->routeIs('mitigacion.*') ? 'active' : '' }}" data-tip="Mitigación">
-            <i class="fas fa-shield-virus"></i>
+        <a href="{{ route('matriz.index') }}" class="nav-item {{ request()->routeIs('matriz.*') ? 'active' : '' }}">
+            <i class="fas fa-th"></i> Matriz de Riesgos
         </a>
 
-        <div class="nav-sep"></div>
-
-        <a href="{{ route('bitacora.index') }}" class="nav-icon {{ request()->routeIs('bitacora.*') ? 'active' : '' }}" data-tip="Bitácora">
-            <i class="fas fa-clipboard-list"></i>
+        <span class="nav-section-label">Gestión</span>
+        <a href="{{ route('activos.index') }}" class="nav-item {{ request()->routeIs('activos.*') ? 'active' : '' }}">
+            <i class="fas fa-server"></i> Activos TI
+        </a>
+        <a href="{{ route('amenazas.index') }}" class="nav-item {{ request()->routeIs('amenazas.*') ? 'active' : '' }}">
+            <i class="fas fa-biohazard"></i> Amenazas
+        </a>
+        <a href="{{ route('evaluaciones.index') }}" class="nav-item {{ request()->routeIs('evaluaciones.index','evaluaciones.show','evaluaciones.edit') ? 'active' : '' }}">
+            <i class="fas fa-search-plus"></i> Evaluaciones
+        </a>
+        <a href="{{ route('evaluaciones.create') }}" class="nav-item {{ request()->routeIs('evaluaciones.create') ? 'active' : '' }}">
+            <i class="fas fa-calculator"></i> Cálculo de Riesgo
+        </a>
+        <a href="{{ route('mitigacion.index') }}" class="nav-item {{ request()->routeIs('mitigacion.*') ? 'active' : '' }}">
+            <i class="fas fa-shield-virus"></i> Mitigación
         </a>
 
-        <div class="nav-sep"></div>
+        <span class="nav-section-label">Auditoría</span>
+        <a href="{{ route('bitacora.index') }}" class="nav-item {{ request()->routeIs('bitacora.*') ? 'active' : '' }}">
+            <i class="fas fa-clipboard-list"></i> Bitácora
+        </a>
 
-        <a href="{{ route('usuarios.index') }}" class="nav-icon {{ request()->routeIs('usuarios.*') ? 'active' : '' }}" data-tip="Usuarios">
-            <i class="fas fa-users-cog"></i>
+        <span class="nav-section-label">Administración</span>
+        <a href="{{ route('usuarios.index') }}" class="nav-item {{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
+            <i class="fas fa-users-cog"></i> Usuarios
         </a>
-        <a href="{{ route('roles.index') }}" class="nav-icon {{ request()->routeIs('roles.*') ? 'active' : '' }}" data-tip="Control de Roles">
-            <i class="fas fa-user-shield"></i>
+        <a href="{{ route('roles.index') }}" class="nav-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+            <i class="fas fa-user-shield"></i> Control de Roles
         </a>
-        <a href="{{ route('respaldos.index') }}" class="nav-icon {{ request()->routeIs('respaldos.*') ? 'active' : '' }}" data-tip="Respaldo BD">
-            <i class="fas fa-database"></i>
+        <a href="{{ route('respaldos.index') }}" class="nav-item {{ request()->routeIs('respaldos.*') ? 'active' : '' }}">
+            <i class="fas fa-database"></i> Respaldo BD
         </a>
     </nav>
 
+    {{-- Logout --}}
     <div class="sidebar-bottom">
-        <div class="user-avatar-sm" data-tip="{{ auth()->user()->name }}">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="logout-icon-btn"><i class="fas fa-sign-out-alt"></i></button>
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </button>
         </form>
     </div>
+
 </aside>
 
 <div class="app-wrapper">
