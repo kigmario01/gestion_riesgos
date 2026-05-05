@@ -44,4 +44,4 @@ COPY docker/supervisord.conf /etc/supervisord.conf
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-c", "php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan migrate --force && php artisan db:seed --force && supervisord -c /etc/supervisord.conf"]
+CMD ["/bin/sh", "-c", "php artisan config:cache && php artisan route:clear && php artisan route:cache && php artisan view:cache && php artisan migrate --force && php artisan db:seed --force && supervisord -c /etc/supervisord.conf"]
