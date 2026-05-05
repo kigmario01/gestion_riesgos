@@ -22,7 +22,44 @@
 </style>
 @endpush
 
+@push('styles')
+<style>
+.guia-iso{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.guia-iso-header{padding:13px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.guia-iso-header:hover{background:rgba(255,255,255,0.4);}
+.guia-iso-icon{width:34px;height:34px;border-radius:9px;background:#ffedd5;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.guia-iso-title{font-size:13px;font-weight:700;color:#c2410c;flex:1;}
+.guia-iso-ref{font-size:10px;font-weight:600;background:#ffedd5;color:#ea580c;padding:2px 9px;border-radius:20px;}
+.guia-iso-body{padding:4px 18px 16px 18px;border-top:1px solid #fed7aa;}
+.guia-paso{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;}
+.guia-num{min-width:22px;height:22px;border-radius:50%;background:#ffedd5;color:#ea580c;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.guia-nota{margin-top:10px;padding:9px 13px;background:rgba(255,255,255,0.65);border-radius:8px;font-size:11.5px;color:#475569;display:flex;gap:8px;}
+</style>
+@endpush
+
 @section('content')
+
+<div class="guia-iso">
+    <div class="guia-iso-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'">
+        <div class="guia-iso-icon"><i class="fas fa-question-circle" style="color:#ea580c;font-size:14px;"></i></div>
+        <div class="guia-iso-title">Cómo completar correctamente el cálculo de riesgo</div>
+        <span class="guia-iso-ref">ISO 27001 — Evaluación de Riesgo</span>
+        <i class="fas fa-chevron-up" style="color:#ea580c;font-size:11px;"></i>
+    </div>
+    <div class="guia-iso-body">
+        <div class="guia-paso"><div class="guia-num">1</div><div><strong>Activo TI:</strong> Selecciona el activo que estás evaluando. Si no aparece en la lista, primero regístralo en el módulo de Activos TI.</div></div>
+        <div class="guia-paso"><div class="guia-num">2</div><div><strong>Amenaza:</strong> Selecciona la amenaza específica que podría afectar a ese activo. Puedes crear múltiples evaluaciones del mismo activo con diferentes amenazas.</div></div>
+        <div class="guia-paso"><div class="guia-num">3</div><div><strong>Impacto:</strong> ¿Qué consecuencias tendría si la amenaza se materializa sobre este activo? Considera pérdida económica, reputacional y operacional. <em>1 = insignificante, 5 = catastrófico</em>.</div></div>
+        <div class="guia-paso"><div class="guia-num">4</div><div><strong>Probabilidad:</strong> ¿Qué tan probable es que ocurra? Considera el historial, el entorno y las vulnerabilidades conocidas. <em>1 = muy improbable, 5 = muy probable o ya ocurrió</em>.</div></div>
+        <div class="guia-paso"><div class="guia-num">5</div><div><strong>Vulnerabilidades:</strong> Documenta las debilidades específicas que hacen posible que la amenaza explote el activo (ej. "contraseñas débiles", "sin cifrado en reposo").</div></div>
+        <div class="guia-paso"><div class="guia-num">6</div><div><strong>Controles existentes:</strong> Lista los controles que ya tienes implementados. Esto demuestra madurez del SGSI y puede justificar una probabilidad menor.</div></div>
+        <div class="guia-nota">
+            <i class="fas fa-lightbulb" style="color:#f59e0b;flex-shrink:0;margin-top:1px;"></i>
+            <span>El sistema calcula automáticamente el valor (Impacto × Probabilidad) y el nivel de riesgo en tiempo real. Riesgos <strong>Alto o Crítico</strong> deben tener un Plan de Mitigación creado inmediatamente después.</span>
+        </div>
+    </div>
+</div>
+
 <div class="form-card">
     <div class="form-header">
         <h2><i class="fas fa-search-plus"></i> Calcular nivel de riesgo — ISO 27001</h2>

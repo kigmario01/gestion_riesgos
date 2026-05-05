@@ -17,7 +17,55 @@
 </style>
 @endpush
 
+@push('styles')
+<style>
+.guia-iso{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.guia-iso-header{padding:13px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.guia-iso-header:hover{background:rgba(255,255,255,0.4);}
+.guia-iso-icon{width:34px;height:34px;border-radius:9px;background:#ffedd5;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.guia-iso-title{font-size:13px;font-weight:700;color:#c2410c;flex:1;}
+.guia-iso-ref{font-size:10px;font-weight:600;background:#ffedd5;color:#ea580c;padding:2px 9px;border-radius:20px;}
+.guia-iso-body{padding:4px 18px 16px 18px;border-top:1px solid #fed7aa;}
+.guia-paso{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;}
+.guia-num{min-width:22px;height:22px;border-radius:50%;background:#ffedd5;color:#ea580c;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.guia-tabla-niveles{width:100%;border-collapse:collapse;margin:10px 0;font-size:11.5px;}
+.guia-tabla-niveles th{padding:6px 10px;background:#ffedd5;color:#c2410c;font-weight:700;text-align:left;}
+.guia-tabla-niveles td{padding:6px 10px;border-bottom:1px solid #fed7aa;}
+.guia-nota{margin-top:10px;padding:9px 13px;background:rgba(255,255,255,0.65);border-radius:8px;font-size:11.5px;color:#475569;display:flex;gap:8px;}
+</style>
+@endpush
+
 @section('content')
+
+<div class="guia-iso">
+    <div class="guia-iso-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'; this.querySelector('.guia-chevron').style.transform=this.nextElementSibling.style.display===''?'rotate(180deg)':''">
+        <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#ea580c;font-size:14px;"></i></div>
+        <div class="guia-iso-title">¿Cómo se analiza y evalúa el riesgo según ISO 27001?</div>
+        <span class="guia-iso-ref">ISO 27001 — Fases 4.3 y 4.4 · Análisis y Evaluación</span>
+        <i class="fas fa-chevron-up guia-chevron" style="color:#ea580c;font-size:11px;transition:transform .2s;"></i>
+    </div>
+    <div class="guia-iso-body">
+        <p style="font-size:12.5px;color:#9a3412;margin-bottom:12px;line-height:1.6;">
+            El análisis de riesgo combina el <strong>impacto potencial</strong> de una amenaza sobre un activo con la <strong>probabilidad</strong> de que ocurra. El resultado es un valor numérico que determina la urgencia de actuar. ISO 27001 requiere documentar cada evaluación con su justificación.
+        </p>
+        <div class="guia-paso"><div class="guia-num">1</div><div><strong>Selecciona el activo</strong> que deseas evaluar y la <strong>amenaza</strong> específica que podría afectarlo (puedes hacer múltiples evaluaciones del mismo activo con distintas amenazas).</div></div>
+        <div class="guia-paso"><div class="guia-num">2</div><div><strong>Impacto (1–5):</strong> ¿Qué tan grave sería el daño si la amenaza se materializara? 1 = insignificante / 5 = pérdida financiera insoportable para el negocio.</div></div>
+        <div class="guia-paso"><div class="guia-num">3</div><div><strong>Probabilidad (1–5):</strong> ¿Con qué frecuencia podría ocurrir este evento? 1 = muy rara vez / 5 = ha ocurrido recientemente o es muy probable.</div></div>
+        <div class="guia-paso"><div class="guia-num">4</div><div><strong>Valor de riesgo = Impacto × Probabilidad.</strong> El sistema lo calcula automáticamente y determina el nivel según esta escala:</div></div>
+        <table class="guia-tabla-niveles">
+            <tr><th>Valor</th><th>Nivel</th><th>Acción requerida</th></tr>
+            <tr><td><strong style="color:#dc2626;">16–25</strong></td><td><span style="background:#fef2f2;color:#dc2626;padding:1px 8px;border-radius:10px;font-weight:700;">CRÍTICO</span></td><td>Acción inmediata obligatoria. Escalar a dirección.</td></tr>
+            <tr><td><strong style="color:#ea580c;">10–15</strong></td><td><span style="background:#fff7ed;color:#ea580c;padding:1px 8px;border-radius:10px;font-weight:700;">ALTO</span></td><td>Plan de mitigación en el corto plazo (&lt; 30 días).</td></tr>
+            <tr><td><strong style="color:#ca8a04;">5–9</strong></td><td><span style="background:#fefce8;color:#ca8a04;padding:1px 8px;border-radius:10px;font-weight:700;">MEDIO</span></td><td>Plan de mitigación a mediano plazo (&lt; 90 días).</td></tr>
+            <tr><td><strong style="color:#16a34a;">1–4</strong></td><td><span style="background:#f0fdf4;color:#16a34a;padding:1px 8px;border-radius:10px;font-weight:700;">BAJO</span></td><td>Monitorear periódicamente. Puede aceptarse.</td></tr>
+        </table>
+        <div class="guia-paso"><div class="guia-num">5</div><div><strong>Documenta vulnerabilidades y controles existentes.</strong> Esto es evidencia auditada de que conoces el riesgo y estás gestionándolo activamente.</div></div>
+        <div class="guia-nota">
+            <i class="fas fa-lightbulb" style="color:#f59e0b;flex-shrink:0;margin-top:1px;"></i>
+            <span>Todo riesgo con nivel <strong>Alto o Crítico</strong> debe tener un Plan de Mitigación asociado en el módulo de Mitigación. La evaluación sin plan de tratamiento no cumple con ISO 27001.</span>
+        </div>
+    </div>
+</div>
 
 @php
     $grouped  = $evaluaciones->groupBy('nivel_riesgo');

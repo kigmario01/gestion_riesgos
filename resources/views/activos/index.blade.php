@@ -29,7 +29,45 @@
 </style>
 @endpush
 
+@push('styles')
+<style>
+.guia-iso{background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.guia-iso-header{padding:13px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.guia-iso-header:hover{background:rgba(255,255,255,0.4);}
+.guia-iso-icon{width:34px;height:34px;border-radius:9px;background:#dbeafe;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.guia-iso-title{font-size:13px;font-weight:700;color:#1d4ed8;flex:1;}
+.guia-iso-ref{font-size:10px;font-weight:600;background:#dbeafe;color:#3b82f6;padding:2px 9px;border-radius:20px;}
+.guia-iso-body{padding:4px 18px 16px 18px;border-top:1px solid #bfdbfe;}
+.guia-paso{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;}
+.guia-num{min-width:22px;height:22px;border-radius:50%;background:#dbeafe;color:#3b82f6;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.guia-nota{margin-top:10px;padding:9px 13px;background:rgba(255,255,255,0.65);border-radius:8px;font-size:11.5px;color:#475569;display:flex;gap:8px;}
+</style>
+@endpush
+
 @section('content')
+
+<div class="guia-iso">
+    <div class="guia-iso-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'; this.querySelector('.guia-chevron').style.transform=this.nextElementSibling.style.display===''?'rotate(180deg)':''">
+        <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#3b82f6;font-size:14px;"></i></div>
+        <div class="guia-iso-title">¿Qué es el Inventario de Activos TI y por qué es importante?</div>
+        <span class="guia-iso-ref">ISO 27001 — Fase 4.1</span>
+        <i class="fas fa-chevron-up guia-chevron" style="color:#3b82f6;font-size:11px;transition:transform .2s;"></i>
+    </div>
+    <div class="guia-iso-body">
+        <p style="font-size:12.5px;color:#1e40af;margin-bottom:12px;line-height:1.6;">
+            El inventario de activos es el <strong>punto de partida del SGSI</strong>. No puedes proteger lo que no conoces. ISO 27001 exige identificar todos los activos de información de la organización, clasificarlos y asignarles un responsable.
+        </p>
+        <div class="guia-paso"><div class="guia-num">1</div><div><strong>Identifica</strong> todos los recursos de la organización: servidores, aplicaciones, bases de datos, redes, personas clave, instalaciones físicas y servicios contratados.</div></div>
+        <div class="guia-paso"><div class="guia-num">2</div><div><strong>Clasifica el tipo</strong> de activo: Hardware, Software, Red, Datos, Servicios, Personas o Instalaciones. Esto determina qué controles aplican.</div></div>
+        <div class="guia-paso"><div class="guia-num">3</div><div><strong>Asigna la criticidad</strong> según el impacto si ese activo fallara: Baja (interrupción mínima) → Media → Alta → Crítica (parada total del negocio).</div></div>
+        <div class="guia-paso"><div class="guia-num">4</div><div><strong>Designa un responsable</strong> (propietario del activo) que será quien tome decisiones sobre él y responda ante incidentes.</div></div>
+        <div class="guia-paso"><div class="guia-num">5</div><div><strong>Mantén actualizado</strong> el inventario. Un activo que sale de producción o cambia de responsable debe actualizarse de inmediato.</div></div>
+        <div class="guia-nota">
+            <i class="fas fa-lightbulb" style="color:#f59e0b;flex-shrink:0;margin-top:1px;"></i>
+            <span>Las evaluaciones de riesgo del siguiente módulo usan estos activos como base. Sin un inventario completo, el análisis de riesgos estará incompleto. Empieza por los activos más críticos para el negocio.</span>
+        </div>
+    </div>
+</div>
 
 @php
     $tipoIcon = [

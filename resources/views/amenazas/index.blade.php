@@ -28,7 +28,45 @@
 </style>
 @endpush
 
+@push('styles')
+<style>
+.guia-iso{background:#fdf4ff;border:1px solid #e9d5ff;border-radius:12px;margin-bottom:20px;overflow:hidden;}
+.guia-iso-header{padding:13px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.guia-iso-header:hover{background:rgba(255,255,255,0.4);}
+.guia-iso-icon{width:34px;height:34px;border-radius:9px;background:#f3e8ff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.guia-iso-title{font-size:13px;font-weight:700;color:#7e22ce;flex:1;}
+.guia-iso-ref{font-size:10px;font-weight:600;background:#f3e8ff;color:#9333ea;padding:2px 9px;border-radius:20px;}
+.guia-iso-body{padding:4px 18px 16px 18px;border-top:1px solid #e9d5ff;}
+.guia-paso{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;}
+.guia-num{min-width:22px;height:22px;border-radius:50%;background:#f3e8ff;color:#9333ea;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.guia-nota{margin-top:10px;padding:9px 13px;background:rgba(255,255,255,0.65);border-radius:8px;font-size:11.5px;color:#475569;display:flex;gap:8px;}
+</style>
+@endpush
+
 @section('content')
+
+<div class="guia-iso">
+    <div class="guia-iso-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'; this.querySelector('.guia-chevron').style.transform=this.nextElementSibling.style.display===''?'rotate(180deg)':''">
+        <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#9333ea;font-size:14px;"></i></div>
+        <div class="guia-iso-title">¿Qué es el Catálogo de Amenazas y cómo se usa en ISO 27001?</div>
+        <span class="guia-iso-ref">ISO 27001 — Fase 4.2 · Catálogo de Amenazas</span>
+        <i class="fas fa-chevron-up guia-chevron" style="color:#9333ea;font-size:11px;transition:transform .2s;"></i>
+    </div>
+    <div class="guia-iso-body">
+        <p style="font-size:12.5px;color:#6b21a8;margin-bottom:12px;line-height:1.6;">
+            ISO 27001 requiere identificar las <strong>amenazas que pueden afectar a tus activos</strong>. El catálogo de amenazas es la lista de todos los eventos adversos posibles clasificados por su naturaleza. Este sistema incluye las 43 amenazas estándar de la norma.
+        </p>
+        <div class="guia-paso"><div class="guia-num">1</div><div><strong>Accidental:</strong> Errores involuntarios de usuarios, fallos de hardware, cortes de suministro. Ocurren sin intención maliciosa.</div></div>
+        <div class="guia-paso"><div class="guia-num">2</div><div><strong>Deliberada:</strong> Ataques intencionados — ransomware, phishing, acceso no autorizado, espionaje. Son las más peligrosas y de mayor impacto.</div></div>
+        <div class="guia-paso"><div class="guia-num">3</div><div><strong>Ambiental:</strong> Desastres naturales (inundaciones, terremotos, incendios) que afectan la disponibilidad física de los activos.</div></div>
+        <div class="guia-paso"><div class="guia-num">4</div><div><strong>Técnica:</strong> Vulnerabilidades intrínsecas al software o hardware — bugs, obsolescencia, incompatibilidades.</div></div>
+        <div class="guia-paso"><div class="guia-num">5</div><div><strong>Humana:</strong> Actos de personal interno — uso indebido de privilegios, negligencia, fuga de información.</div></div>
+        <div class="guia-nota">
+            <i class="fas fa-lightbulb" style="color:#f59e0b;flex-shrink:0;margin-top:1px;"></i>
+            <span>Las amenazas de este catálogo se vinculan a los activos en el módulo de <strong>Evaluaciones de Riesgo</strong>. Cuantas más amenazas relevantes identifiques aquí, más preciso será tu análisis de riesgo.</span>
+        </div>
+    </div>
+</div>
 
 @php
     $catIcon = [
