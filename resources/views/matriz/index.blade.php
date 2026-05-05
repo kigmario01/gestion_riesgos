@@ -37,6 +37,46 @@
 
 @section('content')
 
+<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;margin-bottom:20px;overflow:hidden;">
+    <div style="padding:13px 18px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'':'none';this.querySelector('.gch').style.transform=b.style.display===''?'rotate(180deg)':''">
+        <div style="width:34px;height:34px;border-radius:9px;background:#fee2e2;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="fas fa-book-open" style="color:#dc2626;font-size:14px;"></i>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:#b91c1c;flex:1;">¿Cómo interpretar la Matriz de Riesgos 5×5 de ISO 27001?</div>
+        <span style="font-size:10px;font-weight:600;background:#fee2e2;color:#dc2626;padding:2px 9px;border-radius:20px;">ISO 27001 — Fase 4.4 · Evaluación del Riesgo</span>
+        <i class="fas fa-chevron-up gch" style="color:#dc2626;font-size:11px;transition:transform .2s;"></i>
+    </div>
+    <div style="padding:4px 18px 16px 18px;border-top:1px solid #fecaca;">
+        <p style="font-size:12.5px;color:#991b1b;margin-bottom:12px;line-height:1.6;">
+            La matriz de riesgos es la <strong>herramienta visual principal</strong> del SGSI. Cruza el eje de Impacto (cuánto daño causa) con el eje de Probabilidad (qué tan probable es), generando una cuadrícula de 5×5 = 25 celdas que clasifica cada riesgo en su nivel correspondiente.
+        </p>
+        <div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;">
+            <span style="min-width:22px;height:22px;border-radius:50%;background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span>
+            <div><strong>Eje Y (vertical) = Impacto:</strong> Cuánto daño causaría la amenaza al materializarse. Va de 1 (insignificante) a 5 (catastrófico para el negocio).</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;">
+            <span style="min-width:22px;height:22px;border-radius:50%;background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span>
+            <div><strong>Eje X (horizontal) = Probabilidad:</strong> Qué tan probable es que la amenaza ocurra. Va de 1 (muy poco probable) a 5 (prácticamente seguro).</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;">
+            <span style="min-width:22px;height:22px;border-radius:50%;background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</span>
+            <div><strong>Cada celda muestra el número de riesgos</strong> que caen en esa combinación. Los colores indican el nivel: <span style="background:#fee2e2;color:#dc2626;padding:1px 7px;border-radius:8px;font-size:11px;font-weight:700;">CRÍTICO ≥16</span> <span style="background:#fff7ed;color:#ea580c;padding:1px 7px;border-radius:8px;font-size:11px;font-weight:700;">ALTO ≥10</span> <span style="background:#fefce8;color:#ca8a04;padding:1px 7px;border-radius:8px;font-size:11px;font-weight:700;">MEDIO ≥5</span> <span style="background:#f0fdf4;color:#16a34a;padding:1px 7px;border-radius:8px;font-size:11px;font-weight:700;">BAJO &lt;5</span></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;">
+            <span style="min-width:22px;height:22px;border-radius:50%;background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</span>
+            <div><strong>La zona roja (esquina superior derecha)</strong> concentra los riesgos más urgentes. ISO 27001 exige que la dirección fije un <em>umbral de riesgo aceptable</em> — todo lo que esté por encima requiere tratamiento.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12.5px;color:#374151;line-height:1.5;">
+            <span style="min-width:22px;height:22px;border-radius:50%;background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</span>
+            <div><strong>El objetivo del SGSI</strong> es que con el tiempo, gracias a los planes de mitigación, los puntos migren hacia la zona verde (bajo impacto, baja probabilidad).</div>
+        </div>
+        <div style="margin-top:10px;padding:9px 13px;background:rgba(255,255,255,0.65);border-radius:8px;font-size:11.5px;color:#475569;display:flex;gap:8px;">
+            <i class="fas fa-lightbulb" style="color:#f59e0b;flex-shrink:0;margin-top:1px;"></i>
+            <span>Esta matriz se actualiza en tiempo real con las evaluaciones registradas. Para moverla hacia zonas más seguras, implementa los planes de mitigación del módulo correspondiente y reevalúa los riesgos periódicamente.</span>
+        </div>
+    </div>
+</div>
+
 <div class="stats-grid">
     <div class="stat-card critico">
         <div class="stat-value c-critico">{{ $criticos->count() }}</div>
