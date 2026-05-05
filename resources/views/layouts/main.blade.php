@@ -589,12 +589,40 @@
         @endcan
         @endif
 
-        @can('bitacora.ver')
+        @if(auth()->user()->canAny(['bitacora.ver','reportes.generar']))
         <span class="nav-section-label">Auditoría</span>
+        @can('bitacora.ver')
         <a href="{{ route('bitacora.index') }}" class="nav-item {{ request()->routeIs('bitacora.*') ? 'active' : '' }}">
             <i class="fas fa-clipboard-list"></i> Bitácora
         </a>
         @endcan
+        @can('reportes.generar')
+        <a href="#reportesMenu" class="nav-item {{ request()->is('reportes/*') ? 'active' : '' }}" onclick="toggleReportes(event)" id="reportesToggle">
+            <i class="fas fa-file-pdf"></i> Reportes PDF
+            <i class="fas fa-chevron-down" id="reportesChevron" style="margin-left:auto;font-size:9px;transition:transform 0.2s;"></i>
+        </a>
+        <div id="reportesMenu" style="display:{{ request()->is('reportes/*') ? 'block' : 'none' }};padding-left:14px;">
+            <a href="{{ route('reportes.ejecutivo') }}" class="nav-item" style="font-size:12px;padding:7px 12px;" target="_blank">
+                <i class="fas fa-chart-bar" style="font-size:11px;"></i> Ejecutivo
+            </a>
+            <a href="{{ route('reportes.activos') }}" class="nav-item" style="font-size:12px;padding:7px 12px;" target="_blank">
+                <i class="fas fa-server" style="font-size:11px;"></i> Activos TI
+            </a>
+            <a href="{{ route('reportes.amenazas') }}" class="nav-item" style="font-size:12px;padding:7px 12px;" target="_blank">
+                <i class="fas fa-biohazard" style="font-size:11px;"></i> Amenazas
+            </a>
+            <a href="{{ route('reportes.evaluaciones') }}" class="nav-item" style="font-size:12px;padding:7px 12px;" target="_blank">
+                <i class="fas fa-search-plus" style="font-size:11px;"></i> Evaluaciones
+            </a>
+            <a href="{{ route('reportes.mitigacion') }}" class="nav-item" style="font-size:12px;padding:7px 12px;" target="_blank">
+                <i class="fas fa-shield-virus" style="font-size:11px;"></i> Mitigación
+            </a>
+            <a href="{{ route('reportes.bitacora') }}" class="nav-item" style="font-size:12px;padding:7px 12px;" target="_blank">
+                <i class="fas fa-clipboard-list" style="font-size:11px;"></i> Bitácora
+            </a>
+        </div>
+        @endcan
+        @endif
 
         @if(auth()->user()->canAny(['usuarios.ver','roles.ver','basedatos.ver']))
         <span class="nav-section-label">Administración</span>
@@ -686,6 +714,16 @@ function updateThemeIcon(t) {
     if (btn) btn.innerHTML = t === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
 }
 updateThemeIcon(document.documentElement.getAttribute('data-theme'));
+
+function toggleReportes(e) {
+    e.preventDefault();
+    var menu = document.getElementById('reportesMenu');
+    var chevron = document.getElementById('reportesChevron');
+    if (!menu) return;
+    var open = menu.style.display !== 'none';
+    menu.style.display = open ? 'none' : 'block';
+    if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
+}
 </script>
 </body>
 </html>

@@ -21,7 +21,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
             'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar', 'mitigacion.aprobar',
             'matriz.ver', 'matriz.exportar',
-            'reportes.ver', 'reportes.exportar',
+            'reportes.generar',
             'bitacora.ver',
             'evidencias.ver', 'evidencias.aprobar',
             'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
@@ -39,7 +39,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $po->syncPermissions([
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
             'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
-            'reportes.ver', 'reportes.exportar', 'bitacora.ver',
+            'reportes.generar', 'bitacora.ver',
             'usuarios.ver', 'roles.ver', 'evidencias.ver',
         ]);
 
@@ -47,14 +47,14 @@ class RolesAndPermissionsSeeder extends Seeder
         $sm->syncPermissions([
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
             'mitigacion.ver', 'matriz.ver', 'matriz.exportar',
-            'reportes.ver', 'reportes.exportar', 'bitacora.ver',
+            'reportes.generar', 'bitacora.ver',
             'usuarios.ver', 'roles.ver',
         ]);
 
         $frontend = Role::firstOrCreate(['name' => 'frontend', 'guard_name' => 'web']);
         $frontend->syncPermissions([
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
-            'mitigacion.ver', 'matriz.ver', 'matriz.exportar', 'reportes.ver', 'reportes.exportar',
+            'mitigacion.ver', 'matriz.ver', 'matriz.exportar', 'reportes.generar',
         ]);
 
         $backend = Role::firstOrCreate(['name' => 'backend', 'guard_name' => 'web']);
@@ -64,7 +64,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'amenazas.ver', 'amenazas.crear', 'amenazas.editar', 'amenazas.eliminar',
             'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
             'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar', 'mitigacion.aprobar',
-            'matriz.ver', 'matriz.exportar', 'reportes.ver', 'reportes.exportar',
+            'matriz.ver', 'matriz.exportar', 'reportes.generar',
             'bitacora.ver',
             'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
             'roles.ver', 'roles.editar',
@@ -75,7 +75,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $bd->syncPermissions([
             'dashboard.ver', 'activos.ver', 'activos.crear', 'activos.editar',
             'amenazas.ver', 'amenazas.crear', 'evaluaciones.ver', 'mitigacion.ver',
-            'matriz.ver', 'matriz.exportar', 'reportes.ver', 'usuarios.ver',
+            'matriz.ver', 'matriz.exportar', 'reportes.generar', 'usuarios.ver',
             'basedatos.ver', 'basedatos.configurar', 'basedatos.respaldar',
         ]);
 
@@ -83,7 +83,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $auditoria->syncPermissions([
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
             'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
-            'reportes.ver', 'reportes.exportar', 'bitacora.ver',
+            'reportes.generar', 'bitacora.ver',
             'evidencias.ver', 'evidencias.aprobar',
             'usuarios.ver', 'roles.ver',
         ]);
