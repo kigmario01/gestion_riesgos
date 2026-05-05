@@ -43,6 +43,7 @@ class UsuarioController extends Controller
         ]);
 
         $usuario->assignRole($request->role);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         BitacoraAuditoria::registrar(
             'crear', 'users',
@@ -91,6 +92,7 @@ class UsuarioController extends Controller
 
         $usuario->update($datos);
         $usuario->syncRoles([$request->role]);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         BitacoraAuditoria::registrar(
             'editar', 'users',

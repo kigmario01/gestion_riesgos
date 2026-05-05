@@ -548,46 +548,72 @@
 
     {{-- Navegación con scroll --}}
     <nav class="sidebar-nav">
+        @can('dashboard.ver')
         <span class="nav-section-label">Principal</span>
         <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="fas fa-chart-pie"></i> Dashboard
         </a>
+        @endcan
+        @can('matriz.ver')
         <a href="{{ route('matriz.index') }}" class="nav-item {{ request()->routeIs('matriz.*') ? 'active' : '' }}">
             <i class="fas fa-th"></i> Matriz de Riesgos
         </a>
+        @endcan
 
+        @if(auth()->user()->canAny(['activos.ver','amenazas.ver','evaluaciones.ver','mitigacion.ver']))
         <span class="nav-section-label">Gestión</span>
+        @can('activos.ver')
         <a href="{{ route('activos.index') }}" class="nav-item {{ request()->routeIs('activos.*') ? 'active' : '' }}">
             <i class="fas fa-server"></i> Activos TI
         </a>
+        @endcan
+        @can('amenazas.ver')
         <a href="{{ route('amenazas.index') }}" class="nav-item {{ request()->routeIs('amenazas.*') ? 'active' : '' }}">
             <i class="fas fa-biohazard"></i> Amenazas
         </a>
+        @endcan
+        @can('evaluaciones.ver')
         <a href="{{ route('evaluaciones.index') }}" class="nav-item {{ request()->routeIs('evaluaciones.index','evaluaciones.show','evaluaciones.edit') ? 'active' : '' }}">
             <i class="fas fa-search-plus"></i> Evaluaciones
         </a>
+        @endcan
+        @can('evaluaciones.calcular')
         <a href="{{ route('evaluaciones.create') }}" class="nav-item {{ request()->routeIs('evaluaciones.create') ? 'active' : '' }}">
             <i class="fas fa-calculator"></i> Cálculo de Riesgo
         </a>
+        @endcan
+        @can('mitigacion.ver')
         <a href="{{ route('mitigacion.index') }}" class="nav-item {{ request()->routeIs('mitigacion.*') ? 'active' : '' }}">
             <i class="fas fa-shield-virus"></i> Mitigación
         </a>
+        @endcan
+        @endif
 
+        @can('bitacora.ver')
         <span class="nav-section-label">Auditoría</span>
         <a href="{{ route('bitacora.index') }}" class="nav-item {{ request()->routeIs('bitacora.*') ? 'active' : '' }}">
             <i class="fas fa-clipboard-list"></i> Bitácora
         </a>
+        @endcan
 
+        @if(auth()->user()->canAny(['usuarios.ver','roles.ver','basedatos.ver']))
         <span class="nav-section-label">Administración</span>
+        @can('usuarios.ver')
         <a href="{{ route('usuarios.index') }}" class="nav-item {{ request()->routeIs('usuarios.*') ? 'active' : '' }}">
             <i class="fas fa-users-cog"></i> Usuarios
         </a>
+        @endcan
+        @can('roles.ver')
         <a href="{{ route('roles.index') }}" class="nav-item {{ request()->routeIs('roles.*') ? 'active' : '' }}">
             <i class="fas fa-user-shield"></i> Control de Roles
         </a>
+        @endcan
+        @can('basedatos.ver')
         <a href="{{ route('respaldos.index') }}" class="nav-item {{ request()->routeIs('respaldos.*') ? 'active' : '' }}">
             <i class="fas fa-database"></i> Respaldo BD
         </a>
+        @endcan
+        @endif
     </nav>
 
     {{-- Logout --}}
