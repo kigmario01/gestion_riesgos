@@ -115,6 +115,9 @@ class UsuarioController extends Controller
             $usuario->id, $usuario->toArray()
         );
 
+        // Desvincula registros de bitácora antes de eliminar para evitar FK violation
+        \DB::table('bitacora_auditoria')->where('user_id', $usuario->id)->update(['user_id' => null]);
+
         $usuario->delete();
 
         return redirect()->route('usuarios.index')
