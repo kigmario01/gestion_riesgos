@@ -27,30 +27,31 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // ── Activos TI ──
-    Route::middleware('permission:activos.ver')->group(function () {
-        Route::get('activos',          [ActivoTiController::class, 'index'])->name('activos.index');
-        Route::get('activos/{activo}', [ActivoTiController::class, 'show'])->name('activos.show');
-    });
+    // static routes must be registered before wildcard {activo}
     Route::middleware('permission:activos.crear')->group(function () {
-        Route::get('activos/create',         [ActivoTiController::class, 'create'])->name('activos.create');
-        Route::post('activos',               [ActivoTiController::class, 'store'])->name('activos.store');
+        Route::get('activos/create',        [ActivoTiController::class, 'create'])->name('activos.create');
+        Route::post('activos',              [ActivoTiController::class, 'store'])->name('activos.store');
+    });
+    Route::middleware('permission:activos.ver')->group(function () {
+        Route::get('activos',               [ActivoTiController::class, 'index'])->name('activos.index');
+        Route::get('activos/{activo}',      [ActivoTiController::class, 'show'])->name('activos.show');
     });
     Route::middleware('permission:activos.editar')->group(function () {
-        Route::get('activos/{activo}/edit',  [ActivoTiController::class, 'edit'])->name('activos.edit');
-        Route::put('activos/{activo}',       [ActivoTiController::class, 'update'])->name('activos.update');
-        Route::patch('activos/{activo}',     [ActivoTiController::class, 'update']);
+        Route::get('activos/{activo}/edit', [ActivoTiController::class, 'edit'])->name('activos.edit');
+        Route::put('activos/{activo}',      [ActivoTiController::class, 'update'])->name('activos.update');
+        Route::patch('activos/{activo}',    [ActivoTiController::class, 'update']);
     });
     Route::delete('activos/{activo}', [ActivoTiController::class, 'destroy'])
         ->middleware('permission:activos.eliminar')->name('activos.destroy');
 
     // ── Amenazas ──
-    Route::middleware('permission:amenazas.ver')->group(function () {
-        Route::get('amenazas',           [AmenazaController::class, 'index'])->name('amenazas.index');
-        Route::get('amenazas/{amenaza}', [AmenazaController::class, 'show'])->name('amenazas.show');
-    });
     Route::middleware('permission:amenazas.crear')->group(function () {
-        Route::get('amenazas/create',        [AmenazaController::class, 'create'])->name('amenazas.create');
-        Route::post('amenazas',              [AmenazaController::class, 'store'])->name('amenazas.store');
+        Route::get('amenazas/create',         [AmenazaController::class, 'create'])->name('amenazas.create');
+        Route::post('amenazas',               [AmenazaController::class, 'store'])->name('amenazas.store');
+    });
+    Route::middleware('permission:amenazas.ver')->group(function () {
+        Route::get('amenazas',                [AmenazaController::class, 'index'])->name('amenazas.index');
+        Route::get('amenazas/{amenaza}',      [AmenazaController::class, 'show'])->name('amenazas.show');
     });
     Route::middleware('permission:amenazas.editar')->group(function () {
         Route::get('amenazas/{amenaza}/edit', [AmenazaController::class, 'edit'])->name('amenazas.edit');
@@ -61,13 +62,13 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('permission:amenazas.eliminar')->name('amenazas.destroy');
 
     // ── Evaluaciones ──
-    Route::middleware('permission:evaluaciones.ver')->group(function () {
-        Route::get('evaluaciones',             [EvaluacionRiesgoController::class, 'index'])->name('evaluaciones.index');
-        Route::get('evaluaciones/{evaluacion}',[EvaluacionRiesgoController::class, 'show'])->name('evaluaciones.show');
-    });
     Route::middleware('permission:evaluaciones.calcular')->group(function () {
-        Route::get('evaluaciones/create',          [EvaluacionRiesgoController::class, 'create'])->name('evaluaciones.create');
-        Route::post('evaluaciones',                [EvaluacionRiesgoController::class, 'store'])->name('evaluaciones.store');
+        Route::get('evaluaciones/create',           [EvaluacionRiesgoController::class, 'create'])->name('evaluaciones.create');
+        Route::post('evaluaciones',                 [EvaluacionRiesgoController::class, 'store'])->name('evaluaciones.store');
+    });
+    Route::middleware('permission:evaluaciones.ver')->group(function () {
+        Route::get('evaluaciones',                  [EvaluacionRiesgoController::class, 'index'])->name('evaluaciones.index');
+        Route::get('evaluaciones/{evaluacion}',     [EvaluacionRiesgoController::class, 'show'])->name('evaluaciones.show');
     });
     Route::middleware('permission:evaluaciones.editar')->group(function () {
         Route::get('evaluaciones/{evaluacion}/edit', [EvaluacionRiesgoController::class, 'edit'])->name('evaluaciones.edit');
@@ -77,13 +78,13 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ── Mitigación ──
-    Route::middleware('permission:mitigacion.ver')->group(function () {
-        Route::get('mitigacion',             [PlanMitigacionController::class, 'index'])->name('mitigacion.index');
-        Route::get('mitigacion/{mitigacion}',[PlanMitigacionController::class, 'show'])->name('mitigacion.show');
-    });
     Route::middleware('permission:mitigacion.crear')->group(function () {
-        Route::get('mitigacion/create',       [PlanMitigacionController::class, 'create'])->name('mitigacion.create');
-        Route::post('mitigacion',             [PlanMitigacionController::class, 'store'])->name('mitigacion.store');
+        Route::get('mitigacion/create',        [PlanMitigacionController::class, 'create'])->name('mitigacion.create');
+        Route::post('mitigacion',              [PlanMitigacionController::class, 'store'])->name('mitigacion.store');
+    });
+    Route::middleware('permission:mitigacion.ver')->group(function () {
+        Route::get('mitigacion',               [PlanMitigacionController::class, 'index'])->name('mitigacion.index');
+        Route::get('mitigacion/{mitigacion}',  [PlanMitigacionController::class, 'show'])->name('mitigacion.show');
     });
     Route::middleware('permission:mitigacion.editar')->group(function () {
         Route::get('mitigacion/{mitigacion}/edit', [PlanMitigacionController::class, 'edit'])->name('mitigacion.edit');
@@ -103,18 +104,18 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('permission:bitacora.ver')->name('bitacora.index');
 
     // ── Usuarios ──
-    Route::middleware('permission:usuarios.ver')->group(function () {
-        Route::get('usuarios',           [UsuarioController::class, 'index'])->name('usuarios.index');
-        Route::get('usuarios/{usuario}', [UsuarioController::class, 'show'])->name('usuarios.show');
-    });
     Route::middleware('permission:usuarios.crear')->group(function () {
-        Route::get('usuarios/create',    [UsuarioController::class, 'create'])->name('usuarios.create');
-        Route::post('usuarios',          [UsuarioController::class, 'store'])->name('usuarios.store');
+        Route::get('usuarios/create',         [UsuarioController::class, 'create'])->name('usuarios.create');
+        Route::post('usuarios',               [UsuarioController::class, 'store'])->name('usuarios.store');
+    });
+    Route::middleware('permission:usuarios.ver')->group(function () {
+        Route::get('usuarios',                [UsuarioController::class, 'index'])->name('usuarios.index');
+        Route::get('usuarios/{usuario}',      [UsuarioController::class, 'show'])->name('usuarios.show');
     });
     Route::middleware('permission:usuarios.editar')->group(function () {
-        Route::get('usuarios/{usuario}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
-        Route::put('usuarios/{usuario}',      [UsuarioController::class, 'update'])->name('usuarios.update');
-        Route::patch('usuarios/{usuario}',    [UsuarioController::class, 'update']);
+        Route::get('usuarios/{usuario}/edit',    [UsuarioController::class, 'edit'])->name('usuarios.edit');
+        Route::put('usuarios/{usuario}',         [UsuarioController::class, 'update'])->name('usuarios.update');
+        Route::patch('usuarios/{usuario}',       [UsuarioController::class, 'update']);
         Route::post('usuarios/{usuario}/toggle', [UsuarioController::class, 'toggleActivo'])->name('usuarios.toggle');
     });
     Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])
@@ -126,9 +127,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('roles/{rol}',  [RolController::class, 'show'])->name('roles.show');
     });
     Route::middleware('permission:roles.editar')->group(function () {
-        Route::get('roles/{rol}/edit',  [RolController::class, 'edit'])->name('roles.edit');
-        Route::put('roles/{rol}',       [RolController::class, 'update'])->name('roles.update');
-        Route::patch('roles/{rol}',     [RolController::class, 'update']);
+        Route::get('roles/{rol}/edit', [RolController::class, 'edit'])->name('roles.edit');
+        Route::put('roles/{rol}',      [RolController::class, 'update'])->name('roles.update');
+        Route::patch('roles/{rol}',    [RolController::class, 'update']);
     });
 
     // ── Respaldos ──
