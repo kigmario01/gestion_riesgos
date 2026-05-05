@@ -42,6 +42,7 @@ class RolController extends Controller
 
         $anterior = $rol->permissions->pluck('name')->toArray();
         $rol->syncPermissions($request->permissions ?? []);
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         BitacoraAuditoria::registrar(
             'editar', 'roles',
