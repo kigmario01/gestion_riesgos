@@ -8,7 +8,7 @@
 @endsection
 
 @section('topbar-right')
-    <a href="{{ route('activos.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Activo</a>
+    @can('activos.crear')<a href="{{ route('activos.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Activo</a>@endcan
 @endsection
 
 @push('styles')
@@ -122,11 +122,13 @@
             </span>
             <div class="actions">
                 <a href="{{ route('activos.show', $activo) }}" class="btn btn-outline btn-xs" title="Ver detalle"><i class="fas fa-eye"></i></a>
-                <a href="{{ route('activos.edit', $activo) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>
+                @can('activos.editar')<a href="{{ route('activos.edit', $activo) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>@endcan
+                @can('activos.eliminar')
                 <form method="POST" action="{{ route('activos.destroy', $activo) }}" onsubmit="return confirm('¿Eliminar este activo?')">
                     @csrf @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash"></i></button>
                 </form>
+                @endcan
             </div>
         </div>
     </div>

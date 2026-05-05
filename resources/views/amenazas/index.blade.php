@@ -8,7 +8,7 @@
 @endsection
 
 @section('topbar-right')
-    <a href="{{ route('amenazas.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nueva Amenaza</a>
+    @can('amenazas.crear')<a href="{{ route('amenazas.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nueva Amenaza</a>@endcan
 @endsection
 
 @push('styles')
@@ -102,13 +102,13 @@
                 {{ $amenaza->created_at->format('d/m/Y') }}
             </span>
             <div class="actions">
-                <a href="{{ route('amenazas.edit', $amenaza) }}" class="btn btn-outline btn-xs" title="Editar">
-                    <i class="fas fa-edit"></i>
-                </a>
+                @can('amenazas.editar')<a href="{{ route('amenazas.edit', $amenaza) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>@endcan
+                @can('amenazas.eliminar')
                 <form method="POST" action="{{ route('amenazas.destroy', $amenaza) }}" onsubmit="return confirm('¿Eliminar esta amenaza?')">
                     @csrf @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash"></i></button>
                 </form>
+                @endcan
             </div>
         </div>
     </div>
