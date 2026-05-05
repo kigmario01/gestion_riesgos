@@ -8,7 +8,7 @@
 @endsection
 
 @section('topbar-right')
-    <a href="{{ route('mitigacion.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Plan</a>
+    @can('mitigacion.crear')<a href="{{ route('mitigacion.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Plan</a>@endcan
 @endsection
 
 @push('styles')
@@ -129,17 +129,21 @@
             </span>
             <div class="actions">
                 <a href="{{ route('mitigacion.show', $plan) }}" class="btn btn-outline btn-xs" title="Ver"><i class="fas fa-eye"></i></a>
-                <a href="{{ route('mitigacion.edit', $plan) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>
+                @can('mitigacion.editar')<a href="{{ route('mitigacion.edit', $plan) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>@endcan
+                @can('mitigacion.aprobar')
                 @if($plan->estado == 'pendiente')
                 <form method="POST" action="{{ route('mitigacion.aprobar', $plan) }}" style="display:inline;">
                     @csrf
                     <button type="submit" class="btn btn-success btn-xs" title="Aprobar"><i class="fas fa-check"></i></button>
                 </form>
                 @endif
+                @endcan
+                @can('mitigacion.editar')
                 <form method="POST" action="{{ route('mitigacion.destroy', $plan) }}" onsubmit="return confirm('¿Eliminar este plan?')" style="display:inline;">
                     @csrf @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash"></i></button>
                 </form>
+                @endcan
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
 @endsection
 
 @section('topbar-right')
-    <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nueva Evaluación</a>
+    @can('evaluaciones.calcular')<a href="{{ route('evaluaciones.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nueva Evaluación</a>@endcan
 @endsection
 
 @push('styles')
@@ -99,18 +99,14 @@
                     <div style="display:flex;align-items:center;gap:5px;">
                         <span class="rc-id">{{ $ev->codigo }}</span>
                         <div class="rc-actions">
-                            <a href="{{ route('evaluaciones.show', $ev) }}" class="btn btn-outline btn-xs" title="Ver detalle">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a href="{{ route('evaluaciones.edit', $ev) }}" class="btn btn-outline btn-xs" title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            <a href="{{ route('evaluaciones.show', $ev) }}" class="btn btn-outline btn-xs" title="Ver detalle"><i class="fas fa-eye"></i></a>
+                            @can('evaluaciones.editar')<a href="{{ route('evaluaciones.edit', $ev) }}" class="btn btn-outline btn-xs" title="Editar"><i class="fas fa-edit"></i></a>@endcan
+                            @can('evaluaciones.editar')
                             <form method="POST" action="{{ route('evaluaciones.destroy', $ev) }}" onsubmit="return confirm('¿Eliminar esta evaluación?')" style="display:inline;">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-xs" title="Eliminar">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <button type="submit" class="btn btn-danger btn-xs" title="Eliminar"><i class="fas fa-trash"></i></button>
                             </form>
+                            @endcan
                         </div>
                     </div>
                 </div>

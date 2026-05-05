@@ -8,7 +8,7 @@
 @endsection
 
 @section('topbar-right')
-    <a href="{{ route('usuarios.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Usuario</a>
+    @can('usuarios.crear')<a href="{{ route('usuarios.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Usuario</a>@endcan
 @endsection
 
 @push('styles')
@@ -70,18 +70,22 @@
             <td>
                 <div class="actions">
                     <a href="{{ route('usuarios.show', $usuario) }}" class="btn btn-outline btn-xs"><i class="fas fa-eye"></i></a>
-                    <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-outline btn-xs"><i class="fas fa-edit"></i></a>
+                    @can('usuarios.editar')<a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-outline btn-xs"><i class="fas fa-edit"></i></a>@endcan
                     @if($usuario->id !== auth()->id())
+                    @can('usuarios.editar')
                     <form method="POST" action="{{ route('usuarios.toggle', $usuario) }}">
                         @csrf
                         <button type="submit" class="btn btn-xs {{ $usuario->activo ? 'btn-warning' : 'btn-success' }}" title="{{ $usuario->activo ? 'Desactivar' : 'Activar' }}">
                             <i class="fas fa-{{ $usuario->activo ? 'ban' : 'check' }}"></i>
                         </button>
                     </form>
+                    @endcan
+                    @can('usuarios.eliminar')
                     <form method="POST" action="{{ route('usuarios.destroy', $usuario) }}" onsubmit="return confirm('¿Eliminar usuario {{ $usuario->name }}?')">
                         @csrf @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-xs"><i class="fas fa-trash"></i></button>
                     </form>
+                    @endcan
                     @endif
                 </div>
             </td>
