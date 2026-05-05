@@ -25,6 +25,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'bitacora.ver',
             'evidencias.ver', 'evidencias.aprobar',
             'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
+            'roles.ver', 'roles.editar',
             'basedatos.ver', 'basedatos.configurar', 'basedatos.respaldar',
             'dashboard.ver',
         ];
@@ -38,14 +39,16 @@ class RolesAndPermissionsSeeder extends Seeder
         $po->syncPermissions([
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
             'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
-            'reportes.ver', 'reportes.exportar', 'bitacora.ver', 'usuarios.ver', 'evidencias.ver',
+            'reportes.ver', 'reportes.exportar', 'bitacora.ver',
+            'usuarios.ver', 'roles.ver', 'evidencias.ver',
         ]);
 
         $sm = Role::firstOrCreate(['name' => 'scrum_master', 'guard_name' => 'web']);
         $sm->syncPermissions([
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
             'mitigacion.ver', 'matriz.ver', 'matriz.exportar',
-            'reportes.ver', 'reportes.exportar', 'bitacora.ver', 'usuarios.ver',
+            'reportes.ver', 'reportes.exportar', 'bitacora.ver',
+            'usuarios.ver', 'roles.ver',
         ]);
 
         $frontend = Role::firstOrCreate(['name' => 'frontend', 'guard_name' => 'web']);
@@ -60,10 +63,12 @@ class RolesAndPermissionsSeeder extends Seeder
             'activos.ver', 'activos.crear', 'activos.editar', 'activos.eliminar',
             'amenazas.ver', 'amenazas.crear', 'amenazas.editar', 'amenazas.eliminar',
             'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
-            'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar',
+            'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar', 'mitigacion.aprobar',
             'matriz.ver', 'matriz.exportar', 'reportes.ver', 'reportes.exportar',
-            'bitacora.ver', 'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
-            'basedatos.ver',
+            'bitacora.ver',
+            'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
+            'roles.ver', 'roles.editar',
+            'basedatos.ver', 'basedatos.respaldar', 'basedatos.configurar',
         ]);
 
         $bd = Role::firstOrCreate(['name' => 'base_datos', 'guard_name' => 'web']);
@@ -79,7 +84,8 @@ class RolesAndPermissionsSeeder extends Seeder
             'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
             'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
             'reportes.ver', 'reportes.exportar', 'bitacora.ver',
-            'evidencias.ver', 'evidencias.aprobar', 'usuarios.ver',
+            'evidencias.ver', 'evidencias.aprobar',
+            'usuarios.ver', 'roles.ver',
         ]);
 
         // USUARIOS DE PRUEBA
