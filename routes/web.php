@@ -11,6 +11,7 @@ use App\Http\Controllers\MatrizRiesgoController;
 use App\Http\Controllers\RespaldoBdController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\ReporteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect()->route('login'));
@@ -130,6 +131,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('roles/{rol}/edit', [RolController::class, 'edit'])->name('roles.edit');
         Route::put('roles/{rol}',      [RolController::class, 'update'])->name('roles.update');
         Route::patch('roles/{rol}',    [RolController::class, 'update']);
+    });
+
+    // ── Reportes PDF ──
+    Route::prefix('reportes')->name('reportes.')->middleware('permission:reportes.generar')->group(function () {
+        Route::get('ejecutivo',   [ReporteController::class, 'ejecutivo'])->name('ejecutivo');
+        Route::get('activos',     [ReporteController::class, 'activos'])->name('activos');
+        Route::get('amenazas',    [ReporteController::class, 'amenazas'])->name('amenazas');
+        Route::get('evaluaciones',[ReporteController::class, 'evaluaciones'])->name('evaluaciones');
+        Route::get('mitigacion',  [ReporteController::class, 'mitigacion'])->name('mitigacion');
+        Route::get('bitacora',    [ReporteController::class, 'bitacora'])->name('bitacora');
     });
 
     // ── Respaldos ──
