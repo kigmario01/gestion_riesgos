@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "PowerShell(cd c:\\\\xampp\\\\htdocs\\\\gestion_riesgos; php artisan tinker --execute=\"use App\\\\Models\\\\User; use Spatie\\\\Permission\\\\Models\\\\Role; $admin = User::where\\('email','admin@gestion.com'\\)->first\\(\\); echo $admin->name . ' roles: ' . json_encode\\($admin->getRoleNames\\(\\)\\);\" 2>&1)"
     ]
   }
 }
