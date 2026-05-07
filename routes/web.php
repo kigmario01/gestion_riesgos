@@ -9,6 +9,7 @@ use App\Http\Controllers\PlanMitigacionController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\MatrizRiesgoController;
 use App\Http\Controllers\RespaldoBdController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\ReporteController;
@@ -154,6 +155,10 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('permission:basedatos.configurar')->name('respaldos.destroy');
     Route::post('respaldos/config', [RespaldoBdController::class, 'saveConfig'])
         ->middleware('permission:basedatos.configurar')->name('respaldos.config');
+
+    // ── Perfil ──
+    Route::get('perfil', [PerfilController::class, 'edit'])->name('perfil.edit');
+    Route::post('perfil', [PerfilController::class, 'update'])->name('perfil.update');
 
 });
 

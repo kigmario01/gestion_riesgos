@@ -563,13 +563,18 @@
     </div>
 
     {{-- Usuario --}}
-    <div class="sidebar-user">
-        <div class="sidebar-user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
-        <div style="min-width:0;">
-            <div class="sidebar-user-name">{{ auth()->user()->name }}</div>
+    <a href="{{ route('perfil.edit') }}" class="sidebar-user" style="text-decoration:none;" title="Editar perfil">
+        @if(auth()->user()->avatar_url)
+            <img src="{{ auth()->user()->avatar_url }}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid #fed7aa;">
+        @else
+            <div class="sidebar-user-avatar">{{ strtoupper(substr(auth()->user()->display_name, 0, 2)) }}</div>
+        @endif
+        <div style="min-width:0;flex:1;">
+            <div class="sidebar-user-name">{{ auth()->user()->display_name }}</div>
             <div class="sidebar-user-role">{{ auth()->user()->getRoleNames()->first() ?? 'Sin rol' }}</div>
         </div>
-    </div>
+        <i class="fas fa-pen" style="font-size:9px;color:#94a3b8;flex-shrink:0;"></i>
+    </a>
 
     {{-- Navegación con scroll --}}
     <nav class="sidebar-nav" role="navigation" aria-label="Menú principal">
