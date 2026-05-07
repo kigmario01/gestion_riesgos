@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RespaldoBd;
+use App\Models\RespaldoConfig;
 use App\Models\BitacoraAuditoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,31 @@ class RespaldoBdController extends Controller
         $totalRespaldos = RespaldoBd::count();
         $exitosos       = RespaldoBd::where('estado', 'completado')->count();
         $ultimoRespaldo = RespaldoBd::where('estado', 'completado')->latest('created_at')->first();
+        $config         = RespaldoConfig::instancia();
 
-        return view('respaldos.index', compact('respaldos', 'totalRespaldos', 'exitosos', 'ultimoRespaldo'));
+        return view('respaldos.index', compact('respaldos', 'totalRespaldos', 'exitosos', 'ultimoRespaldo', 'config'));
+    }
+
+    public function saveConfig(Request $request)
+    {
+        $request->validate([
+            'activo'     => 'nullable|boolean',
+            'frecuencia' => 'required|in:diario,semanal,mensual',
+            'hora'       => 'required|date_format:H:i',
+            'dia_semana' => 'nullable|integer|min:0|max:6',
+            'dia_mes'    => 'nullable|integer|min:1|max:28',
+        ]);
+
+        $config = RespaldoConfig::instancia();
+        $config->update([
+            'activo'     => $request->boolean('activo'),
+            'frecuencia' => $request->frecuencia,
+            'hora'       => $request->hora . ':00',
+            'dia_semana' => $request->dia_semana,
+            'dia_mes'    => $request->dia_mes,
+        ]);
+
+        return redirect()->route('respaldos.index')->with('success', 'Configuración de respaldo automático guardada.');
     }
 
     public function store(Request $request)
