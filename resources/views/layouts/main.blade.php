@@ -109,9 +109,10 @@
             color: #fff;
         }
         .nav-item.active {
-            background: rgba(0,0,0,0.18);
+            background: #1e3a8a;
             color: #fff;
             font-weight: 600;
+            box-shadow: 0 4px 14px rgba(249,115,22,0.45);
         }
         .nav-item.active i { color: #fff; }
 
