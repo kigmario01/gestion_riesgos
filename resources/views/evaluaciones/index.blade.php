@@ -42,9 +42,9 @@
         <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#ea580c;font-size:14px;"></i></div>
         <div class="guia-iso-title">¿Cómo se analiza y evalúa el riesgo según ISO 27001?</div>
         <span class="guia-iso-ref">ISO 27001 — Fases 4.3 y 4.4 · Análisis y Evaluación</span>
-        <i class="fas fa-chevron-up guia-chevron" style="color:#ea580c;font-size:11px;transition:transform .2s;"></i>
+        <i class="fas fa-chevron-up guia-chevron" style="transform:rotate(180deg)" style="color:#ea580c;font-size:11px;transition:transform .2s;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <p style="font-size:12.5px;color:#9a3412;margin-bottom:12px;line-height:1.6;">
             El análisis de riesgo combina el <strong>impacto potencial</strong> de una amenaza sobre un activo con la <strong>probabilidad</strong> de que ocurra. El resultado es un valor numérico que determina la urgencia de actuar. ISO 27001 requiere documentar cada evaluación con su justificación.
         </p>

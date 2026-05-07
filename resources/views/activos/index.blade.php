@@ -51,9 +51,9 @@
         <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#3b82f6;font-size:14px;"></i></div>
         <div class="guia-iso-title">¿Qué es el Inventario de Activos TI y por qué es importante?</div>
         <span class="guia-iso-ref">ISO 27001 — Fase 4.1</span>
-        <i class="fas fa-chevron-up guia-chevron" style="color:#3b82f6;font-size:11px;transition:transform .2s;"></i>
+        <i class="fas fa-chevron-up guia-chevron" style="transform:rotate(180deg)" style="color:#3b82f6;font-size:11px;transition:transform .2s;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <p style="font-size:12.5px;color:#1e40af;margin-bottom:12px;line-height:1.6;">
             El inventario de activos es el <strong>punto de partida del SGSI</strong>. No puedes proteger lo que no conoces. ISO 27001 exige identificar todos los activos de información de la organización, clasificarlos y asignarles un responsable.
         </p>

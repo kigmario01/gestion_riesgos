@@ -35,7 +35,7 @@
         <span class="guia-iso-ref">ISO 27001 — Inventario de Activos</span>
         <i class="fas fa-chevron-up" style="color:#3b82f6;font-size:11px;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <div class="guia-paso"><div class="guia-num">1</div><div><strong>Nombre y Código:</strong> Usa un nombre descriptivo y un código único (ej. <code style="background:#dbeafe;padding:1px 5px;border-radius:4px;">AKT-001</code>). El código sirve para referenciar el activo en evaluaciones y reportes.</div></div>
         <div class="guia-paso"><div class="guia-num">2</div><div><strong>Tipo:</strong> Selecciona la categoría que mejor describe el activo. ISO 27001 reconoce: Hardware (equipos físicos), Software (aplicaciones), Red (infraestructura de red), Datos (información almacenada), Servicios (cloud, SaaS), Personas y Instalaciones.</div></div>
         <div class="guia-paso"><div class="guia-num">3</div><div><strong>Criticidad:</strong> Evalúa el impacto en el negocio si este activo se pierde o falla. <strong>Crítica</strong> = operaciones detenidas; <strong>Alta</strong> = impacto severo; <strong>Media</strong> = impacto moderado; <strong>Baja</strong> = impacto mínimo.</div></div>

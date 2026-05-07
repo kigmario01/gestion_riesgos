@@ -50,9 +50,9 @@
         <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#9333ea;font-size:14px;"></i></div>
         <div class="guia-iso-title">¿Qué es el Catálogo de Amenazas y cómo se usa en ISO 27001?</div>
         <span class="guia-iso-ref">ISO 27001 — Fase 4.2 · Catálogo de Amenazas</span>
-        <i class="fas fa-chevron-up guia-chevron" style="color:#9333ea;font-size:11px;transition:transform .2s;"></i>
+        <i class="fas fa-chevron-up guia-chevron" style="transform:rotate(180deg)" style="color:#9333ea;font-size:11px;transition:transform .2s;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <p style="font-size:12.5px;color:#6b21a8;margin-bottom:12px;line-height:1.6;">
             ISO 27001 requiere identificar las <strong>amenazas que pueden afectar a tus activos</strong>. El catálogo de amenazas es la lista de todos los eventos adversos posibles clasificados por su naturaleza. Este sistema incluye las 43 amenazas estándar de la norma.
         </p>

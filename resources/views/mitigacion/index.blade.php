@@ -50,9 +50,9 @@
         <div class="guia-iso-icon"><i class="fas fa-book-open" style="color:#16a34a;font-size:14px;"></i></div>
         <div class="guia-iso-title">¿Qué es el Plan de Tratamiento de Riesgos y cuándo se usa?</div>
         <span class="guia-iso-ref">ISO 27001 — Fase 4.5 · Tratamiento de Riesgos</span>
-        <i class="fas fa-chevron-up guia-chevron" style="color:#16a34a;font-size:11px;transition:transform .2s;"></i>
+        <i class="fas fa-chevron-up guia-chevron" style="transform:rotate(180deg)" style="color:#16a34a;font-size:11px;transition:transform .2s;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <p style="font-size:12.5px;color:#166534;margin-bottom:12px;line-height:1.6;">
             Una vez identificados y evaluados los riesgos, ISO 27001 exige <strong>decidir qué hacer con cada uno</strong>. El Plan de Mitigación documenta esa decisión, quién es responsable, cuándo se implementa y cómo se medirá el éxito.
         </p>

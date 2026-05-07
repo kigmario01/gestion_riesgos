@@ -79,7 +79,7 @@
 @endphp
 
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-    <div style="font-size:13px;font-weight:600;color:#1b1f3b;display:flex;align-items:center;gap:8px;">
+    <div style="font-size:13px;font-weight:600;color:#1b1f3b;display:flex;align-items:center;gap:8px;" class="text-adaptive">
         <i class="fas fa-layer-group" style="color:#f97316;font-size:12px;" aria-hidden="true"></i> Últimos Riesgos Activos
         <span style="font-size:11px;font-weight:400;color:#94a3b8;">— {{ $ultimosRiesgos->count() }} más recientes</span>
     </div>
@@ -153,7 +153,7 @@
                               @else #4f8ef7 @endif;">
                 </div>
                 <div style="min-width:0;">
-                    <div style="font-size:12.5px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $log->descripcion }}</div>
+                    <div style="font-size:12.5px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="text-adaptive">{{ $log->descripcion }}</div>
                     <div style="font-size:11px;color:#94a3b8;margin-top:2px;">
                         {{ $log->user_nombre ?? 'Sistema' }} &middot; {{ \Carbon\Carbon::parse($log->created_at)->diffForHumans() }}
                         &middot; <span style="font-weight:600;text-transform:uppercase;font-size:10px;">{{ $log->accion }}</span>
@@ -190,11 +190,11 @@
                     <i class="fas {{ $item['icon'] }}"></i>
                 </div>
                 <div>
-                    <div style="font-size:13px;font-weight:500;color:#1e293b;">{{ $item['label'] }}</div>
+                    <div style="font-size:13px;font-weight:500;color:#1e293b;" class="text-adaptive">{{ $item['label'] }}</div>
                     <div style="font-size:11px;color:#94a3b8;">{{ $item['sub'] }}</div>
                 </div>
             </div>
-            <div style="font-size:22px;font-weight:800;color:#1b1f3b;">{{ $item['val'] }}</div>
+            <div style="font-size:22px;font-weight:800;color:#1b1f3b;" class="text-adaptive">{{ $item['val'] }}</div>
         </a>
         @endforeach
         <div style="padding:12px 18px;display:flex;gap:8px;">
