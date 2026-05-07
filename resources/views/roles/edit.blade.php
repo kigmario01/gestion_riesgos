@@ -18,10 +18,22 @@
 .module-header{padding:12px 20px;background:#f8fafc;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
 .module-title{font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px;}
 .module-body{padding:14px 20px;display:flex;flex-wrap:wrap;gap:14px;}
-.perm-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
-.perm-toggle input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#3b82f6;flex-shrink:0;}
+.perm-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;padding:8px 12px;border-radius:9px;border:1.5px solid #e2e8f0;background:#f8fafc;transition:all .15s;min-width:120px;}
+.perm-toggle:hover{border-color:#f97316;background:#fff7ed;}
+.perm-toggle input[type=checkbox]{display:none;}
+.perm-check{width:20px;height:20px;border-radius:6px;border:2px solid #cbd5e1;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.perm-toggle input:checked ~ .perm-check-wrap .perm-check,
+.perm-toggle.checked .perm-check{background:#f97316;border-color:#f97316;}
+.perm-check i{font-size:10px;color:#fff;display:none;}
+.perm-toggle.checked .perm-check i{display:block;}
 .perm-label{font-size:13px;color:#374151;font-weight:500;}
-.perm-label-sub{font-size:11px;color:#94a3b8;}
+.perm-label-sub{font-size:10.5px;color:#94a3b8;}
+[data-theme="dark"] .perm-toggle{background:#1e2438;border-color:#2a2f45;}
+[data-theme="dark"] .perm-toggle:hover{border-color:#f97316;background:#2d1a0a;}
+[data-theme="dark"] .perm-check{background:#161b2e;border-color:#3a4060;}
+[data-theme="dark"] .perm-label{color:#cbd5e1;}
+[data-theme="dark"] .perm-toggle.checked{background:#2d1a0a;border-color:#f97316;}
+[data-theme="dark"] .perm-toggle.checked .perm-check{background:#f97316;border-color:#f97316;}
 .select-all-btn{font-size:11px;color:#3b82f6;cursor:pointer;background:none;border:none;font-weight:600;padding:0;font-family:inherit;}
 .select-all-btn:hover{text-decoration:underline;}
 .action-bar{background:#fff;border-top:1px solid #e2e8f0;padding:14px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;bottom:0;z-index:40;box-shadow:0 -4px 16px rgba(0,0,0,0.05);}
@@ -57,10 +69,11 @@
             <div class="module-body" id="module-{{ $modulo }}">
                 @foreach($permisos as $perm)
                 @php $action = explode('.', $perm->name)[1] ?? $perm->name; @endphp
-                <label class="perm-toggle">
+                <label class="perm-toggle {{ in_array($perm->name, $rolPerms) ? 'checked' : '' }}">
                     <input type="checkbox" name="permissions[]" value="{{ $perm->name }}"
                         {{ in_array($perm->name, $rolPerms) ? 'checked' : '' }}
                         data-module="{{ $modulo }}">
+                    <div class="perm-check"><i class="fas fa-check"></i></div>
                     <div>
                         <div class="perm-label">{{ ucfirst($action) }}</div>
                         <div class="perm-label-sub">{{ $perm->name }}</div>
@@ -90,7 +103,12 @@ function updateCounter() {
     document.getElementById('selected-count').textContent =
         document.querySelectorAll('input[name="permissions[]"]:checked').length;
 }
-document.querySelectorAll('input[name="permissions[]"]').forEach(cb => cb.addEventListener('change', updateCounter));
+document.querySelectorAll('input[name="permissions[]"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+        this.closest('.perm-toggle').classList.toggle('checked', this.checked);
+        updateCounter();
+    });
+});
 
 function toggleAll(val) {
     document.querySelectorAll('input[name="permissions[]"]').forEach(cb => cb.checked = val);
