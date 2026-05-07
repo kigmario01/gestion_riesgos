@@ -14,7 +14,8 @@
 @push('styles')
 <style>
 .user-cell{display:flex;align-items:center;gap:10px;}
-.mini-avatar{width:32px;height:32px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;flex-shrink:0;}
+.mini-avatar{width:32px;height:32px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;flex-shrink:0;overflow:hidden;}
+.mini-avatar img{width:100%;height:100%;object-fit:cover;}
 .role-badge{background:#eff6ff;color:#1d4ed8;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;display:inline-block;}
 </style>
 @endpush
@@ -44,7 +45,13 @@
         <tr>
             <td>
                 <div class="user-cell">
-                    <div class="mini-avatar">{{ strtoupper(substr($usuario->name,0,2)) }}</div>
+                    <div class="mini-avatar">
+                        @if($usuario->avatar_url)
+                            <img src="{{ $usuario->avatar_url }}" alt="">
+                        @else
+                            {{ strtoupper(substr($usuario->display_name,0,2)) }}
+                        @endif
+                    </div>
                     <div>
                         <div style="font-weight:500;">{{ $usuario->name }}</div>
                         @if($usuario->id === auth()->id())
