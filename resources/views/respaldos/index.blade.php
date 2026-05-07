@@ -128,6 +128,85 @@
     @endif
 </div>
 
+@can('basedatos.configurar')
+<div class="panel">
+    <div class="panel-header">
+        <div class="panel-title"><i class="fas fa-robot"></i> Respaldo Automático</div>
+        <span class="panel-subtitle">
+            @if($config->activo)
+                <span style="color:#16a34a;font-weight:600;"><i class="fas fa-circle" style="font-size:8px;"></i> Activo — {{ ucfirst($config->frecuencia) }} a las {{ substr($config->hora,0,5) }}</span>
+            @else
+                <span style="color:#94a3b8;"><i class="fas fa-circle" style="font-size:8px;"></i> Desactivado</span>
+            @endif
+        </span>
+    </div>
+    <form method="POST" action="{{ route('respaldos.config') }}" style="padding:20px;">
+        @csrf
+        <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:16px;align-items:end;">
+
+            {{-- Toggle activo --}}
+            <div>
+                <div style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Estado</div>
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                    <div style="position:relative;">
+                        <input type="checkbox" name="activo" value="1" id="toggleActivo" {{ $config->activo ? 'checked' : '' }} style="opacity:0;width:0;height:0;position:absolute;">
+                        <div id="toggleTrack" style="width:44px;height:24px;border-radius:12px;background:{{ $config->activo ? '#f97316' : '#e2e8f0' }};transition:.2s;cursor:pointer;" onclick="toggleSwitch()"></div>
+                        <div id="toggleThumb" style="position:absolute;top:3px;left:{{ $config->activo ? '23px' : '3px' }};width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:.2s;pointer-events:none;"></div>
+                    </div>
+                    <span style="font-size:13px;font-weight:600;color:#374151;" id="toggleLabel">{{ $config->activo ? 'Activado' : 'Desactivado' }}</span>
+                </label>
+            </div>
+
+            {{-- Frecuencia --}}
+            <div>
+                <label style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">Frecuencia</label>
+                <select name="frecuencia" id="frecuencia" class="form-control" onchange="actualizarCampos()" style="width:100%;">
+                    <option value="diario"   {{ $config->frecuencia=='diario'  ?'selected':'' }}>Diario</option>
+                    <option value="semanal"  {{ $config->frecuencia=='semanal' ?'selected':'' }}>Semanal</option>
+                    <option value="mensual"  {{ $config->frecuencia=='mensual' ?'selected':'' }}>Mensual</option>
+                </select>
+            </div>
+
+            {{-- Hora --}}
+            <div>
+                <label style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">Hora</label>
+                <input type="time" name="hora" value="{{ substr($config->hora,0,5) }}" class="form-control" style="width:100%;" required>
+            </div>
+
+            {{-- Día (semanal o mensual) --}}
+            <div id="campoDia">
+                <div id="campoDiaSemana" style="display:{{ $config->frecuencia=='semanal'?'block':'none' }}">
+                    <label style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">Día de semana</label>
+                    <select name="dia_semana" class="form-control" style="width:100%;">
+                        @foreach(['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'] as $i => $d)
+                        <option value="{{ $i }}" {{ $config->dia_semana==$i?'selected':'' }}>{{ $d }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div id="campoDiaMes" style="display:{{ $config->frecuencia=='mensual'?'block':'none' }}">
+                    <label style="font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:6px;">Día del mes</label>
+                    <input type="number" name="dia_mes" value="{{ $config->dia_mes ?? 1 }}" min="1" max="28" class="form-control" style="width:100%;">
+                </div>
+                <div id="campoDiarioMsg" style="display:{{ $config->frecuencia=='diario'?'flex':'none' }};align-items:flex-end;height:38px;">
+                    <span style="font-size:12px;color:#94a3b8;">Todos los días</span>
+                </div>
+            </div>
+        </div>
+
+        @if($config->ultimo_ejecutado)
+        <div style="margin-top:12px;font-size:11.5px;color:#94a3b8;">
+            <i class="fas fa-history" style="font-size:10px;"></i>
+            Último ejecutado: {{ $config->ultimo_ejecutado->format('d/m/Y H:i') }}
+        </div>
+        @endif
+
+        <div style="margin-top:16px;">
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Guardar configuración</button>
+        </div>
+    </form>
+</div>
+@endcan
+
 <div class="panel">
     <div class="panel-header">
         <div class="panel-title"><i class="fas fa-info-circle"></i> Información del Sistema de Respaldos</div>
@@ -153,3 +232,24 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+var activo = {{ $config->activo ? 'true' : 'false' }};
+
+function toggleSwitch() {
+    activo = !activo;
+    document.getElementById('toggleActivo').checked = activo;
+    document.getElementById('toggleTrack').style.background = activo ? '#f97316' : '#e2e8f0';
+    document.getElementById('toggleThumb').style.left = activo ? '23px' : '3px';
+    document.getElementById('toggleLabel').textContent = activo ? 'Activado' : 'Desactivado';
+}
+
+function actualizarCampos() {
+    var freq = document.getElementById('frecuencia').value;
+    document.getElementById('campoDiaSemana').style.display = freq === 'semanal' ? 'block' : 'none';
+    document.getElementById('campoDiaMes').style.display    = freq === 'mensual' ? 'block' : 'none';
+    document.getElementById('campoDiarioMsg').style.display = freq === 'diario'  ? 'flex'  : 'none';
+}
+</script>
+@endpush

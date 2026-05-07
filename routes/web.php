@@ -152,6 +152,8 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('permission:basedatos.respaldar')->name('respaldos.download');
     Route::delete('respaldos/{respaldo}', [RespaldoBdController::class, 'destroy'])
         ->middleware('permission:basedatos.configurar')->name('respaldos.destroy');
+    Route::post('respaldos/config', [RespaldoBdController::class, 'saveConfig'])
+        ->middleware('permission:basedatos.configurar')->name('respaldos.config');
 
 });
 
