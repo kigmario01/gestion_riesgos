@@ -137,7 +137,7 @@
         .logout-btn:hover { background: #fee2e2; color: #b91c1c; }
 
         /* ══ APP WRAPPER ══ */
-        .app-wrapper { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+        .app-wrapper { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; background: #d2d9e2; }
 
         /* ══ TOPBAR ══ */
         .topbar {
@@ -436,6 +436,7 @@
         [data-theme="dark"] .topbar-icon { background:#2d1a0a; color:#f97316; }
         [data-theme="dark"] .notif-btn { background:#1e2438; border-color:#2a2f45; color:#94a3b8; }
         [data-theme="dark"] .app-content { background:#0f1117; }
+        [data-theme="dark"] .app-wrapper { background:#0f1117; }
         [data-theme="dark"] .statusbar { background:#161b2e; border-top-color:#2a2f45; color:#64748b; }
 
         [data-theme="dark"] .panel { background:#1a1f2e !important; border-color:#2a2f45 !important; }
