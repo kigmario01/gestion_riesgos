@@ -43,34 +43,35 @@
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 11px;
             margin-bottom: 6px;
         }
 
-        .logo-bars {
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            border-radius: 12px;
             display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 28px;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(249,115,22,0.40);
         }
-
-        .logo-bars span {
-            display: block;
-            width: 5px;
-            border-radius: 3px;
-            background: linear-gradient(to top, #1e3a8a, #3b82f6);
-        }
-
-        .logo-bars span:nth-child(1) { height: 12px; }
-        .logo-bars span:nth-child(2) { height: 18px; }
-        .logo-bars span:nth-child(3) { height: 24px; }
-        .logo-bars span:nth-child(4) { height: 28px; }
 
         .logo-name {
-            font-size: 20px;
+            font-size: 15px;
             font-weight: 700;
             color: #1e3a8a;
-            letter-spacing: -0.3px;
+            letter-spacing: 0.1px;
+            line-height: 1.2;
+        }
+
+        .logo-sub {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 400;
+            margin-top: 1px;
         }
 
         .login-heading {
@@ -201,6 +202,20 @@
 
         .btn-signup:hover {
             background: #fff7ed;
+        }
+
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 9px;
+            padding: 10px 14px;
+            font-size: 12.5px;
+            color: #1e40af;
+            line-height: 1.5;
+            margin-top: 20px;
         }
 
         .error-box {
@@ -389,12 +404,15 @@
     <div class="panel-form">
 
         <div class="logo-area">
-            <div class="logo-bars">
-                <span></span><span></span><span></span><span></span>
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="white" style="width:20px;height:20px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5zm-1 3v4h2V8h-2zm0 6v2h2v-2h-2z"/></svg>
             </div>
-            <span class="logo-name">Network</span>
+            <div>
+                <div class="logo-name">RiskGuard TI</div>
+                <div class="logo-sub">Gestión de Riesgos</div>
+            </div>
         </div>
-        <p class="login-heading">Login into your account</p>
+        <p class="login-heading">Inicia sesión en tu cuenta</p>
 
         @if ($errors->any())
         <div class="error-box">
@@ -428,20 +446,18 @@
                 </span>
             </div>
 
-            @if (Route::has('password.request'))
-            <a href="{{ route('password.request') }}" class="forgot-link">Forgot password?</a>
-            @endif
-
             <button type="submit" class="btn-login">Login now</button>
         </form>
 
-        <div class="divider">OR</div>
+        <div class="info-box">
+            <svg viewBox="0 0 20 20" fill="currentColor" style="width:15px;height:15px;flex-shrink:0;color:#1d4ed8"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+            <span>¿No tienes cuenta? Solicita al <strong>administrador</strong> que te cree un usuario.</span>
+        </div>
 
-        @if (Route::has('register'))
-        <a href="{{ route('register') }}" class="btn-signup">Signup now</a>
-        @else
-        <span class="btn-signup" style="opacity:0.4;cursor:default;">Signup now</span>
-        @endif
+        <div class="info-box" style="margin-top:10px;">
+            <svg viewBox="0 0 20 20" fill="currentColor" style="width:15px;height:15px;flex-shrink:0;color:#1d4ed8"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+            <span>¿Necesitas ayuda? Escríbele al <strong>administrador</strong>: <a href="mailto:admin@riskguard.com" style="color:#f97316;text-decoration:none;font-weight:600;">admin@riskguard.com</a></span>
+        </div>
 
     </div>
 
