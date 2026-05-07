@@ -31,7 +31,7 @@
                         <i class="fas fa-camera"></i> Cambiar foto
                     </label>
                     <input type="file" name="avatar" id="avatarInput" accept="image/jpg,image/jpeg,image/png,image/webp" style="display:none;" onchange="previewAvatar(this)">
-                    @if($user->avatar)
+                    @if($user->avatar_url)
                     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;cursor:pointer;">
                         <input type="checkbox" name="remove_avatar" value="1" style="width:14px;height:14px;">
                         Quitar foto
