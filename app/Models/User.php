@@ -16,10 +16,22 @@ class User extends Authenticatable
         'email',
         'password',
         'activo',
+        'alias',
+        'avatar',
         'intentos_fallidos',
         'bloqueado_hasta',
         'ultimo_acceso',
     ];
+
+    public function getDisplayNameAttribute(): string
+    {
+        return $this->alias ?: $this->name;
+    }
+
+    public function getAvatarUrlAttribute(): ?string
+    {
+        return $this->avatar ? asset('storage/' . $this->avatar) : null;
+    }
 
     protected $hidden = [
         'password',

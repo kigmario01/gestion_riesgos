@@ -1,1 +1,1 @@
-web: php artisan migrate --force && php artisan db:seed --force && php artisan permission:cache-reset && (php artisan schedule:work &) && php artisan serve --host=0.0.0.0 --port=$PORT
+web: php artisan migrate --force && php artisan db:seed --force && php artisan permission:cache-reset && php artisan storage:link --force && (php artisan schedule:work &) && php artisan serve --host=0.0.0.0 --port=$PORT
