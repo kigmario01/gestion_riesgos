@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'RiskGuard TI') — Gestión de Riesgos</title>
+    <meta name="description" content="@yield('meta-description', 'RiskGuard TI — Sistema de Gestión de Seguridad de la Información basado en ISO/IEC 27001. Gestiona riesgos, activos, amenazas y planes de mitigación.')">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet"></noscript>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
     <script>
@@ -544,11 +547,13 @@
 </head>
 <body>
 
-<aside class="sidebar">
+<a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+<aside class="sidebar" role="complementary" aria-label="Navegación lateral">
 
     {{-- Header --}}
     <div class="sidebar-header">
-        <a href="{{ route('dashboard') }}" class="sidebar-logo"><i class="fas fa-shield-alt"></i></a>
+        <a href="{{ route('dashboard') }}" class="sidebar-logo" aria-label="RiskGuard TI — Ir al dashboard"><i class="fas fa-shield-alt" aria-hidden="true"></i></a>
         <div>
             <div class="sidebar-app-name">RiskGuard TI</div>
             <div class="sidebar-app-sub">Gestión de Riesgos</div>
@@ -565,7 +570,7 @@
     </div>
 
     {{-- Navegación con scroll --}}
-    <nav class="sidebar-nav">
+    <nav class="sidebar-nav" role="navigation" aria-label="Menú principal">
         @can('dashboard.ver')
         <span class="nav-section-label">Principal</span>
         <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -687,15 +692,15 @@
 
         <div class="topbar-right">
             <span class="topbar-date">{{ now()->format('d M Y') }}</span>
-            <button id="themeToggle" class="notif-btn" onclick="toggleTheme()" title="Cambiar tema" style="cursor:pointer;border:none;font-family:inherit;"></button>
-            <a href="{{ route('bitacora.index') }}" class="notif-btn" title="Bitácora de auditoría">
-                <i class="fas fa-bell"></i>
+            <button id="themeToggle" class="notif-btn" onclick="toggleTheme()" title="Cambiar tema" aria-label="Cambiar tema claro/oscuro" style="cursor:pointer;border:none;font-family:inherit;"></button>
+            <a href="{{ route('bitacora.index') }}" class="notif-btn" title="Bitácora de auditoría" aria-label="Ver bitácora de auditoría">
+                <i class="fas fa-bell" aria-hidden="true"></i>
             </a>
             @yield('topbar-right')
         </div>
     </header>
 
-    <div class="app-content">
+    <main class="app-content" id="main-content" role="main">
         @if(session('success'))
         <div class="alert alert-success"><i class="fas fa-check-circle"></i><span>{{ session('success') }}</span></div>
         @endif
@@ -707,7 +712,7 @@
         @endif
 
         @yield('content')
-    </div>
+    </main>
 
     <footer class="statusbar">
         <span><span class="statusbar-dot" style="background:#22c55e;"></span>Sistema operativo</span>

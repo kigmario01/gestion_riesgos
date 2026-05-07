@@ -28,41 +28,41 @@
 
 {{-- Risk level stats --}}
 <div class="stats-grid">
-    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;">
+    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos críticos: {{ $totalCritico }}">
         <div class="stat-card" style="border-top:3px solid #ef4444;">
-            <div class="stat-icon si-red"><i class="fas fa-exclamation-circle"></i></div>
+            <div class="stat-icon si-red"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalCritico }}</div>
                 <div class="stat-lbl">Riesgos Críticos</div>
-                @if($totalCritico > 0)<div class="stat-trend trend-up"><i class="fas fa-arrow-up" style="font-size:9px;"></i> Atención requerida</div>@endif
+                @if($totalCritico > 0)<div class="stat-trend trend-up"><i class="fas fa-arrow-up" style="font-size:9px;" aria-hidden="true"></i> Atención requerida</div>@endif
             </div>
         </div>
     </a>
-    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;">
+    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos altos: {{ $totalAlto }}">
         <div class="stat-card" style="border-top:3px solid #f97316;">
-            <div class="stat-icon si-orange"><i class="fas fa-exclamation-triangle"></i></div>
+            <div class="stat-icon si-orange"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalAlto }}</div>
                 <div class="stat-lbl">Riesgos Altos</div>
             </div>
         </div>
     </a>
-    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;">
+    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos medios: {{ $totalMedio }}">
         <div class="stat-card" style="border-top:3px solid #eab308;">
-            <div class="stat-icon si-yellow"><i class="fas fa-minus-circle"></i></div>
+            <div class="stat-icon si-yellow"><i class="fas fa-minus-circle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalMedio }}</div>
                 <div class="stat-lbl">Riesgos Medios</div>
             </div>
         </div>
     </a>
-    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;">
+    <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos bajos: {{ $totalBajo }}">
         <div class="stat-card" style="border-top:3px solid #22c55e;">
-            <div class="stat-icon si-green"><i class="fas fa-check-circle"></i></div>
+            <div class="stat-icon si-green"><i class="fas fa-check-circle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalBajo }}</div>
                 <div class="stat-lbl">Riesgos Bajos</div>
-                @if($totalBajo > 0)<div class="stat-trend trend-down"><i class="fas fa-check" style="font-size:9px;"></i> Bajo control</div>@endif
+                @if($totalBajo > 0)<div class="stat-trend trend-down"><i class="fas fa-check" style="font-size:9px;" aria-hidden="true"></i> Bajo control</div>@endif
             </div>
         </div>
     </a>
@@ -80,7 +80,7 @@
 
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
     <div style="font-size:13px;font-weight:600;color:#1b1f3b;display:flex;align-items:center;gap:8px;">
-        <i class="fas fa-layer-group" style="color:#4f8ef7;font-size:12px;"></i> Últimos Riesgos Activos
+        <i class="fas fa-layer-group" style="color:#f97316;font-size:12px;" aria-hidden="true"></i> Últimos Riesgos Activos
         <span style="font-size:11px;font-weight:400;color:#94a3b8;">— {{ $ultimosRiesgos->count() }} más recientes</span>
     </div>
     <a href="{{ route('evaluaciones.index') }}" class="btn btn-outline btn-sm">Ver todos →</a>
@@ -140,8 +140,8 @@
     {{-- Bitácora --}}
     <div class="panel" style="margin-bottom:0;">
         <div class="panel-header">
-            <div class="panel-title"><i class="fas fa-clipboard-list"></i> Actividad Reciente</div>
-            <a href="{{ route('bitacora.index') }}" style="font-size:12px;color:#4f8ef7;text-decoration:none;font-weight:500;">Ver bitácora →</a>
+            <div class="panel-title"><i class="fas fa-clipboard-list" aria-hidden="true"></i> Actividad Reciente</div>
+            <a href="{{ route('bitacora.index') }}" style="font-size:12px;color:#f97316;text-decoration:none;font-weight:500;">Ver bitácora →</a>
         </div>
         @if($ultimaBitacora->count() > 0)
             @foreach($ultimaBitacora as $log)
