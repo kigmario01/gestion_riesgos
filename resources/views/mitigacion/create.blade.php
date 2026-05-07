@@ -35,7 +35,7 @@
         <span class="guia-iso-ref">ISO 27001 — Plan de Tratamiento</span>
         <i class="fas fa-chevron-up" style="color:#16a34a;font-size:11px;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <div class="guia-paso"><div class="guia-num">1</div><div><strong>Evaluación asociada:</strong> Selecciona la evaluación de riesgo que origina este plan. Un plan sin evaluación asociada no cumple el ciclo ISO — la trazabilidad es obligatoria.</div></div>
         <div class="guia-paso"><div class="guia-num">2</div><div><strong>Tipo de control:</strong> <em>Preventivo</em> = evita que el riesgo ocurra; <em>Detectivo</em> = detecta cuando ya ocurrió; <em>Correctivo</em> = repara el daño; <em>Disuasivo</em> = desalienta al atacante.</div></div>
         <div class="guia-paso"><div class="guia-num">3</div><div><strong>Estrategia:</strong> <em>Reducir</em> = implementar controles; <em>Transferir</em> = seguro o contrato; <em>Evitar</em> = eliminar la actividad; <em>Aceptar</em> = decisión documentada de no actuar.</div></div>

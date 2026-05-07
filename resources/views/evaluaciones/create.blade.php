@@ -46,7 +46,7 @@
         <span class="guia-iso-ref">ISO 27001 — Evaluación de Riesgo</span>
         <i class="fas fa-chevron-up" style="color:#ea580c;font-size:11px;"></i>
     </div>
-    <div class="guia-iso-body">
+    <div class="guia-iso-body" style="display:none">
         <div class="guia-paso"><div class="guia-num">1</div><div><strong>Activo TI:</strong> Selecciona el activo que estás evaluando. Si no aparece en la lista, primero regístralo en el módulo de Activos TI.</div></div>
         <div class="guia-paso"><div class="guia-num">2</div><div><strong>Amenaza:</strong> Selecciona la amenaza específica que podría afectar a ese activo. Puedes crear múltiples evaluaciones del mismo activo con diferentes amenazas.</div></div>
         <div class="guia-paso"><div class="guia-num">3</div><div><strong>Impacto:</strong> ¿Qué consecuencias tendría si la amenaza se materializa sobre este activo? Considera pérdida económica, reputacional y operacional. <em>1 = insignificante, 5 = catastrófico</em>.</div></div>

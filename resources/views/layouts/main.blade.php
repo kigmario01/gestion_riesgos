@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'RiskGuard TI') — Gestión de Riesgos</title>
     <meta name="description" content="@yield('meta-description', 'RiskGuard TI — Sistema de Gestión de Seguridad de la Información basado en ISO/IEC 27001. Gestiona riesgos, activos, amenazas y planes de mitigación.')">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link rel="preload" href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet"></noscript>
@@ -19,7 +20,7 @@
     </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: #d2d9e2; color: #1e293b; min-height: 100vh; display: flex; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #fff; color: #1e293b; min-height: 100vh; }
 
         /* ══ SIDEBAR ══ */
         .sidebar {
@@ -137,7 +138,7 @@
         .logout-btn:hover { background: #fee2e2; color: #b91c1c; }
 
         /* ══ APP WRAPPER ══ */
-        .app-wrapper { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; background: #d2d9e2; }
+        .app-wrapper { margin-left: 220px; min-height: 100vh; display: flex; flex-direction: column; }
 
         /* ══ TOPBAR ══ */
         .topbar {
@@ -410,7 +411,7 @@
         .row-hidden { display: none; }
 
         /* ══ DARK MODE ══ */
-        [data-theme="dark"] body { background:#0f1117; color:#e2e8f0; }
+        [data-theme="dark"] body { background:#161b2e; color:#e2e8f0; }
         [data-theme="dark"] .sidebar { background: #161b2e; border-right-color: #2a2f45; }
         [data-theme="dark"] .sidebar-header { border-bottom-color: #2a2f45; }
         [data-theme="dark"] .sidebar-app-name { color: #f97316; }
@@ -436,7 +437,6 @@
         [data-theme="dark"] .topbar-icon { background:#2d1a0a; color:#f97316; }
         [data-theme="dark"] .notif-btn { background:#1e2438; border-color:#2a2f45; color:#94a3b8; }
         [data-theme="dark"] .app-content { background:#0f1117; }
-        [data-theme="dark"] .app-wrapper { background:#0f1117; }
         [data-theme="dark"] .statusbar { background:#161b2e; border-top-color:#2a2f45; color:#64748b; }
 
         [data-theme="dark"] .panel { background:#1a1f2e !important; border-color:#2a2f45 !important; }
@@ -543,6 +543,8 @@
         /* ── Kanban empty placeholder ── */
         .kanban-empty { background:#f8fafc; border-radius:10px; border:1.5px dashed #e8eaf0; padding:24px 14px; text-align:center; color:#cbd5e1; font-size:11.5px; }
         [data-theme="dark"] .kanban-empty { background:#1e2438 !important; border-color:#2a2f45 !important; color:#475569 !important; }
+        [data-theme="dark"] .text-adaptive { color:#e2e8f0 !important; }
+
     </style>
 </head>
 <body>
