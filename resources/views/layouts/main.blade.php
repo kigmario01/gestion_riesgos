@@ -17,62 +17,62 @@
     </script>
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: #f0f2f5; color: #1e293b; min-height: 100vh; display: flex; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: #d2d9e2; color: #1e293b; min-height: 100vh; display: flex; }
 
         /* ══ SIDEBAR ══ */
         .sidebar {
             width: 220px; height: 100vh;
-            background: linear-gradient(180deg, #c2410c 0%, #ea580c 40%, #f97316 100%);
-            border-right: 1px solid rgba(0,0,0,0.12);
+            background: #fff;
+            border-right: 1px solid #e8eaf0;
             display: flex; flex-direction: column;
             position: fixed; top: 0; left: 0; z-index: 200;
-            box-shadow: 4px 0 32px rgba(234,88,12,0.35);
+            box-shadow: 4px 0 24px rgba(0,0,0,0.06);
         }
 
         /* Header con logo y nombre app */
         .sidebar-header {
             padding: 20px 18px 16px;
             display: flex; align-items: center; gap: 11px;
-            border-bottom: 1px solid rgba(0,0,0,0.10);
+            border-bottom: 1px solid #f1f5f9;
             flex-shrink: 0;
         }
         .sidebar-logo {
             width: 38px; height: 38px; flex-shrink: 0;
-            background: rgba(255,255,255,0.20);
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             border-radius: 11px; display: flex; align-items: center; justify-content: center;
             color: #fff; font-size: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15); text-decoration: none;
-            transition: transform 0.15s, background 0.15s;
+            box-shadow: 0 4px 14px rgba(249,115,22,0.40); text-decoration: none;
+            transition: transform 0.15s;
         }
-        .sidebar-logo:hover { transform: scale(1.06); background: rgba(255,255,255,0.28); }
+        .sidebar-logo:hover { transform: scale(1.06); }
         .sidebar-app-name {
-            font-size: 13.5px; font-weight: 700; color: #fff;
+            font-size: 13.5px; font-weight: 700; color: #1e3a8a;
             letter-spacing: 0.2px; line-height: 1.2;
         }
         .sidebar-app-sub {
-            font-size: 10px; color: rgba(255,255,255,0.65); font-weight: 400;
+            font-size: 10px; color: #94a3b8; font-weight: 400;
         }
 
         /* Usuario */
         .sidebar-user {
             padding: 14px 18px;
             display: flex; align-items: center; gap: 10px;
-            border-bottom: 1px solid rgba(0,0,0,0.10);
+            border-bottom: 1px solid #f1f5f9;
             flex-shrink: 0;
         }
         .sidebar-user-avatar {
             width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-            background: rgba(255,255,255,0.25);
+            background: linear-gradient(135deg, #f97316, #ea580c);
             display: flex; align-items: center; justify-content: center;
             font-weight: 700; font-size: 11px; color: #fff;
-            border: 2px solid rgba(255,255,255,0.40);
+            border: 2px solid #fed7aa;
         }
         .sidebar-user-name {
-            font-size: 12.5px; font-weight: 600; color: #fff;
+            font-size: 12.5px; font-weight: 600; color: #1e293b;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .sidebar-user-role {
-            font-size: 10px; color: rgba(255,255,255,0.70);
+            font-size: 10px; color: #94a3b8;
         }
 
         /* Nav scrollable */
@@ -80,16 +80,16 @@
             flex: 1; overflow-y: auto; overflow-x: hidden;
             padding: 10px 12px;
             scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.20) transparent;
+            scrollbar-color: #e8eaf0 transparent;
         }
         .sidebar-nav::-webkit-scrollbar { width: 4px; }
         .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
-        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: #e8eaf0; border-radius: 4px; }
 
         /* Etiqueta de sección */
         .nav-section-label {
             font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
-            color: rgba(255,255,255,0.55); text-transform: uppercase;
+            color: #94a3b8; text-transform: uppercase;
             padding: 14px 8px 6px; display: block;
         }
         .nav-section-label:first-child { padding-top: 4px; }
@@ -98,40 +98,41 @@
         .nav-item {
             display: flex; align-items: center; gap: 10px;
             padding: 9px 12px; border-radius: 10px;
-            color: rgba(255,255,255,0.80); font-size: 13px; font-weight: 500;
+            color: #475569; font-size: 13px; font-weight: 500;
             text-decoration: none; cursor: pointer;
             transition: all 0.15s; margin-bottom: 2px;
             white-space: nowrap;
         }
         .nav-item i { width: 16px; text-align: center; font-size: 13px; flex-shrink: 0; }
         .nav-item:hover {
-            background: rgba(0,0,0,0.12);
-            color: #fff;
+            background: #fff7ed;
+            color: #ea580c;
         }
+        .nav-item:hover i { color: #f97316; }
         .nav-item.active {
-            background: #1e3a8a;
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             color: #fff;
             font-weight: 600;
-            box-shadow: 0 4px 14px rgba(249,115,22,0.45);
+            box-shadow: 0 4px 14px rgba(249,115,22,0.35);
         }
         .nav-item.active i { color: #fff; }
 
         /* Bottom: logout */
         .sidebar-bottom {
             padding: 12px;
-            border-top: 1px solid rgba(0,0,0,0.10);
+            border-top: 1px solid #f1f5f9;
             flex-shrink: 0;
         }
         .logout-btn {
             display: flex; align-items: center; gap: 10px;
             width: 100%; padding: 9px 12px; border-radius: 10px;
-            background: rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.10);
-            color: rgba(255,255,255,0.80); font-size: 12.5px; font-weight: 500;
+            background: #fef2f2; border: 1px solid #fecaca;
+            color: #dc2626; font-size: 12.5px; font-weight: 500;
             cursor: pointer; font-family: inherit; transition: all 0.15s;
             text-align: left;
         }
         .logout-btn i { width: 16px; text-align: center; font-size: 13px; }
-        .logout-btn:hover { background: rgba(0,0,0,0.22); color: #fff; }
+        .logout-btn:hover { background: #fee2e2; color: #b91c1c; }
 
         /* ══ APP WRAPPER ══ */
         .app-wrapper { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
@@ -408,7 +409,22 @@
 
         /* ══ DARK MODE ══ */
         [data-theme="dark"] body { background:#0f1117; color:#e2e8f0; }
-        [data-theme="dark"] .sidebar { background: linear-gradient(180deg, #9a3412 0%, #c2410c 40%, #ea580c 100%); border-right-color: rgba(0,0,0,0.20); }
+        [data-theme="dark"] .sidebar { background: #161b2e; border-right-color: #2a2f45; }
+        [data-theme="dark"] .sidebar-header { border-bottom-color: #2a2f45; }
+        [data-theme="dark"] .sidebar-app-name { color: #f97316; }
+        [data-theme="dark"] .sidebar-app-sub { color: #64748b; }
+        [data-theme="dark"] .sidebar-user { border-bottom-color: #2a2f45; }
+        [data-theme="dark"] .sidebar-user-name { color: #e2e8f0; }
+        [data-theme="dark"] .sidebar-user-role { color: #64748b; }
+        [data-theme="dark"] .sidebar-nav { scrollbar-color: #2a2f45 transparent; }
+        [data-theme="dark"] .sidebar-nav::-webkit-scrollbar-thumb { background: #2a2f45; }
+        [data-theme="dark"] .nav-section-label { color: #475569; }
+        [data-theme="dark"] .nav-item { color: #94a3b8; }
+        [data-theme="dark"] .nav-item:hover { background: #2d1a0a; color: #fb923c; }
+        [data-theme="dark"] .nav-item:hover i { color: #f97316; }
+        [data-theme="dark"] .sidebar-bottom { border-top-color: #2a2f45; }
+        [data-theme="dark"] .logout-btn { background: #2d1515; border-color: #7f1d1d; color: #fca5a5; }
+        [data-theme="dark"] .logout-btn:hover { background: #3d1f1f; color: #fecaca; }
         [data-theme="dark"] .topbar { background:#161b2e; border-bottom-color:#2a2f45; }
         [data-theme="dark"] .topbar-title { color:#e2e8f0; }
         [data-theme="dark"] .topbar-date { color:#64748b; }

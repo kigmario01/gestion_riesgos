@@ -44,9 +44,9 @@
         </div>
         <div style="font-size:13px;font-weight:700;color:#b91c1c;flex:1;">¿Cómo interpretar la Matriz de Riesgos 5×5 de ISO 27001?</div>
         <span style="font-size:10px;font-weight:600;background:#fee2e2;color:#dc2626;padding:2px 9px;border-radius:20px;">ISO 27001 — Fase 4.4 · Evaluación del Riesgo</span>
-        <i class="fas fa-chevron-up gch" style="color:#dc2626;font-size:11px;transition:transform .2s;"></i>
+        <i class="fas fa-chevron-up gch" style="color:#dc2626;font-size:11px;transition:transform .2s;transform:rotate(180deg);"></i>
     </div>
-    <div style="padding:4px 18px 16px 18px;border-top:1px solid #fecaca;">
+    <div style="padding:4px 18px 16px 18px;border-top:1px solid #fecaca;display:none;">
         <p style="font-size:12.5px;color:#991b1b;margin-bottom:12px;line-height:1.6;">
             La matriz de riesgos es la <strong>herramienta visual principal</strong> del SGSI. Cruza el eje de Impacto (cuánto daño causa) con el eje de Probabilidad (qué tan probable es), generando una cuadrícula de 5×5 = 25 celdas que clasifica cada riesgo en su nivel correspondiente.
         </p>
