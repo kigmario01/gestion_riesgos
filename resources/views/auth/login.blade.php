@@ -7,6 +7,7 @@
     @vite(['resources/css/app.css'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>(function(){ document.documentElement.setAttribute('data-theme', localStorage.getItem('rg-theme') || 'light'); })();</script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -394,9 +395,47 @@
             .illus-img { max-width: 200px; }
             .sgsi-features { grid-template-columns: 1fr; }
         }
+
+        /* ── Theme toggle btn ── */
+        .theme-btn {
+            position: fixed; top: 16px; right: 16px; z-index: 100;
+            width: 38px; height: 38px; border-radius: 10px;
+            background: #fff; border: 1.5px solid #e5e7eb;
+            color: #64748b; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .theme-btn:hover { border-color: #f97316; color: #f97316; }
+
+        /* ── Dark mode ── */
+        [data-theme="dark"] body { background: #0f1117; }
+        [data-theme="dark"] .login-card { box-shadow: 0 24px 64px rgba(0,0,0,0.50); }
+        [data-theme="dark"] .panel-form {
+            background: #1a1f2e;
+        }
+        [data-theme="dark"] .logo-name { color: #f97316; }
+        [data-theme="dark"] .logo-sub { color: #64748b; }
+        [data-theme="dark"] .login-heading { color: #94a3b8; }
+        [data-theme="dark"] .form-label { color: #cbd5e1; }
+        [data-theme="dark"] .input-wrap input {
+            background: #0f1117; border-color: #2a2f45; color: #e2e8f0;
+        }
+        [data-theme="dark"] .input-wrap input::placeholder { color: #475569; }
+        [data-theme="dark"] .input-wrap input:focus {
+            border-color: #f97316; background: #161b2e;
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+        }
+        [data-theme="dark"] .error-box { background: #2d1515; border-color: #7f1d1d; color: #fca5a5; }
+        [data-theme="dark"] .success-box { background: #0d2318; border-color: #14532d; color: #86efac; }
+        [data-theme="dark"] .info-box { background: #1e2438; border-color: #2a2f45; color: #93c5fd; }
+        [data-theme="dark"] .info-box a { color: #fb923c !important; }
+        [data-theme="dark"] .theme-btn { background: #1a1f2e; border-color: #2a2f45; color: #94a3b8; }
+        [data-theme="dark"] .theme-btn:hover { border-color: #f97316; color: #f97316; }
     </style>
 </head>
 <body>
+
+<button id="loginThemeToggle" class="theme-btn" onclick="loginToggleTheme()" title="Cambiar tema"></button>
 
 <div class="login-card">
 
@@ -428,7 +467,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <label class="form-label" for="email">Email address</label>
+            <label class="form-label" for="email">Escribe tu correo electrónico</label>
             <div class="input-wrap">
                 <input type="email" id="email" name="email" value="{{ old('email') }}"
                        required autofocus placeholder="alex@email.com">
@@ -437,7 +476,7 @@
                 </span>
             </div>
 
-            <label class="form-label" for="password">Password</label>
+            <label class="form-label" for="password">Escribe tu contraseña</label>
             <div class="input-wrap">
                 <input type="password" id="password" name="password"
                        required placeholder="Enter your password">
@@ -446,7 +485,7 @@
                 </span>
             </div>
 
-            <button type="submit" class="btn-login">Login now</button>
+            <button type="submit" class="btn-login">Iniciar sesión</button>
         </form>
 
         <div class="info-box">
@@ -456,8 +495,8 @@
 
         <div class="info-box" style="margin-top:10px;">
             <svg viewBox="0 0 20 20" fill="currentColor" style="width:15px;height:15px;flex-shrink:0;color:#1d4ed8"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-            <span>¿Necesitas ayuda? Escríbele al <strong>administrador</strong>: <a href="mailto:admin@riskguard.com" style="color:#f97316;text-decoration:none;font-weight:600;">admin@riskguard.com</a></span>
-        </div>
+            <span>¿Necesitas ayuda? Escríbele al <strong>administrador</strong>: <a href="mailto:admin@riskguard.com" style="color:#f97316;text-decoration:none;font-weight:600;">mario.alvarezr@campusucc.edu.co</a></span>
+        </div>  
 
     </div>
 
@@ -507,5 +546,21 @@
 
 </div>
 
+<script>
+var LT_MOON = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>';
+var LT_SUN  = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+function loginUpdateIcon(t) {
+    var btn = document.getElementById('loginThemeToggle');
+    if (btn) btn.innerHTML = t === 'dark' ? LT_SUN : LT_MOON;
+}
+function loginToggleTheme() {
+    var curr = document.documentElement.getAttribute('data-theme');
+    var next = curr === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('rg-theme', next);
+    loginUpdateIcon(next);
+}
+loginUpdateIcon(document.documentElement.getAttribute('data-theme'));
+</script>
 </body>
 </html>
