@@ -135,7 +135,7 @@
     <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;color:#374151;">
         <div>
             <div style="font-size:10.5px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;">Motor de respaldo</div>
-            <div><code class="tag">mysqldump</code> via PHP exec()</div>
+            <div><code class="tag">PDO dump</code> (PostgreSQL compatible)</div>
         </div>
         <div>
             <div style="font-size:10.5px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;">Ubicación de archivos</div>
@@ -143,11 +143,11 @@
         </div>
         <div>
             <div style="font-size:10.5px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;">Base de datos</div>
-            <div><code class="tag">{{ config('database.connections.mysql.database') }}</code></div>
+            <div><code class="tag">{{ config('database.connections.' . config('database.default') . '.database') }}</code></div>
         </div>
         <div>
-            <div style="font-size:10.5px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;">Formato</div>
-            <div><code class="tag">.sql</code> comprimido</div>
+            <div style="font-size:10.5px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;">Respaldo automático</div>
+            <div><code class="tag">Diario</code> a medianoche (Colombia)</div>
         </div>
     </div>
 </div>
