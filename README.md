@@ -216,8 +216,8 @@ gestion_riesgos/
 
 ## 👨‍💻 Autor
 
-**Mario Álvarez**  
-Ingeniería de Sistemas — Universidad Cooperativa de Colombia · Grupo 4
+**Mario De Jesús Álvarez Ramos**  
+Ingeniería de Sistemas — Universidad Cooperativa de Colombia ·
 
 [![GitHub](https://img.shields.io/badge/GitHub-kigmario01-181717?style=flat-square&logo=github)](https://github.com/kigmario01)
 [![Email](https://img.shields.io/badge/Email-mario.alvarezr%40campusucc.edu.co-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:mario.alvarezr@campusucc.edu.co)
