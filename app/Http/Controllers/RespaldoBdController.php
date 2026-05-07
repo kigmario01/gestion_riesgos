@@ -16,8 +16,8 @@ class RespaldoBdController extends Controller
             ->paginate(15);
 
         $totalRespaldos = RespaldoBd::count();
-        $exitosos       = RespaldoBd::where('estado', 'exitoso')->count();
-        $ultimoRespaldo = RespaldoBd::where('estado', 'exitoso')->latest('created_at')->first();
+        $exitosos       = RespaldoBd::where('estado', 'completado')->count();
+        $ultimoRespaldo = RespaldoBd::where('estado', 'completado')->latest('created_at')->first();
 
         return view('respaldos.index', compact('respaldos', 'totalRespaldos', 'exitosos', 'ultimoRespaldo'));
     }
@@ -42,18 +42,18 @@ class RespaldoBdController extends Controller
 
         $driver = DB::connection()->getDriverName();
         if ($driver === 'mysql' && $this->tryMysqldump($db, $filePath, $errorMsg)) {
-            $estado = 'exitoso';
+            $estado = 'completado';
         } else {
             // Fallback: volcado completo vía PDO
             if ($this->tryPdoDump($db, $filePath, $errorMsg)) {
-                $estado = 'exitoso';
+                $estado = 'completado';
             }
         }
 
         $respaldo = RespaldoBd::create([
             'nombre_archivo' => $fileName,
             'ruta_archivo'   => 'backups/' . $fileName,
-            'tamanio_bytes'  => ($estado === 'exitoso' && file_exists($filePath)) ? filesize($filePath) : null,
+            'tamanio_bytes'  => ($estado === 'completado' && file_exists($filePath)) ? filesize($filePath) : null,
             'tipo'           => 'manual',
             'estado'         => $estado,
             'notas'          => $estado === 'fallido' ? $errorMsg : $request->notas,
@@ -64,13 +64,13 @@ class RespaldoBdController extends Controller
         BitacoraAuditoria::registrar(
             'exportar',
             'respaldos_bd',
-            'Respaldo de base de datos ' . ($estado === 'exitoso' ? 'generado exitosamente' : 'falló') . ': ' . $fileName,
+            'Respaldo de base de datos ' . ($estado === 'completado' ? 'generado exitosamente' : 'falló') . ': ' . $fileName,
             $respaldo->id,
             [],
             ['archivo' => $fileName, 'estado' => $estado]
         );
 
-        if ($estado === 'exitoso') {
+        if ($estado === 'completado') {
             return redirect()->route('respaldos.index')
                 ->with('success', 'Respaldo generado exitosamente: ' . $fileName);
         }
