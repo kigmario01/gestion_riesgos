@@ -15,7 +15,8 @@
 @push('styles')
 <style>
 .profile-header{display:flex;align-items:center;gap:20px;padding:24px 20px;border-bottom:1px solid #f1f5f9;}
-.profile-avatar{width:64px;height:64px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px;color:#fff;flex-shrink:0;}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:24px;color:#fff;flex-shrink:0;overflow:hidden;}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;}
 .role-badge{background:#eff6ff;color:#1d4ed8;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:600;display:inline-block;margin:2px;}
 .perm-list{padding:16px 20px;display:flex;flex-wrap:wrap;gap:8px;}
 .perm-item{background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:4px 10px;font-size:11px;color:#475569;font-weight:500;}
@@ -26,7 +27,13 @@
 
 <div class="panel">
     <div class="profile-header">
-        <div class="profile-avatar">{{ strtoupper(substr($usuario->name,0,2)) }}</div>
+        <div class="profile-avatar">
+            @if($usuario->avatar_url)
+                <img src="{{ $usuario->avatar_url }}" alt="">
+            @else
+                {{ strtoupper(substr($usuario->display_name,0,2)) }}
+            @endif
+        </div>
         <div style="flex:1;min-width:0;">
             <div style="font-size:20px;font-weight:700;color:#1e293b;">
                 {{ $usuario->name }}
