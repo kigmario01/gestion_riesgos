@@ -32,14 +32,17 @@ class RespaldoAutomatico extends Command
 
     private function tocaEjecutar(RespaldoConfig $config): bool
     {
-        $ahora     = now();
-        $horaActual = $ahora->format('H:i');
-        $horaProg   = substr($config->hora, 0, 5); // HH:MM
+        $ahora = now();
 
-        if ($horaActual !== $horaProg) return false;
+        // Construir el momento programado de hoy
+        [$h, $m] = explode(':', substr($config->hora, 0, 5));
+        $programado = $ahora->copy()->setTime((int)$h, (int)$m, 0);
 
-        // Si ya se ejecutó hoy a esta hora, no repetir
-        if ($config->ultimo_ejecutado && $config->ultimo_ejecutado->isToday()) return false;
+        // Si aún no llegó la hora programada hoy, esperar
+        if ($ahora->lt($programado)) return false;
+
+        // Si ya se ejecutó hoy, no repetir
+        if ($config->ultimo_ejecutado && $config->ultimo_ejecutado->isSameDay($ahora)) return false;
 
         return match ($config->frecuencia) {
             'diario'   => true,
