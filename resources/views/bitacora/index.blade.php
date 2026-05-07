@@ -33,9 +33,9 @@
         </div>
         <div style="font-size:13px;font-weight:700;color:#334155;flex:1;">¿Qué es la Bitácora de Auditoría y por qué es obligatoria en ISO 27001?</div>
         <span style="font-size:10px;font-weight:600;background:#f1f5f9;color:#475569;padding:2px 9px;border-radius:20px;">ISO 27001 — Cláusula 9.1 · Seguimiento y Medición</span>
-        <i class="fas fa-chevron-up gch" style="color:#475569;font-size:11px;transition:transform .2s;"></i>
+        <i class="fas fa-chevron-up gch" style="color:#475569;font-size:11px;transition:transform .2s;transform:rotate(180deg);"></i>
     </div>
-    <div style="padding:4px 18px 16px 18px;border-top:1px solid #e2e8f0;">
+    <div style="padding:4px 18px 16px 18px;border-top:1px solid #e2e8f0;display:none;">
         <p style="font-size:12.5px;color:#334155;margin-bottom:12px;line-height:1.6;">
             La bitácora es el <strong>registro inmutable de todas las acciones</strong> realizadas en el sistema. ISO 27001 (cláusula 9.1) exige mantener evidencia de que el SGSI está siendo monitoreado y controlado. Este registro es la principal fuente de evidencia en una auditoría.
         </p>

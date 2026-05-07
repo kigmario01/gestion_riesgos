@@ -87,7 +87,7 @@
             <td><span class="badge badge-{{ $respaldo->tipo }}">{{ strtoupper($respaldo->tipo) }}</span></td>
             <td><span class="size-badge">{{ $respaldo->tamanio_formateado }}</span></td>
             <td>
-                @if($respaldo->estado === 'exitoso')
+                @if(in_array($respaldo->estado, ['exitoso', 'completado']))
                 <span class="badge badge-activo"><i class="fas fa-check" style="font-size:9px;"></i> EXITOSO</span>
                 @elseif($respaldo->estado === 'fallido')
                 <span class="badge badge-inactivo"><i class="fas fa-times" style="font-size:9px;"></i> FALLIDO</span>
@@ -100,7 +100,7 @@
             <td style="font-size:11px;color:#94a3b8;max-width:180px;">{{ $respaldo->notas ? Str::limit($respaldo->notas, 45) : '—' }}</td>
             <td>
                 <div class="actions">
-                    @if($respaldo->estado === 'exitoso')
+                    @if(in_array($respaldo->estado, ['exitoso', 'completado']))
                     <a href="{{ route('respaldos.download', $respaldo) }}" class="btn btn-outline btn-xs" title="Descargar">
                         <i class="fas fa-download"></i>
                     </a>
