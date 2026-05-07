@@ -22,58 +22,57 @@
         /* ══ SIDEBAR ══ */
         .sidebar {
             width: 220px; height: 100vh;
-            background: rgba(15, 17, 35, 0.82);
-            backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-            border-right: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(180deg, #c2410c 0%, #ea580c 40%, #f97316 100%);
+            border-right: 1px solid rgba(0,0,0,0.12);
             display: flex; flex-direction: column;
             position: fixed; top: 0; left: 0; z-index: 200;
-            box-shadow: 4px 0 32px rgba(0,0,0,0.35);
+            box-shadow: 4px 0 32px rgba(234,88,12,0.35);
         }
 
         /* Header con logo y nombre app */
         .sidebar-header {
             padding: 20px 18px 16px;
             display: flex; align-items: center; gap: 11px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(0,0,0,0.10);
             flex-shrink: 0;
         }
         .sidebar-logo {
             width: 38px; height: 38px; flex-shrink: 0;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            background: rgba(255,255,255,0.20);
             border-radius: 11px; display: flex; align-items: center; justify-content: center;
             color: #fff; font-size: 16px;
-            box-shadow: 0 4px 14px rgba(249,115,22,0.45); text-decoration: none;
-            transition: transform 0.15s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15); text-decoration: none;
+            transition: transform 0.15s, background 0.15s;
         }
-        .sidebar-logo:hover { transform: scale(1.06); }
+        .sidebar-logo:hover { transform: scale(1.06); background: rgba(255,255,255,0.28); }
         .sidebar-app-name {
             font-size: 13.5px; font-weight: 700; color: #fff;
             letter-spacing: 0.2px; line-height: 1.2;
         }
         .sidebar-app-sub {
-            font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 400;
+            font-size: 10px; color: rgba(255,255,255,0.65); font-weight: 400;
         }
 
         /* Usuario */
         .sidebar-user {
             padding: 14px 18px;
             display: flex; align-items: center; gap: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(0,0,0,0.10);
             flex-shrink: 0;
         }
         .sidebar-user-avatar {
             width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-            background: linear-gradient(135deg, #f97316, #ea580c);
+            background: rgba(255,255,255,0.25);
             display: flex; align-items: center; justify-content: center;
             font-weight: 700; font-size: 11px; color: #fff;
-            border: 2px solid rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.40);
         }
         .sidebar-user-name {
-            font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.88);
+            font-size: 12.5px; font-weight: 600; color: #fff;
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .sidebar-user-role {
-            font-size: 10px; color: rgba(255,255,255,0.35);
+            font-size: 10px; color: rgba(255,255,255,0.70);
         }
 
         /* Nav scrollable */
@@ -81,16 +80,16 @@
             flex: 1; overflow-y: auto; overflow-x: hidden;
             padding: 10px 12px;
             scrollbar-width: thin;
-            scrollbar-color: rgba(255,255,255,0.08) transparent;
+            scrollbar-color: rgba(255,255,255,0.20) transparent;
         }
         .sidebar-nav::-webkit-scrollbar { width: 4px; }
         .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
-        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.20); border-radius: 4px; }
 
         /* Etiqueta de sección */
         .nav-section-label {
             font-size: 9.5px; font-weight: 700; letter-spacing: 1.2px;
-            color: rgba(255,255,255,0.25); text-transform: uppercase;
+            color: rgba(255,255,255,0.55); text-transform: uppercase;
             padding: 14px 8px 6px; display: block;
         }
         .nav-section-label:first-child { padding-top: 4px; }
@@ -99,39 +98,39 @@
         .nav-item {
             display: flex; align-items: center; gap: 10px;
             padding: 9px 12px; border-radius: 10px;
-            color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 500;
+            color: rgba(255,255,255,0.80); font-size: 13px; font-weight: 500;
             text-decoration: none; cursor: pointer;
             transition: all 0.15s; margin-bottom: 2px;
             white-space: nowrap;
         }
         .nav-item i { width: 16px; text-align: center; font-size: 13px; flex-shrink: 0; }
         .nav-item:hover {
-            background: rgba(255,255,255,0.06);
-            color: rgba(255,255,255,0.85);
+            background: rgba(0,0,0,0.12);
+            color: #fff;
         }
         .nav-item.active {
-            background: rgba(249,115,22,0.18);
-            color: #fdba74;
+            background: rgba(0,0,0,0.18);
+            color: #fff;
             font-weight: 600;
         }
-        .nav-item.active i { color: #f97316; }
+        .nav-item.active i { color: #fff; }
 
         /* Bottom: logout */
         .sidebar-bottom {
             padding: 12px;
-            border-top: 1px solid rgba(255,255,255,0.06);
+            border-top: 1px solid rgba(0,0,0,0.10);
             flex-shrink: 0;
         }
         .logout-btn {
             display: flex; align-items: center; gap: 10px;
             width: 100%; padding: 9px 12px; border-radius: 10px;
-            background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.12);
-            color: rgba(252,165,165,0.55); font-size: 12.5px; font-weight: 500;
+            background: rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.10);
+            color: rgba(255,255,255,0.80); font-size: 12.5px; font-weight: 500;
             cursor: pointer; font-family: inherit; transition: all 0.15s;
             text-align: left;
         }
         .logout-btn i { width: 16px; text-align: center; font-size: 13px; }
-        .logout-btn:hover { background: rgba(239,68,68,0.14); color: #fca5a5; }
+        .logout-btn:hover { background: rgba(0,0,0,0.22); color: #fff; }
 
         /* ══ APP WRAPPER ══ */
         .app-wrapper { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
@@ -408,7 +407,7 @@
 
         /* ══ DARK MODE ══ */
         [data-theme="dark"] body { background:#0f1117; color:#e2e8f0; }
-        [data-theme="dark"] .sidebar { background: rgba(10,11,22,0.88); border-right-color: rgba(255,255,255,0.05); }
+        [data-theme="dark"] .sidebar { background: linear-gradient(180deg, #9a3412 0%, #c2410c 40%, #ea580c 100%); border-right-color: rgba(0,0,0,0.20); }
         [data-theme="dark"] .topbar { background:#161b2e; border-bottom-color:#2a2f45; }
         [data-theme="dark"] .topbar-title { color:#e2e8f0; }
         [data-theme="dark"] .topbar-date { color:#64748b; }
@@ -670,9 +669,7 @@
 
         <div class="topbar-right">
             <span class="topbar-date">{{ now()->format('d M Y') }}</span>
-            <button id="themeToggle" class="notif-btn" onclick="toggleTheme()" title="Modo oscuro" style="cursor:pointer;border:none;font-family:inherit;">
-                <i class="fas fa-moon"></i>
-            </button>
+            <button id="themeToggle" class="notif-btn" onclick="toggleTheme()" title="Cambiar tema" style="cursor:pointer;border:none;font-family:inherit;"></button>
             <a href="{{ route('bitacora.index') }}" class="notif-btn" title="Bitácora de auditoría">
                 <i class="fas fa-bell"></i>
             </a>
@@ -710,9 +707,11 @@ function toggleTheme() {
     localStorage.setItem('rg-theme', next);
     updateThemeIcon(next);
 }
+var SVG_MOON = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>';
+var SVG_SUN  = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 function updateThemeIcon(t) {
     var btn = document.getElementById('themeToggle');
-    if (btn) btn.innerHTML = t === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    if (btn) btn.innerHTML = t === 'dark' ? SVG_SUN : SVG_MOON;
 }
 updateThemeIcon(document.documentElement.getAttribute('data-theme'));
 
