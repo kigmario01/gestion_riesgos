@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PerfilController extends Controller
 {
@@ -24,15 +23,13 @@ class PerfilController extends Controller
         $data = ['alias' => $request->alias ?: null];
 
         if ($request->hasFile('avatar')) {
-            // Borrar avatar anterior
-            if ($user->avatar) {
-                Storage::disk('public')->delete($user->avatar);
-            }
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            $file     = $request->file('avatar');
+            $mime     = $file->getMimeType();
+            $base64   = base64_encode(file_get_contents($file->getRealPath()));
+            $data['avatar'] = 'data:' . $mime . ';base64,' . $base64;
         }
 
-        if ($request->boolean('remove_avatar') && $user->avatar) {
-            Storage::disk('public')->delete($user->avatar);
+        if ($request->boolean('remove_avatar')) {
             $data['avatar'] = null;
         }
 
