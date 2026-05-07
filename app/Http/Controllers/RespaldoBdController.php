@@ -26,7 +26,8 @@ class RespaldoBdController extends Controller
     {
         $request->validate(['notas' => 'nullable|string|max:500']);
 
-        $db       = config('database.connections.mysql');
+        $conn     = config('database.default');
+        $db       = config("database.connections.{$conn}");
         $fileName = 'backup_' . now()->format('Y-m-d_H-i-s') . '.sql';
         $dir      = storage_path('app/backups');
         $filePath = $dir . DIRECTORY_SEPARATOR . $fileName;
@@ -39,7 +40,8 @@ class RespaldoBdController extends Controller
         $estado = 'fallido';
         $errorMsg = '';
 
-        if ($this->tryMysqldump($db, $filePath, $errorMsg)) {
+        $driver = DB::connection()->getDriverName();
+        if ($driver === 'mysql' && $this->tryMysqldump($db, $filePath, $errorMsg)) {
             $estado = 'exitoso';
         } else {
             // Fallback: volcado completo vía PDO
@@ -149,36 +151,59 @@ class RespaldoBdController extends Controller
     private function tryPdoDump(array $db, string $filePath, string &$errorMsg): bool
     {
         try {
-            $pdo = DB::connection()->getPdo();
+            $driver   = DB::connection()->getDriverName();
+            $pdo      = DB::connection()->getPdo();
             $database = $db['database'];
 
             $sql  = "-- RiskGuard TI - Backup generado el " . now()->toDateTimeString() . "\n";
-            $sql .= "-- Base de datos: {$database}\n";
-            $sql .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
+            $sql .= "-- Base de datos: {$database} ({$driver})\n\n";
 
-            // Obtener todas las tablas
-            $tables = $pdo->query("SHOW FULL TABLES FROM `{$database}` WHERE Table_type = 'BASE TABLE'")->fetchAll(\PDO::FETCH_COLUMN);
+            if ($driver === 'pgsql') {
+                // PostgreSQL
+                $tables = $pdo->query(
+                    "SELECT tablename FROM pg_tables WHERE schemaname = 'public' ORDER BY tablename"
+                )->fetchAll(\PDO::FETCH_COLUMN);
 
-            foreach ($tables as $table) {
-                // DROP + CREATE
-                $createRow = $pdo->query("SHOW CREATE TABLE `{$table}`")->fetch(\PDO::FETCH_ASSOC);
-                $createSql = $createRow['Create Table'] ?? '';
-                $sql .= "DROP TABLE IF EXISTS `{$table}`;\n";
-                $sql .= $createSql . ";\n\n";
+                foreach ($tables as $table) {
+                    $sql .= "-- Tabla: {$table}\n";
 
-                // Datos
-                $rows = $pdo->query("SELECT * FROM `{$table}`")->fetchAll(\PDO::FETCH_ASSOC);
-                if (count($rows) > 0) {
-                    $cols = '`' . implode('`, `', array_keys($rows[0])) . '`';
-                    foreach ($rows as $row) {
-                        $vals = array_map(fn($v) => $v === null ? 'NULL' : $pdo->quote($v), array_values($row));
-                        $sql .= "INSERT INTO `{$table}` ({$cols}) VALUES (" . implode(', ', $vals) . ");\n";
+                    $rows = $pdo->query("SELECT * FROM \"{$table}\"")->fetchAll(\PDO::FETCH_ASSOC);
+                    if (count($rows) > 0) {
+                        $cols = '"' . implode('", "', array_keys($rows[0])) . '"';
+                        $sql .= "DELETE FROM \"{$table}\";\n";
+                        foreach ($rows as $row) {
+                            $vals = array_map(fn($v) => $v === null ? 'NULL' : $pdo->quote($v), array_values($row));
+                            $sql .= "INSERT INTO \"{$table}\" ({$cols}) VALUES (" . implode(', ', $vals) . ");\n";
+                        }
                     }
                     $sql .= "\n";
                 }
-            }
+            } else {
+                // MySQL
+                $sql .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
 
-            $sql .= "SET FOREIGN_KEY_CHECKS=1;\n";
+                $tables = $pdo->query(
+                    "SHOW FULL TABLES FROM `{$database}` WHERE Table_type = 'BASE TABLE'"
+                )->fetchAll(\PDO::FETCH_COLUMN);
+
+                foreach ($tables as $table) {
+                    $createRow = $pdo->query("SHOW CREATE TABLE `{$table}`")->fetch(\PDO::FETCH_ASSOC);
+                    $sql .= "DROP TABLE IF EXISTS `{$table}`;\n";
+                    $sql .= ($createRow['Create Table'] ?? '') . ";\n\n";
+
+                    $rows = $pdo->query("SELECT * FROM `{$table}`")->fetchAll(\PDO::FETCH_ASSOC);
+                    if (count($rows) > 0) {
+                        $cols = '`' . implode('`, `', array_keys($rows[0])) . '`';
+                        foreach ($rows as $row) {
+                            $vals = array_map(fn($v) => $v === null ? 'NULL' : $pdo->quote($v), array_values($row));
+                            $sql .= "INSERT INTO `{$table}` ({$cols}) VALUES (" . implode(', ', $vals) . ");\n";
+                        }
+                        $sql .= "\n";
+                    }
+                }
+
+                $sql .= "SET FOREIGN_KEY_CHECKS=1;\n";
+            }
 
             file_put_contents($filePath, $sql);
             return file_exists($filePath) && filesize($filePath) > 100;
