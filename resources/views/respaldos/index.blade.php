@@ -27,6 +27,12 @@
 .stat-num{font-size:24px;font-weight:700;color:#1e293b;}
 .stat-lbl{font-size:11px;color:#94a3b8;margin-top:2px;}
 .size-badge{background:#f8fafc;color:#475569;border:1px solid #e2e8f0;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;}
+[data-theme="dark"] .stat-box{background:#1a1f2e;border-color:#2a2f45;}
+[data-theme="dark"] .stat-num{color:#e2e8f0;}
+[data-theme="dark"] .stat-icon.blue{background:#1e2d4a;color:#60a5fa;}
+[data-theme="dark"] .stat-icon.green{background:#0d2318;color:#4ade80;}
+[data-theme="dark"] .stat-icon.slate{background:#1e2438;color:#94a3b8;}
+[data-theme="dark"] .size-badge{background:#1e2438;color:#94a3b8;border-color:#2a2f45;}
 </style>
 @endpush
 
