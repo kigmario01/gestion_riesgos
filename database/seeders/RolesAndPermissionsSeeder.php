@@ -34,59 +34,72 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::firstOrCreate(['name' => $permiso, 'guard_name' => 'web']);
         }
 
-        // ROLES
+        // ROLES — syncPermissions solo si el rol se acaba de crear
+        // Si el rol ya existe en BD, no se sobreescriben los permisos modificados desde la UI
         $po = Role::firstOrCreate(['name' => 'product_owner', 'guard_name' => 'web']);
-        $po->syncPermissions([
-            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
-            'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
-            'reportes.generar', 'bitacora.ver',
-            'usuarios.ver', 'roles.ver', 'evidencias.ver',
-        ]);
+        if ($po->wasRecentlyCreated) {
+            $po->syncPermissions([
+                'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+                'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
+                'reportes.generar', 'bitacora.ver',
+                'usuarios.ver', 'roles.ver', 'evidencias.ver',
+            ]);
+        }
 
         $sm = Role::firstOrCreate(['name' => 'scrum_master', 'guard_name' => 'web']);
-        $sm->syncPermissions([
-            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
-            'mitigacion.ver', 'matriz.ver', 'matriz.exportar',
-            'reportes.generar', 'bitacora.ver',
-            'usuarios.ver', 'roles.ver',
-        ]);
+        if ($sm->wasRecentlyCreated) {
+            $sm->syncPermissions([
+                'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+                'mitigacion.ver', 'matriz.ver', 'matriz.exportar',
+                'reportes.generar', 'bitacora.ver',
+                'usuarios.ver', 'roles.ver',
+            ]);
+        }
 
         $frontend = Role::firstOrCreate(['name' => 'frontend', 'guard_name' => 'web']);
-        $frontend->syncPermissions([
-            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
-            'mitigacion.ver', 'matriz.ver', 'matriz.exportar', 'reportes.generar',
-        ]);
+        if ($frontend->wasRecentlyCreated) {
+            $frontend->syncPermissions([
+                'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+                'mitigacion.ver', 'matriz.ver', 'matriz.exportar', 'reportes.generar',
+            ]);
+        }
 
         $backend = Role::firstOrCreate(['name' => 'backend', 'guard_name' => 'web']);
-        $backend->syncPermissions([
-            'dashboard.ver',
-            'activos.ver', 'activos.crear', 'activos.editar', 'activos.eliminar',
-            'amenazas.ver', 'amenazas.crear', 'amenazas.editar', 'amenazas.eliminar',
-            'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
-            'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar', 'mitigacion.aprobar',
-            'matriz.ver', 'matriz.exportar', 'reportes.generar',
-            'bitacora.ver',
-            'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
-            'roles.ver', 'roles.editar',
-            'basedatos.ver', 'basedatos.respaldar', 'basedatos.configurar',
-        ]);
+        if ($backend->wasRecentlyCreated) {
+            $backend->syncPermissions([
+                'dashboard.ver',
+                'activos.ver', 'activos.crear', 'activos.editar', 'activos.eliminar',
+                'amenazas.ver', 'amenazas.crear', 'amenazas.editar', 'amenazas.eliminar',
+                'evaluaciones.ver', 'evaluaciones.crear', 'evaluaciones.editar', 'evaluaciones.calcular',
+                'mitigacion.ver', 'mitigacion.crear', 'mitigacion.editar', 'mitigacion.aprobar',
+                'matriz.ver', 'matriz.exportar', 'reportes.generar',
+                'bitacora.ver',
+                'usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar',
+                'roles.ver', 'roles.editar',
+                'basedatos.ver', 'basedatos.respaldar', 'basedatos.configurar',
+            ]);
+        }
 
         $bd = Role::firstOrCreate(['name' => 'base_datos', 'guard_name' => 'web']);
-        $bd->syncPermissions([
-            'dashboard.ver', 'activos.ver', 'activos.crear', 'activos.editar',
-            'amenazas.ver', 'amenazas.crear', 'evaluaciones.ver', 'mitigacion.ver',
-            'matriz.ver', 'matriz.exportar', 'reportes.generar', 'usuarios.ver',
-            'basedatos.ver', 'basedatos.configurar', 'basedatos.respaldar',
-        ]);
+        if ($bd->wasRecentlyCreated) {
+            $bd->syncPermissions([
+                'dashboard.ver', 'activos.ver', 'activos.crear', 'activos.editar',
+                'amenazas.ver', 'amenazas.crear', 'evaluaciones.ver', 'mitigacion.ver',
+                'matriz.ver', 'matriz.exportar', 'reportes.generar', 'usuarios.ver',
+                'basedatos.ver', 'basedatos.configurar', 'basedatos.respaldar',
+            ]);
+        }
 
         $auditoria = Role::firstOrCreate(['name' => 'auditoria', 'guard_name' => 'web']);
-        $auditoria->syncPermissions([
-            'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
-            'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
-            'reportes.generar', 'bitacora.ver',
-            'evidencias.ver', 'evidencias.aprobar',
-            'usuarios.ver', 'roles.ver',
-        ]);
+        if ($auditoria->wasRecentlyCreated) {
+            $auditoria->syncPermissions([
+                'dashboard.ver', 'activos.ver', 'amenazas.ver', 'evaluaciones.ver',
+                'mitigacion.ver', 'mitigacion.aprobar', 'matriz.ver', 'matriz.exportar',
+                'reportes.generar', 'bitacora.ver',
+                'evidencias.ver', 'evidencias.aprobar',
+                'usuarios.ver', 'roles.ver',
+            ]);
+        }
 
         // USUARIOS DE PRUEBA
         $admin = User::firstOrCreate(
