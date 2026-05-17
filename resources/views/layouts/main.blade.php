@@ -7,6 +7,8 @@
     <title>@yield('title', 'RiskGuard TI') — Gestión de Riesgos</title>
     <meta name="description" content="@yield('meta-description', 'RiskGuard TI — Sistema de Gestión de Seguridad de la Información basado en ISO/IEC 27001. Gestiona riesgos, activos, amenazas y planes de mitigación.')">
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link rel="preload" href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet"></noscript>
@@ -41,12 +43,12 @@
         }
         .sidebar-logo {
             width: 38px; height: 38px; flex-shrink: 0;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             border-radius: 11px; display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 16px;
+            overflow: hidden;
             box-shadow: 0 4px 14px rgba(249,115,22,0.40); text-decoration: none;
             transition: transform 0.15s;
         }
+        .sidebar-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sidebar-logo:hover { transform: scale(1.06); }
         .sidebar-app-name {
             font-size: 13.5px; font-weight: 700; color: #1e3a8a;
@@ -545,6 +547,51 @@
         [data-theme="dark"] .kanban-empty { background:#1e2438 !important; border-color:#2a2f45 !important; color:#475569 !important; }
         [data-theme="dark"] .text-adaptive { color:#e2e8f0 !important; }
 
+        /* ── Dark mode: corrección de textos oscuros fijos (inline / estilos locales) ── */
+        /* Texto oscuro casi negro → claro legible */
+        [data-theme="dark"] [style*="color:#1e293b"],
+        [data-theme="dark"] [style*="color: #1e293b"],
+        [data-theme="dark"] [style*="color:#0f172a"],
+        [data-theme="dark"] [style*="color: #0f172a"],
+        [data-theme="dark"] [style*="color:#111827"],
+        [data-theme="dark"] [style*="color: #111827"],
+        [data-theme="dark"] [style*="color:#1f2937"],
+        [data-theme="dark"] [style*="color: #1f2937"],
+        [data-theme="dark"] [style*="color:#1e3a8a"],
+        [data-theme="dark"] [style*="color: #1e3a8a"] { color:#e2e8f0 !important; }
+        /* Texto gris medio → gris claro */
+        [data-theme="dark"] [style*="color:#374151"],
+        [data-theme="dark"] [style*="color: #374151"],
+        [data-theme="dark"] [style*="color:#334155"],
+        [data-theme="dark"] [style*="color: #334155"],
+        [data-theme="dark"] [style*="color:#475569"],
+        [data-theme="dark"] [style*="color: #475569"] { color:#cbd5e1 !important; }
+
+        /* Bloques informativos ISO con fondo claro fijo */
+        [data-theme="dark"] [style*="background:rgba(255,255,255,0.65)"],
+        [data-theme="dark"] [style*="background: rgba(255,255,255,0.65)"] { background:rgba(255,255,255,0.05) !important; }
+        [data-theme="dark"] [style*="background:#f8fafc"],
+        [data-theme="dark"] [style*="background: #f8fafc"],
+        [data-theme="dark"] [style*="background:#f9fafb"],
+        [data-theme="dark"] [style*="background: #f9fafb"],
+        [data-theme="dark"] [style*="background:#f1f5f9"],
+        [data-theme="dark"] [style*="background: #f1f5f9"] { background:#161b2e !important; border-color:#2a2f45 !important; }
+        /* Círculos numerados de las guías ISO (mantener legibles) */
+        [data-theme="dark"] [style*="background:#f1f5f9"][style*="border-radius:50%"],
+        [data-theme="dark"] [style*="background:#fee2e2"][style*="border-radius:50%"],
+        [data-theme="dark"] [style*="background:#ffedd5"][style*="border-radius:50%"],
+        [data-theme="dark"] [style*="background:#dbeafe"][style*="border-radius:50%"] { background:#2a2f45 !important; }
+
+        /* Clases definidas en <style> locales de las vistas */
+        [data-theme="dark"] .guia-paso { color:#cbd5e1 !important; }
+        [data-theme="dark"] .matriz-title { color:#e2e8f0 !important; }
+        [data-theme="dark"] .ley-item { color:#94a3b8 !important; }
+        [data-theme="dark"] .stat-num { color:#e2e8f0 !important; }
+        [data-theme="dark"] .stat-value { color:#e2e8f0 !important; }
+        [data-theme="dark"] .stat-label { color:#64748b !important; }
+        [data-theme="dark"] .role-name { color:#e2e8f0 !important; }
+        [data-theme="dark"] .perm-label { color:#cbd5e1 !important; }
+
     </style>
 </head>
 <body>
@@ -555,7 +602,7 @@
 
     {{-- Header --}}
     <div class="sidebar-header">
-        <a href="{{ route('dashboard') }}" class="sidebar-logo" aria-label="RiskGuard TI — Ir al dashboard"><i class="fas fa-shield-alt" aria-hidden="true"></i></a>
+        <a href="{{ route('dashboard') }}" class="sidebar-logo" aria-label="RiskGuard TI — Ir al dashboard"><img src="{{ asset('images/logo.png') }}" alt="RiskGuard TI"></a>
         <div>
             <div class="sidebar-app-name">RiskGuard TI</div>
             <div class="sidebar-app-sub">Gestión de Riesgos</div>
