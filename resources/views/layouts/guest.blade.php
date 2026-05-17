@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Gestión de Riesgos TI') }}</title>
 
+        <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -18,7 +21,8 @@
         <div class="flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
             <div class="w-full max-w-md">
                 <div class="text-center mb-8">
-                    <x-application-logo class="mx-auto h-12 w-auto text-slate-900" />
+                    <img src="{{ asset('images/logo.png') }}" alt="RiskGuard TI"
+                         class="mx-auto h-20 w-20 rounded-2xl object-cover shadow-md">
                     <h1 class="mt-5 text-2xl font-semibold tracking-tight">Gestión de Riesgos TI</h1>
                     <p class="mt-2 text-sm text-slate-500">Accede con tu usuario para continuar.</p>
                 </div>

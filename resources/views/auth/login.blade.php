@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión — RiskGuard TI</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
     @vite(['resources/css/app.css'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -52,12 +54,19 @@
             width: 42px;
             height: 42px;
             flex-shrink: 0;
-            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             border-radius: 12px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 14px rgba(249,115,22,0.40);
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .logo-name {
@@ -444,7 +453,7 @@
 
         <div class="logo-area">
             <div class="logo-icon">
-                <svg viewBox="0 0 24 24" fill="white" style="width:20px;height:20px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5zm-1 3v4h2V8h-2zm0 6v2h2v-2h-2z"/></svg>
+                <img src="{{ asset('images/logo.png') }}" alt="RiskGuard TI">
             </div>
             <div>
                 <div class="logo-name">RiskGuard TI</div>
