@@ -3,7 +3,7 @@
 FROM composer:2.8 AS vendor
 WORKDIR /src
 COPY composer.json composer.lock* ./
-RUN composer install --no-interaction --prefer-dist --no-progress --no-dev --optimize-autoloader
+RUN composer install --no-interaction --prefer-dist --no-progress --no-dev --optimize-autoloader --no-scripts
 
 FROM node:22-alpine AS frontend
 WORKDIR /src
@@ -56,6 +56,8 @@ RUN apt-get update \
 COPY --from=vendor /src/vendor ./vendor
 COPY --from=frontend /src/public/build ./public/build
 COPY . .
+
+RUN php artisan package:discover --ansi
 
 RUN cp docker/php/php.ini /usr/local/etc/php/php.ini \
     && cp docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf \
