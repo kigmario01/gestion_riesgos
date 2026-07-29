@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS riskguard;
+CREATE USER IF NOT EXISTS 'riskguard'@'%' IDENTIFIED BY 'riskguard';
+GRANT ALL PRIVILEGES ON riskguard.* TO 'riskguard'@'%';
+FLUSH PRIVILEGES;
