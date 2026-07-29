@@ -1,47 +1,81 @@
-FROM php:8.3-fpm-alpine
+# syntax=docker/dockerfile:1.7
 
-# System dependencies
-RUN apk add --no-cache \
-    git curl zip unzip \
-    libpng-dev libzip-dev libxml2-dev oniguruma-dev \
-    freetype-dev libjpeg-turbo-dev \
-    postgresql-dev \
-    nginx supervisor \
-    nodejs npm
+FROM composer:2.8 AS vendor
+WORKDIR /src
+COPY composer.json composer.lock* ./
+RUN composer install --no-interaction --prefer-dist --no-progress --no-dev --optimize-autoloader
 
-# PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-        pdo pdo_mysql pdo_pgsql pgsql \
-        mbstring bcmath gd zip xml pcntl opcache
-
-# Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-WORKDIR /app
-
-# Install PHP dependencies
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
-
-# Install Node dependencies and build frontend
-COPY package.json package-lock.json ./
-RUN npm ci
-
-COPY . .
-
+FROM node:22-alpine AS frontend
+WORKDIR /src
+COPY package*.json ./
+RUN npm ci --no-audit --no-fund
+COPY resources ./resources
+COPY vite.config.js tailwind.config.js postcss.config.js ./
 RUN npm run build
 
-# Permissions
-RUN chmod -R 775 storage bootstrap/cache \
-    && chown -R www-data:www-data storage bootstrap/cache /app 2>/dev/null || true
+FROM php:8.3-fpm-bookworm AS production
 
-# Nginx config
-COPY docker/nginx.conf /etc/nginx/nginx.conf
+ENV APP_ENV=production \
+    APP_DEBUG=false \
+    PHP_OPCACHE_ENABLE=1 \
+    PHP_OPCACHE_MEMORY_CONSUMPTION=128 \
+    PHP_OPCACHE_VALIDATE_TIMESTAMPS=0 \
+    PHP_OPCACHE_REVALIDATE_FREQ=0 \
+    PHP_UPLOAD_MAX_FILESIZE=20M \
+    PHP_POST_MAX_SIZE=20M \
+    PHP_MAX_EXECUTION_TIME=60
 
-# Supervisor config
-COPY docker/supervisord.conf /etc/supervisord.conf
+WORKDIR /var/www/html
 
-EXPOSE 8000
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        git \
+        unzip \
+        zip \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
+        libonig-dev \
+        libxml2-dev \
+        libicu-dev \
+        libzip-dev \
+        libpq-dev \
+        default-mysql-client \
+        procps \
+        supervisor \
+        logrotate \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" pdo_mysql pcntl mbstring bcmath gd zip opcache intl pdo_pgsql pgsql \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apt-get clean \
+    && rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
-CMD ["/bin/sh", "-c", "php artisan config:cache && php artisan route:clear && php artisan route:cache && php artisan view:cache && php artisan migrate --force && php artisan db:seed --force && supervisord -c /etc/supervisord.conf"]
+COPY --from=vendor /src/vendor ./vendor
+COPY --from=frontend /src/public/build ./public/build
+COPY . .
+
+RUN cp docker/php/php.ini /usr/local/etc/php/php.ini \
+    && cp docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf \
+    && cp docker/php/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf \
+    && cp docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini \
+    && cp docker/nginx/nginx.conf /etc/nginx/nginx.conf \
+    && cp docker/logrotate/riskguard.conf /etc/logrotate.d/riskguard \
+    && cp docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf \
+    && chmod +x docker/scripts/entrypoint.sh docker/scripts/backup-mysql.sh docker/scripts/restore-mysql.sh docker/scripts/cleanup-backups.sh \
+    && mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache public/uploads \
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache public/uploads \
+    && find /var/www/html -type d -exec chmod 755 {} + \
+    && find /var/www/html -type f -exec chmod 644 {} +
+
+EXPOSE 9000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD php-fpm -t >/dev/null || exit 1
+
+USER www-data
+
+ENTRYPOINT ["/var/www/html/docker/scripts/entrypoint.sh"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
