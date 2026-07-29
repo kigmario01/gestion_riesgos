@@ -93,14 +93,16 @@ services:
     image: mysql:8.4
     container_name: riskguard-mysql
     restart: unless-stopped
-    command: --default-authentication-plugin=caching_sha2_password --innodb_log_file_size=256M --sql_mode="STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    command: >
+      --innodb-redo-log-capacity=268435456
+      --sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-riskguard_root}
       MYSQL_DATABASE: ${DB_DATABASE:-riskguard}
       MYSQL_USER: ${DB_USERNAME:-riskguard}
       MYSQL_PASSWORD: ${DB_PASSWORD:-riskguard}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data_fresh:/var/lib/mysql
       - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
@@ -127,7 +129,7 @@ services:
       - riskguard_internal
 
 volumes:
-  mysql_data:
+  mysql_data_fresh:
   redis_data:
   app_storage:
   app_bootstrap:
