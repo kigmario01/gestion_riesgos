@@ -53,9 +53,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
+COPY . .
 COPY --from=vendor /src/vendor ./vendor
 COPY --from=frontend /src/public/build ./public/build
-COPY . .
 
 RUN php artisan package:discover --ansi
 
@@ -63,7 +63,6 @@ RUN cp docker/php/php.ini /usr/local/etc/php/php.ini \
     && cp docker/php/www.conf /usr/local/etc/php-fpm.d/www.conf \
     && cp docker/php/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf \
     && cp docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini \
-    && cp docker/nginx/nginx.conf /etc/nginx/nginx.conf \
     && cp docker/logrotate/riskguard.conf /etc/logrotate.d/riskguard \
     && cp docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf \
     && chmod +x docker/scripts/entrypoint.sh docker/scripts/backup-mysql.sh docker/scripts/restore-mysql.sh docker/scripts/cleanup-backups.sh \
@@ -76,8 +75,6 @@ RUN cp docker/php/php.ini /usr/local/etc/php/php.ini \
 EXPOSE 9000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD php-fpm -t >/dev/null || exit 1
-
-USER www-data
 
 ENTRYPOINT ["/var/www/html/docker/scripts/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
