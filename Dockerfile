@@ -57,6 +57,12 @@ COPY . .
 COPY --from=vendor /src/vendor ./vendor
 COPY --from=frontend /src/public/build ./public/build
 
+RUN chmod +x \
+    /var/www/html/docker/scripts/entrypoint.sh \
+    /var/www/html/docker/scripts/backup-mysql.sh \
+    /var/www/html/docker/scripts/restore-mysql.sh \
+    /var/www/html/docker/scripts/cleanup-backups.sh
+
 RUN php artisan package:discover --ansi
 
 RUN cp docker/php/php.ini /usr/local/etc/php/php.ini \
@@ -65,7 +71,6 @@ RUN cp docker/php/php.ini /usr/local/etc/php/php.ini \
     && cp docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini \
     && cp docker/logrotate/riskguard.conf /etc/logrotate.d/riskguard \
     && cp docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf \
-    && chmod +x docker/scripts/entrypoint.sh docker/scripts/backup-mysql.sh docker/scripts/restore-mysql.sh docker/scripts/cleanup-backups.sh \
     && mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache public/uploads \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache public/uploads \
@@ -76,5 +81,5 @@ EXPOSE 9000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD php-fpm -t >/dev/null || exit 1
 
-ENTRYPOINT ["/var/www/html/docker/scripts/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/var/www/html/docker/scripts/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
