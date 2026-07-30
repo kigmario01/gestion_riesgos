@@ -121,6 +121,7 @@ services:
       - ./public/uploads:/var/www/html/public/uploads:ro
     networks:
       - internal
+      - edge
     depends_on:
       app:
         condition: service_healthy
@@ -176,3 +177,5 @@ networks:
   internal:
     driver: bridge
     internal: true
+  edge:
+    driver: bridge
