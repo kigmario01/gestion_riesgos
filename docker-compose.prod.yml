@@ -153,7 +153,8 @@ services:
   redis:
     image: redis:7.2-alpine
     restart: unless-stopped
-    user: "redis"
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?}
     command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD:?}"]
     volumes:
       - redis_data:/data
