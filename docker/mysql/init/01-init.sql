@@ -1,4 +1,2 @@
-CREATE DATABASE IF NOT EXISTS riskguard;
-CREATE USER IF NOT EXISTS 'riskguard'@'%' IDENTIFIED BY 'riskguard';
-GRANT ALL PRIVILEGES ON riskguard.* TO 'riskguard'@'%';
-FLUSH PRIVILEGES;
+-- The official MySQL image creates the database and application user from
+-- MYSQL_DATABASE, MYSQL_USER and MYSQL_PASSWORD supplied by Docker Compose.

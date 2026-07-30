@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -304,12 +305,24 @@ return new class extends Migration
             ],
         ];
 
+        $userId = DB::table('users')->value('id');
+        if (!$userId) {
+            $userId = DB::table('users')->insertGetId([
+                'name' => 'Sistema',
+                'email' => 'sistema@riskguard.local',
+                'password' => Hash::make('password'),
+                'activo' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
         foreach ($amenazas as $amenaza) {
             DB::table('amenazas')->updateOrInsert(
                 ['codigo' => $amenaza['codigo']],
                 array_merge($amenaza, [
                     'estado' => 'activa',
-                    'registrado_por' => 1,
+                    'registrado_por' => $userId ?? 1,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ])
