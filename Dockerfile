@@ -15,16 +15,6 @@ RUN npm run build
 
 FROM php:8.3-fpm-bookworm AS production
 
-ENV APP_ENV=production \
-    APP_DEBUG=false \
-    PHP_OPCACHE_ENABLE=1 \
-    PHP_OPCACHE_MEMORY_CONSUMPTION=128 \
-    PHP_OPCACHE_VALIDATE_TIMESTAMPS=0 \
-    PHP_OPCACHE_REVALIDATE_FREQ=0 \
-    PHP_UPLOAD_MAX_FILESIZE=20M \
-    PHP_POST_MAX_SIZE=20M \
-    PHP_MAX_EXECUTION_TIME=60
-
 WORKDIR /var/www/html
 
 RUN apt-get update \
