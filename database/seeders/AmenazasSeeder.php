@@ -312,7 +312,7 @@ class AmenazasSeeder extends Seeder
             $userId = DB::table('users')->insertGetId([
                 'name' => 'Sistema',
                 'email' => 'sistema@riskguard.local',
-                'password' => Hash::make('password'),
+                'password' => Hash::make(env('SEEDER_SYSTEM_PASSWORD', 'password')),
                 'activo' => true,
                 'created_at' => now(),
                 'updated_at' => now(),

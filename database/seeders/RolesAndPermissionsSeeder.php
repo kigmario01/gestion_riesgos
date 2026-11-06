@@ -101,12 +101,15 @@ class RolesAndPermissionsSeeder extends Seeder
             ]);
         }
 
-        // USUARIOS DE PRUEBA
+        // USUARIOS DE PRUEBA (Credenciales parametrizables por entorno)
+        $adminPassword = env('SEEDER_ADMIN_PASSWORD', 'Admin1234!');
+        $scrumPassword = env('SEEDER_SCRUM_PASSWORD', 'Scrum1234!');
+
         $admin = User::firstOrCreate(
             ['email' => 'admin@gestion.com'],
             [
                 'name'     => 'Administrador',
-                'password' => Hash::make('Admin1234!'),
+                'password' => Hash::make($adminPassword),
                 'activo'   => true,
             ]
         );
@@ -116,7 +119,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ['email' => 'mario.alvarez@gestion.com'],
             [
                 'name'     => 'Mario Álvarez',
-                'password' => Hash::make('Scrum1234!'),
+                'password' => Hash::make($scrumPassword),
                 'activo'   => true,
             ]
         );
