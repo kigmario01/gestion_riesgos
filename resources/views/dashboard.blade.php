@@ -3,66 +3,101 @@
 @section('title', 'Dashboard')
 
 @section('topbar-left')
-    <div class="topbar-icon"><i class="fas fa-chart-pie"></i></div>
+    <div class="topbar-icon" style="transition:transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);" onmouseover="this.style.transform='scale(1.15) rotate(8deg)'" onmouseout="this.style.transform='scale(1)'">
+        <i class="fas fa-chart-pie"></i>
+    </div>
     <div>
         <div class="topbar-title">Dashboard General</div>
     </div>
 @endsection
 
 @section('topbar-right')
-    <a href="{{ route('evaluaciones.index') }}" class="btn btn-outline btn-sm"><i class="fas fa-layer-group"></i> Todos los riesgos</a>
-    <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Nuevo Riesgo</a>
+    <a href="{{ route('evaluaciones.index') }}" class="btn btn-outline btn-sm">
+        <i class="fas fa-layer-group"></i> Todos los riesgos
+    </a>
+    <a href="{{ route('evaluaciones.create') }}" class="btn btn-primary btn-sm btn-pulse">
+        <i class="fas fa-plus"></i> Nuevo Riesgo
+    </a>
 @endsection
 
 @section('content')
 
 @if($totalCritico > 0)
-<div class="alert alert-error">
-    <i class="fas fa-exclamation-triangle"></i>
+<div class="alert alert-error" style="border-left: 4px solid #ef4444; box-shadow: 0 4px 14px rgba(239,68,68,0.12);">
+    <i class="fas fa-exclamation-triangle fa-beat" style="--fa-animation-duration: 2s;"></i>
     <div>
         <strong>{{ $totalCritico }} riesgo(s) crítico(s) requieren atención inmediata.</strong>
-        Revisa la <a href="{{ route('matriz.index') }}" style="color:#dc2626;font-weight:600;">matriz de riesgos</a> y asigna planes de mitigación urgentes.
+        Revisa la <a href="{{ route('matriz.index') }}" style="color:#dc2626;font-weight:700;text-decoration:underline;">matriz de riesgos</a> y asigna planes de mitigación urgentes.
     </div>
 </div>
 @endif
 
+{{-- Quick Filter Pills --}}
+<div class="filter-tabs" style="display:flex; gap:8px; margin-bottom:16px; overflow-x:auto; padding-bottom:4px;">
+    <button type="button" class="filter-tab active" onclick="filterKanban('all', this)">
+        <i class="fas fa-th-large"></i> Vista Completa
+    </button>
+    <button type="button" class="filter-tab" onclick="filterKanban('critico', this)">
+        <span style="width:8px;height:8px;border-radius:50%;background:#ef4444;display:inline-block;"></span> Solo Críticos
+        <span class="tab-count">{{ $totalCritico }}</span>
+    </button>
+    <button type="button" class="filter-tab" onclick="filterKanban('alto', this)">
+        <span style="width:8px;height:8px;border-radius:50%;background:#f97316;display:inline-block;"></span> Solo Altos
+        <span class="tab-count">{{ $totalAlto }}</span>
+    </button>
+    <button type="button" class="filter-tab" onclick="filterKanban('medio', this)">
+        <span style="width:8px;height:8px;border-radius:50%;background:#eab308;display:inline-block;"></span> Solo Medios
+        <span class="tab-count">{{ $totalMedio }}</span>
+    </button>
+    <button type="button" class="filter-tab" onclick="filterKanban('bajo', this)">
+        <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;"></span> Solo Bajos
+        <span class="tab-count">{{ $totalBajo }}</span>
+    </button>
+</div>
+
 {{-- Risk level stats --}}
 <div class="stats-grid">
     <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos críticos: {{ $totalCritico }}">
-        <div class="stat-card" style="border-top:3px solid #ef4444;">
+        <div class="stat-card" style="border-top:3.5px solid #ef4444;">
             <div class="stat-icon si-red"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalCritico }}</div>
                 <div class="stat-lbl">Riesgos Críticos</div>
-                @if($totalCritico > 0)<div class="stat-trend trend-up"><i class="fas fa-arrow-up" style="font-size:9px;" aria-hidden="true"></i> Atención requerida</div>@endif
+                @if($totalCritico > 0)
+                    <div class="stat-trend trend-up"><i class="fas fa-arrow-up" style="font-size:9px;" aria-hidden="true"></i> Acción urgente</div>
+                @else
+                    <div class="stat-trend trend-down"><i class="fas fa-check" style="font-size:9px;" aria-hidden="true"></i> 0 Críticos</div>
+                @endif
             </div>
         </div>
     </a>
     <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos altos: {{ $totalAlto }}">
-        <div class="stat-card" style="border-top:3px solid #f97316;">
+        <div class="stat-card" style="border-top:3.5px solid #f97316;">
             <div class="stat-icon si-orange"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalAlto }}</div>
                 <div class="stat-lbl">Riesgos Altos</div>
+                <div class="stat-trend trend-neutral"><i class="fas fa-shield-alt" style="font-size:9px;"></i> En mitigación</div>
             </div>
         </div>
     </a>
     <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos medios: {{ $totalMedio }}">
-        <div class="stat-card" style="border-top:3px solid #eab308;">
+        <div class="stat-card" style="border-top:3.5px solid #eab308;">
             <div class="stat-icon si-yellow"><i class="fas fa-minus-circle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalMedio }}</div>
                 <div class="stat-lbl">Riesgos Medios</div>
+                <div class="stat-trend trend-neutral"><i class="fas fa-eye" style="font-size:9px;"></i> Monitoreados</div>
             </div>
         </div>
     </a>
     <a href="{{ route('evaluaciones.index') }}" style="text-decoration:none;" aria-label="Ver riesgos bajos: {{ $totalBajo }}">
-        <div class="stat-card" style="border-top:3px solid #22c55e;">
+        <div class="stat-card" style="border-top:3.5px solid #22c55e;">
             <div class="stat-icon si-green"><i class="fas fa-check-circle" aria-hidden="true"></i></div>
             <div>
                 <div class="stat-num">{{ $totalBajo }}</div>
                 <div class="stat-lbl">Riesgos Bajos</div>
-                @if($totalBajo > 0)<div class="stat-trend trend-down"><i class="fas fa-check" style="font-size:9px;" aria-hidden="true"></i> Bajo control</div>@endif
+                <div class="stat-trend trend-down"><i class="fas fa-check-double" style="font-size:9px;" aria-hidden="true"></i> Bajo control</div>
             </div>
         </div>
     </a>
@@ -78,23 +113,30 @@
     $tagMap    = ['critico'=>'rc-tag-critico','alto'=>'rc-tag-alto','medio'=>'rc-tag-medio','bajo'=>'rc-tag-bajo'];
 @endphp
 
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-    <div style="font-size:13px;font-weight:600;color:#1b1f3b;display:flex;align-items:center;gap:8px;" class="text-adaptive">
-        <i class="fas fa-layer-group" style="color:#f97316;font-size:12px;" aria-hidden="true"></i> Últimos Riesgos Activos
-        <span style="font-size:11px;font-weight:400;color:#94a3b8;">— {{ $ultimosRiesgos->count() }} más recientes</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+    <div style="font-size:14px;font-weight:700;color:#1b1f3b;display:flex;align-items:center;gap:8px;" class="text-adaptive">
+        <i class="fas fa-layer-group" style="color:#f97316;font-size:13px;" aria-hidden="true"></i> Tablero de Riesgos Activos
+        <span style="font-size:11.5px;font-weight:500;color:#94a3b8;">— {{ $ultimosRiesgos->count() }} más recientes</span>
     </div>
-    <a href="{{ route('evaluaciones.index') }}" class="btn btn-outline btn-sm">Ver todos →</a>
+    <div style="display:flex; align-items:center; gap:8px;">
+        <a href="{{ route('matriz.index') }}" class="btn btn-outline btn-sm">
+            <i class="fas fa-th"></i> Ver Matriz
+        </a>
+        <a href="{{ route('evaluaciones.index') }}" class="btn btn-outline btn-sm">
+            Ver todos <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
 </div>
 
-<div class="kanban-board" style="margin-bottom:20px;">
+<div class="kanban-board" id="kanbanBoard" style="margin-bottom:24px;">
     @foreach($niveles as $nivel => $label)
-    <div class="kanban-col">
+    <div class="kanban-col" data-col-nivel="{{ $nivel }}">
         <div class="kanban-col-header {{ $kchMap[$nivel] }}">
             <span>{{ $label }}</span>
             <span class="kch-count">{{ $grupos->get($nivel, collect())->count() }}</span>
         </div>
         @forelse($grupos->get($nivel, collect()) as $riesgo)
-        <a href="{{ route('evaluaciones.show', $riesgo) }}" style="text-decoration:none;">
+        <a href="{{ route('evaluaciones.show', $riesgo) }}" style="text-decoration:none;" class="kanban-card-link">
             <div class="risk-card">
                 <div class="risk-card-stripe {{ $strMap[$nivel] }}"></div>
                 <div class="risk-card-body">
@@ -106,7 +148,7 @@
                     </div>
                     <div class="risk-card-title">{{ $riesgo->amenaza->nombre ?? 'Sin amenaza' }}</div>
                     <div class="risk-card-path">
-                        <i class="fas fa-server" style="font-size:9px;"></i>
+                        <i class="fas fa-server" style="font-size:10px; color:#94a3b8;"></i>
                         {{ $riesgo->activo->nombre ?? 'Sin activo' }}
                     </div>
                     <div class="risk-card-meta">
@@ -115,7 +157,9 @@
                     </div>
                     <div class="risk-card-footer">
                         <div class="rc-assignee">
-                            <div class="rc-avatar" style="background:linear-gradient(135deg,#4f8ef7,#6366f1);">{{ strtoupper(substr($riesgo->evaluador->name ?? 'S', 0, 2)) }}</div>
+                            <div class="rc-avatar" style="background:linear-gradient(135deg,#4f8ef7,#6366f1); font-weight:800;">
+                                {{ strtoupper(substr($riesgo->evaluador->name ?? 'S', 0, 2)) }}
+                            </div>
                             <div>
                                 <div class="rc-name">{{ $riesgo->evaluador->name ?? 'Sistema' }}</div>
                             </div>
@@ -127,7 +171,8 @@
         </a>
         @empty
         <div class="kanban-empty">
-            <i class="fas fa-check-circle" style="font-size:18px;display:block;margin-bottom:6px;"></i>Sin riesgos
+            <i class="fas fa-check-circle" style="font-size:20px;display:block;margin-bottom:8px;color:#22c55e;"></i>
+            Sin riesgos en este nivel
         </div>
         @endforelse
     </div>
@@ -135,28 +180,37 @@
 </div>
 
 {{-- Bottom row --}}
-<div style="display:grid;grid-template-columns:1fr 320px;gap:18px;padding-bottom:32px;">
+<div class="dashboard-bottom-grid">
 
     {{-- Bitácora --}}
     <div class="panel" style="margin-bottom:0;">
         <div class="panel-header">
             <div class="panel-title"><i class="fas fa-clipboard-list" aria-hidden="true"></i> Actividad Reciente</div>
-            <a href="{{ route('bitacora.index') }}" style="font-size:12px;color:#f97316;text-decoration:none;font-weight:500;">Ver bitácora →</a>
+            <a href="{{ route('bitacora.index') }}" class="btn btn-outline btn-xs" style="color:#f97316; font-weight:600;">
+                Ver bitácora <i class="fas fa-arrow-right"></i>
+            </a>
         </div>
         @if($ultimaBitacora->count() > 0)
             @foreach($ultimaBitacora as $log)
-            <div style="display:flex;gap:12px;padding:10px 18px;border-bottom:1px solid #f5f6fa;">
-                <div style="width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0;
+            <div class="dashboard-activity-row" style="display:flex;gap:12px;padding:12px 18px;border-bottom:1px solid rgba(0,0,0,0.05);transition:all .2s ease;">
+                <div style="width:8px;height:8px;border-radius:50%;margin-top:6px;flex-shrink:0;
                     background:@if(in_array($log->accion,['crear','aprobar']))#22c55e
                               @elseif(in_array($log->accion,['eliminar','login_fallido']))#ef4444
                               @elseif($log->accion=='editar')#eab308
-                              @else #4f8ef7 @endif;">
+                              @else #4f8ef7 @endif;
+                    box-shadow: 0 0 8px @if(in_array($log->accion,['crear','aprobar']))rgba(34,197,94,0.5)
+                                         @elseif(in_array($log->accion,['eliminar','login_fallido']))rgba(239,68,68,0.5)
+                                         @elseif($log->accion=='editar')rgba(234,179,8,0.5)
+                                         @else rgba(79,142,247,0.5) @endif;">
                 </div>
-                <div style="min-width:0;">
+                <div style="min-width:0; flex:1;">
                     <div style="font-size:12.5px;color:#374151;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="text-adaptive">{{ $log->descripcion }}</div>
-                    <div style="font-size:11px;color:#94a3b8;margin-top:2px;">
-                        {{ $log->user_nombre ?? 'Sistema' }} &middot; {{ \Carbon\Carbon::parse($log->created_at)->diffForHumans() }}
-                        &middot; <span style="font-weight:600;text-transform:uppercase;font-size:10px;">{{ $log->accion }}</span>
+                    <div style="font-size:11px;color:#94a3b8;margin-top:3px; display:flex; align-items:center; gap:6px;">
+                        <span><i class="fas fa-user-circle" style="font-size:10px;"></i> {{ $log->user_nombre ?? 'Sistema' }}</span>
+                        <span>&middot;</span>
+                        <span><i class="far fa-clock" style="font-size:10px;"></i> {{ \Carbon\Carbon::parse($log->created_at)->diffForHumans() }}</span>
+                        <span>&middot;</span>
+                        <span class="badge" style="font-size:9.5px; padding:1px 6px; font-weight:700;">{{ strtoupper($log->accion) }}</span>
                     </div>
                 </div>
             </div>
@@ -183,21 +237,20 @@
         ];
         @endphp
         @foreach($resumen as $item)
-        <a href="{{ route($item['route']) }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #f5f6fa;text-decoration:none;color:inherit;transition:background .15s;"
-           onmouseover="this.style.background='#fafbff'" onmouseout="this.style.background=''">
+        <a href="{{ route($item['route']) }}" class="dashboard-row-link">
             <div style="display:flex;align-items:center;gap:12px;">
-                <div class="stat-icon {{ $item['si'] }}" style="width:36px;height:36px;border-radius:9px;font-size:14px;flex-shrink:0;">
+                <div class="stat-icon {{ $item['si'] }}" style="width:38px;height:38px;border-radius:10px;font-size:14px;flex-shrink:0;">
                     <i class="fas {{ $item['icon'] }}"></i>
                 </div>
                 <div>
-                    <div style="font-size:13px;font-weight:500;color:#1e293b;" class="text-adaptive">{{ $item['label'] }}</div>
+                    <div style="font-size:13px;font-weight:600;color:#1e293b;" class="text-adaptive">{{ $item['label'] }}</div>
                     <div style="font-size:11px;color:#94a3b8;">{{ $item['sub'] }}</div>
                 </div>
             </div>
             <div style="font-size:22px;font-weight:800;color:#1b1f3b;" class="text-adaptive">{{ $item['val'] }}</div>
         </a>
         @endforeach
-        <div style="padding:12px 18px;display:flex;gap:8px;">
+        <div style="padding:14px 18px;display:flex;gap:10px;">
             <a href="{{ route('matriz.index') }}" class="btn btn-outline btn-sm" style="flex:1;justify-content:center;">
                 <i class="fas fa-th"></i> Ver Matriz
             </a>
@@ -208,5 +261,26 @@
     </div>
 
 </div>
+
+@push('scripts')
+<script>
+function filterKanban(nivel, btn) {
+    // update active tab
+    document.querySelectorAll('.filter-tabs .filter-tab').forEach(function(t) {
+        t.classList.remove('active');
+    });
+    btn.classList.add('active');
+
+    var cols = document.querySelectorAll('#kanbanBoard .kanban-col');
+    cols.forEach(function(col) {
+        if (nivel === 'all') {
+            col.style.display = 'flex';
+        } else {
+            col.style.display = col.getAttribute('data-col-nivel') === nivel ? 'flex' : 'none';
+        }
+    });
+}
+</script>
+@endpush
 
 @endsection

@@ -19,7 +19,10 @@
 @push('styles')
 <style>
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px;}
-.stat-box{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:18px 20px;display:flex;align-items:center;gap:14px;}
+@media (max-width: 900px) { .stats-row{grid-template-columns:repeat(2,1fr);gap:12px;} }
+@media (max-width: 540px) { .stats-row{grid-template-columns:1fr;gap:10px;} }
+.stat-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all 0.2s cubic-bezier(0.16, 1, 0.3, 1);}
+.stat-box:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.06);}
 .stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .stat-icon.blue{background:#eff6ff;color:#3b82f6;}
 .stat-icon.green{background:#f0fdf4;color:#16a34a;}

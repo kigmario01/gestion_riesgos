@@ -69,3 +69,8 @@ Thumbs.db
 _ide_helper.php
 Homestead.json
 Homestead.yaml
+
+# Reportes y artefactos de pruebas E2E
+/playwright-report
+/test-results
+fix_env.php

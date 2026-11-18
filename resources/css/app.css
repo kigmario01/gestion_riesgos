@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═════════════════════════════════════════════════════════════
+   🎨 RISKGUARD TI — ULTRA-FLUID INTERACTION & MOTION DESIGN
+   ═════════════════════════════════════════════════════════════ */
+
+:root {
+    --primary-orange: #f97316;
+    --primary-orange-hover: #ea580c;
+    --primary-orange-light: #fff7ed;
+    --primary-navy: #1e3a8a;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 /* Accesibilidad: skip to content */
 .skip-link {
     position: absolute;
@@ -13,12 +26,383 @@
     background: #f97316;
     color: #fff;
     padding: 8px 16px;
-    border-radius: 0 0 8px 8px;
-    font-weight: 600;
+    border-radius: 0 0 10px 10px;
+    font-weight: 700;
     font-size: 13px;
     text-decoration: none;
-    transition: top 0.15s;
+    transition: top 0.2s var(--ease-smooth);
+    box-shadow: 0 4px 14px rgba(249,115,22,0.4);
 }
 .skip-link:focus {
     top: 0;
 }
+
+/* ═════════════════════════════════════════════════════════════
+   🚀 INTERACTIVE BUTTON SYSTEM (Moving, Bouncing & Shimmering)
+   ═════════════════════════════════════════════════════════════ */
+
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.24s var(--ease-spring);
+    cursor: pointer;
+    text-decoration: none;
+    overflow: hidden;
+    user-select: none;
+}
+
+/* Micro-movement on icons inside buttons */
+.btn i, .btn svg {
+    transition: transform 0.25s var(--ease-spring);
+    display: inline-block;
+}
+
+.btn:hover i, .btn:hover svg {
+    transform: translateX(3px) scale(1.15);
+}
+
+.btn:active i, .btn:active svg {
+    transform: scale(0.95);
+}
+
+/* Shimmer shine beam across buttons on hover */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -100%;
+    width: 60%;
+    height: 200%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.35),
+        transparent
+    );
+    transform: rotate(30deg);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.btn:hover::before {
+    left: 150%;
+}
+
+/* Primary Button (Vibrant Orange Glow + Lift) */
+.btn-primary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35), 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 24px rgba(249, 115, 22, 0.48), 0 2px 6px rgba(0,0,0,0.08) !important;
+}
+
+.btn-primary:active {
+    transform: translateY(1px) scale(0.97) !important;
+    box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3) !important;
+}
+
+/* Secondary Button (Navy Blue) */
+.btn-secondary {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(30, 58, 138, 0.3) !important;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 24px rgba(30, 58, 138, 0.45) !important;
+}
+
+.btn-secondary:active {
+    transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Outline Button */
+.btn-outline {
+    background: #ffffff;
+    color: #374151;
+    border: 1.5px solid #e5e7eb;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.btn-outline:hover {
+    background: #fff7ed;
+    color: #ea580c;
+    border-color: #f97316;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.18);
+}
+
+.btn-outline:active {
+    transform: translateY(1px) scale(0.97);
+}
+
+[data-theme="dark"] .btn-outline {
+    background: #18233c !important;
+    color: #e2e8f0 !important;
+    border-color: #223254 !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+[data-theme="dark"] .btn-outline:hover {
+    background: rgba(249, 115, 22, 0.15) !important;
+    color: #fb923c !important;
+    border-color: #f97316 !important;
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25) !important;
+}
+
+/* Danger Button */
+.btn-danger {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1.5px solid #fecaca;
+}
+
+.btn-danger:hover {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-color: #ef4444;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.22);
+}
+
+[data-theme="dark"] .btn-danger {
+    background: rgba(239, 68, 68, 0.14) !important;
+    color: #f87171 !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-danger:hover {
+    background: rgba(239, 68, 68, 0.24) !important;
+    color: #fca5a5 !important;
+    border-color: #ef4444 !important;
+}
+
+/* Success Button */
+.btn-success {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1.5px solid #bbf7d0;
+}
+
+.btn-success:hover {
+    background: #dcfce7;
+    color: #15803d;
+    border-color: #22c55e;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.22);
+}
+
+[data-theme="dark"] .btn-success {
+    background: rgba(34, 197, 94, 0.14) !important;
+    color: #4ade80 !important;
+    border-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-success:hover {
+    background: rgba(34, 197, 94, 0.24) !important;
+    color: #86efac !important;
+    border-color: #22c55e !important;
+}
+
+/* Floating pulse animation for high priority action buttons */
+.btn-pulse {
+    animation: btnPulseGlow 2.5s infinite;
+}
+@keyframes btnPulseGlow {
+    0%, 100% {
+        box-shadow: 0 4px 14px rgba(249, 115, 22, 0.35);
+    }
+    50% {
+        box-shadow: 0 6px 26px rgba(249, 115, 22, 0.65);
+    }
+}
+
+/* ═════════════════════════════════════════════════════════════
+   ✨ DYNAMIC CARDS & STATS HOVER LIFT
+   ═════════════════════════════════════════════════════════════ */
+
+.stat-card {
+    transition: all 0.28s var(--ease-spring);
+    will-change: transform, box-shadow;
+}
+
+.stat-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.1), 0 6px 16px -4px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .stat-card:hover {
+    box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.4), 0 0 20px rgba(249, 115, 22, 0.1) !important;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.18) rotate(6deg);
+}
+
+.stat-icon {
+    transition: transform 0.35s var(--ease-spring);
+}
+
+/* Risk Cards Interactive 3D Lift */
+.risk-card {
+    transition: all 0.28s var(--ease-spring);
+    transform-origin: center;
+}
+
+.risk-card:hover {
+    transform: translateY(-7px) scale(1.02);
+    box-shadow: 0 20px 42px -8px rgba(0,0,0,0.12), 0 8px 16px -4px rgba(0,0,0,0.06);
+    border-color: #f97316 !important;
+}
+
+[data-theme="dark"] .risk-card:hover {
+    box-shadow: 0 20px 42px -8px rgba(0,0,0,0.5), 0 0 20px rgba(249, 115, 22, 0.15) !important;
+}
+
+.risk-card:active {
+    transform: translateY(-2px) scale(0.99);
+}
+
+/* Nav Item Fluid Sliding */
+.nav-item {
+    transition: all 0.22s var(--ease-spring);
+}
+
+.nav-item:hover {
+    transform: translateX(6px);
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+[data-theme="dark"] .nav-item:hover {
+    background: rgba(249, 115, 22, 0.14) !important;
+    color: #fb923c !important;
+}
+
+.nav-item:hover i {
+    transform: scale(1.25) rotate(5deg);
+    color: #f97316;
+}
+
+.nav-item i {
+    transition: transform 0.25s var(--ease-spring), color 0.2s ease;
+}
+
+.nav-item:active {
+    transform: translateX(2px) scale(0.98);
+}
+
+/* Topbar Notification & Search Interactive FX */
+.notif-btn {
+    transition: all 0.24s var(--ease-spring);
+}
+
+.notif-btn:hover {
+    transform: translateY(-3px) scale(1.08);
+    border-color: #f97316;
+    color: #f97316;
+    background: #fff7ed;
+    box-shadow: 0 6px 18px rgba(249, 115, 22, 0.22);
+}
+
+[data-theme="dark"] .notif-btn:hover {
+    background: rgba(249, 115, 22, 0.14) !important;
+    color: #fb923c !important;
+    border-color: #f97316 !important;
+    box-shadow: 0 6px 18px rgba(249, 115, 22, 0.25) !important;
+}
+
+.topbar-search input {
+    transition: all 0.25s var(--ease-smooth);
+}
+
+.topbar-search input:focus {
+    transform: translateY(-1px) scale(1.01);
+    border-color: #f97316;
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.15);
+}
+
+/* Badges with Micro-bounce on hover */
+.badge {
+    transition: transform 0.2s var(--ease-spring);
+    display: inline-flex;
+    align-items: center;
+}
+
+.badge:hover {
+    transform: scale(1.08);
+}
+
+/* Table rows smooth glide (Light mode default) */
+.table tr {
+    transition: all 0.18s ease;
+}
+
+html:not([data-theme="dark"]) .table tr:hover {
+    background: #fffaf5;
+}
+
+[data-theme="dark"] .table tr:hover td {
+    background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Hover row class for dashboard lists */
+.dashboard-row-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s var(--ease-smooth);
+}
+
+.dashboard-row-link:hover {
+    background: #fffaf5;
+    transform: translateX(4px);
+}
+
+[data-theme="dark"] .dashboard-row-link {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-theme="dark"] .dashboard-row-link:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+    transform: translateX(4px);
+}
+
+/* ═════════════════════════════════════════════════════════════
+   🌊 FLUID STAGGER ANIMATIONS FOR DASHBOARD
+   ═════════════════════════════════════════════════════════════ */
+
+@keyframes smoothEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.animate-entrance {
+    animation: smoothEntrance 0.45s var(--ease-smooth) both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
