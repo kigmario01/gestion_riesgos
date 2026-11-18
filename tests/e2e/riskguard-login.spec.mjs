@@ -37,7 +37,7 @@ test.describe('RiskGuard TI — Pruebas de Login y UI (XAMPP)', () => {
 
   test('debe mostrar error de validación ante credenciales incorrectas', async ({ page }) => {
     await page.locator('#email').fill('usuario_inexistente@correo.com');
-    await page.locator('#password').fill('clave_invalida_123');
+    await page.locator('#password').fill('clave_invalida_123'); // gitleaks:allow
     await page.locator('#loginBtn').click();
 
     // La app debe mantenerse en la pantalla de login o mostrar aviso de error

@@ -4,7 +4,9 @@ import { test, expect } from '@playwright/test';
 test.describe.configure({ mode: 'serial' });
 
 test.describe('RiskGuard TI — Ciclo Completo de Gestión de Riesgos E2E (ISO 27001)', () => {
-  const BASE_URL = 'http://127.0.0.1/gestion_riesgos/public';
+  const BASE_URL = process.env.APP_URL || 'http://127.0.0.1/gestion_riesgos/public';
+  const ADMIN_USER = process.env.SEEDER_ADMIN_USER || 'admin@gestion.com';
+  const ADMIN_PASSWORD = process.env.SEEDER_ADMIN_PASSWORD || 'Admin1234!'; // gitleaks:allow
   const timestamp = Date.now().toString().slice(-4);
   const testAssetCode = `AKT-QA${timestamp}`;
   const testAssetName = `Servidor Central QA ${timestamp}`;
@@ -12,8 +14,8 @@ test.describe('RiskGuard TI — Ciclo Completo de Gestión de Riesgos E2E (ISO 2
 
   test.beforeEach(async ({ page }) => {
     await page.goto(`${BASE_URL}/login`);
-    await page.locator('#email').fill('admin@gestion.com');
-    await page.locator('#password').fill('Admin1234!');
+    await page.locator('#email').fill(ADMIN_USER);
+    await page.locator('#password').fill(ADMIN_PASSWORD);
     await page.locator('#loginBtn').click();
     await expect(page).toHaveURL(`${BASE_URL}/dashboard`);
   });

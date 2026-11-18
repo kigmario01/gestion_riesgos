@@ -59,6 +59,8 @@ Thumbs.db
 /storage/pail
 
 # Herramientas de desarrollo e IDEs
+/.agents/skills
+/.agents/skills.json
 /.claude
 /.fleet
 /.idea

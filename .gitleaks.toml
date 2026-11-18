@@ -1,0 +1,13 @@
+# Configuración de exclusiones de Gitleaks para RiskGuard TI
+title = "RiskGuard Gitleaks Config"
+
+[allowlist]
+description = "Permitir fixtures de prueba, seeders de desarrollo y directivas locales"
+paths = [
+    '''tests/.*''',
+    '''database/seeders/.*'''
+]
+regexes = [
+    '''Admin1234!''',
+    '''Scrum1234!'''
+]
