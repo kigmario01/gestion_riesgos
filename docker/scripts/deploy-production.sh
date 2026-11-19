@@ -19,4 +19,5 @@ set +a
 # logs and cache volumes are deliberately left intact.
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" down
 docker volume rm "${COMPOSE_PROJECT_NAME}_app_code" 2>/dev/null || true
+docker volume ls -q | grep -E "app_code" | xargs -r docker volume rm 2>/dev/null || true
 docker compose --env-file "$ENV_FILE" -f "$COMPOSE_FILE" up -d --build
